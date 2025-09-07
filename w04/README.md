@@ -86,12 +86,11 @@ It's time to add files that we want to track with DVC. We don't want to include 
 
 There's multiple [storage solutions in DVC](https://dvc.org/doc/user-guide/data-management/remote-storage). Generally they require some kind of authentication so that you can read and write from the location but that is beyond the scope for now. Instead we will just use a "local" remote -- that is, just a different directory on your laptop than this project and pretend it's a "remote" remote.
 
-1. Fetch data locally
-   <details> <summary>Suggestion using command line</summary> 
-    <pre> mkdir -p data/raw
-    wget https://github.com/Jeppe-T-K/itu_sdse_2024/raw/w06-exercises/w06/resources/data/raw/coco.jpeg -P data/raw/
-    </pre>
-    </details>
+1. Fetch data locally:
+    ```bash
+    mkdir -p data/raw
+    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/w04/resources/coco_small.jpg -P data/raw/
+    ```
 
 2. Add file to tracking with DVC
    <details> <summary>Hint: It's essentially the same as git</summary> 
@@ -153,12 +152,11 @@ Quite often you don't use the raw data directly in your models but run it throug
 
 For this exercise, we will essentially follow the steps in Exercise 1, but in addition we will switch to another branch in git and make changes to our cleansed data. The challenge is then to recover the original data on the main branch!
 
-1. Create a "cleansed" version of your data
-   <details> <summary>Suggestion using same image</summary> 
-    <pre>mkdir -p data/cleansed
-    wget https://github.com/Jeppe-T-K/itu_sdse_2024/raw/w06-exercises/w06/resources/data/cleansed/coco_cropped.png -P data/cleansed
-    </pre>
-    </details>
+1. Create a "cleansed" version of your data (or use this pre-made)
+    ```sh
+    mkdir -p data/cleansed
+    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/w04/resources/coco_edited_small.jpg -P data/cleansed
+    ```
 
 2. Add new data to dvc + git
    <details> <summary>Hint: repeat steps 2-3 from Exercise 1</summary> 
@@ -178,13 +176,7 @@ For this exercise, we will essentially follow the steps in Exercise 1, but in ad
     </details>
 
 4. Modify your cleansed data (_save to same file name!_)
-   <details> <summary>Suggestion using pre-made image</summary> 
-    <pre>
-    rm data/cleansed/coco_cropped.png
-    wget https://github.com/Jeppe-T-K/itu_sdse_2024/raw/w06-exercises/w06/resources/data/cleansed/coco_cropped_text.png -P data/cleansed
-    mv data/cleansed/coco_cropped_text.png data/cleansed/coco_cropped.png
-    </pre>
-    </details>
+
 
 5. Add changed file to dvc + git
    <details> <summary>Hint: repeat steps from step 2</summary> 
@@ -210,9 +202,37 @@ For this exercise, we will essentially follow the steps in Exercise 1, but in ad
 
 
 ### Exercise 5: Only fetch data from a remote
-Sometimes you rely on external data sources, for example if the data 
+Sometimes you rely on external data sources, for example if a remote system updates the data file or if DVC is not used by that system. In order to do that, we can import directly from a url:
 
+1. Import the data 
+   <details> <summary>Hint: Use the import-url command</summary> 
+    <pre> 
+    mkdir data_imported
+    dvc import-url https://raw.githubusercontent.com/Jeppe-T-K/itu_sdse_2024/9b7b05cf2bd3551f7d723d6510b8fdd2a0df9b66/w06/resources/data/cleansed/coco_cropped.png data_imported/coco_edited_highres.jpeg
+    git add data_imported/*
+    git commit -m "Added cleansed data"
+    (git push)
+    dvc push
+    </pre>
+    </details>
+2. How can you avoid downloading data directly? And why would you want that?
+   <details> <summary>There are two commands</summary>
 
+    1. --no-download
+   
+    2. --to-remote
+
+    --no-download simply creates the DVC file.
+
+    --to-remote also transfers the file to your DVC remote.
+    </details>
+
+3. How do you make sure the tracked data is updated?
+   <details> <summary>You need to <i>update</i> via DVC</summary>
+   dvc update --to-remote data_imported/coco_edited_highres.jpeg
+    </details>
+
+## Outro
 And that's it! Now you've done the whole flow of tracking raw data, creating + modifying a cleansed dataset, and switching between different data versions.
 
 Much of the same thinking about version control of big files also applies to models. However, the flow for creating, testing, evaluating and deploying models through _experiments_ usually require a bit more infrastructure, so before going crazy with exercises for that, we'll instead focus next time on creating a project that follows a nice, clean structure to make our lives easier.
