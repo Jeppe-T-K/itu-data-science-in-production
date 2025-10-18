@@ -1,18 +1,9 @@
 import numpy as np
 
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Lasso
 from sklearn.metrics import mean_squared_error
 
-
-def get_data(N=100):
-    np.random.seed(42)
-    X = np.random.rand(N, 2).reshape(-1, 2) * 100  # between 0 and 100
-    y = X[0, :] + np.random.normal(0, 5, size=(N, 1))  # add noise
-    X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42)
-    return X_train, X_test, y_train, y_test
-
+from data_util import get_data
 
 # Load data
 X_train, X_test, y_train, y_test = get_data()
