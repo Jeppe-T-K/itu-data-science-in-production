@@ -52,6 +52,8 @@ Make sure MLflow and scipy is installed:
 
 This text needs to be replace with an explanation of what a single MLflow run really is and how different models can be logged. Basically follow https://mlflow.org/docs/latest/ml/tracking/quickstart/
 
+For 
+
 
 1. <details> <summary> Log example model with MLflow</summary>
    First <code>import mlflow</code>
@@ -62,13 +64,11 @@ This text needs to be replace with an explanation of what a single MLflow run re
    ```python
    with mlflow.start_run():
        mlflow.log_params(params)
-       mlflow.log_metric("mse", mse)
+       mlflow.log_metric("mean_squared_error", mse)
        mlflow.sklearn.log_model(
-         lr, registered_model_name="Lasso_Regression_Model"
-        )
+         lr, registered_model_name="lasso_regression_model"
+       )
    ```
-
-   <pre><i><u>Discuss in pairs what each option does</u></i></pre>
    </details>
    
 2. <details> <summary> Run training with different parameters</summary> 
@@ -92,6 +92,8 @@ This text needs to be replace with an explanation of what a single MLflow run re
 ### Exercise 2: Running a custom model
 
 Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own.
+
+
 
 1. <details><summary>Define a pyfunc.PythonModel</summary>
     Example:

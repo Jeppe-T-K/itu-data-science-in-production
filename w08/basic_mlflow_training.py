@@ -11,7 +11,8 @@ from mlflow.pyfunc import PythonModel
 
 class BasicModel(PythonModel):
     def linear(self, numbers):
-        return np.array([x[0] for x in numbers])
+        ...
+        return ...  # implement a simple linear function
 
     def predict(self, context, model_input) -> np.ndarray[float]:
         if isinstance(model_input, pd.DataFrame):
@@ -30,11 +31,9 @@ lr = BasicModel()
 
 # Predict on the test set
 y_pred = lr.predict(None, X_test)
-print(y_pred, y_test)
 
 # Calculate metrics
 mse = mean_squared_error(y_test, y_pred)
-print(f"Mean Squared Error: {mse}")
 
 mlflow.set_experiment("Basic Linear Model")
 with mlflow.start_run():
@@ -45,6 +44,7 @@ with mlflow.start_run():
     dataset = mlflow.data.from_pandas(pd.DataFrame(X_test), source=csv_path)
     mlflow.log_input(dataset, context="training")
 
+    # Log other parameters
     mlflow.log_params(params)
     mlflow.log_metric("mean_squared_error", mse)
     mlflow.pyfunc.log_model(

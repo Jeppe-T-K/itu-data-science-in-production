@@ -18,7 +18,7 @@ def detect_data_drift(X_old, X_new):
 X_train, X_test, y_train, y_test = get_data_drift_data()
 
 model_name = "custom_linear_model"
-model_version = 1
+model_version = 1  # Or higher if you ran it multiple times
 
 # Load logged model
 lr = mlflow.pyfunc.load_model(
@@ -36,12 +36,12 @@ eval_data["target"] = y_test
 
 mlflow.set_experiment("Basic Linear Model")
 with mlflow.start_run():
-    print(X_train_old, X_test)
-    print(detect_data_drift(X_train_old, X_test))
-    #mlflow.log_metric("data_drifted_features", len(detect_data_drift(X_train_old, X_test)))
+    data_drift_columns = detect_data_drift(X_train_old, X_test)
+    ... # Log data_drift_columns with MLflow
+
     result = mlflow.evaluate(
-    lr,  # Function to evaluate
-    eval_data,  # Evaluation data
-    targets="target",  # Target column
-    model_type="regressor",  # Task type
-)
+        lr,  # Function to evaluate
+        eval_data,  # Evaluation data
+        targets="target",  # Target column
+        model_type="regressor",  # Task type
+    )
