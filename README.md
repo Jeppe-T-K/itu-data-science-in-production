@@ -1,2 +1,2 @@
-# itu_sdse_2024
-Lesson overview for the ITU course Software Development and Software Engineer 2024
+# Data Science in Production: MLOps and Software Engineering
+Lesson overview for the ITU course Data Science in Production: MLOps and Software Engineering
