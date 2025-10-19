@@ -38,24 +38,30 @@ For the lecture:
 > <li>Explain how to detect concept and model drift</li>
 > </ul>
 
-This text needs to be replaced with an introduction to the exercises
+There are 4 python files in this directory for these exercises:
+* [data_util.py](data_util.py), which you can use for generating the data (imagine it is the output of the data processing pipelines)
+* [example_model.py](example_model.py), which you can use as the basic SKLearn model
+* [basic_mlflow_training.py](basic_mlflow_training.py), which you can use to guide you on how to create a custom model/function and set up MLflow
+* [basic_mlflow_evaluation.py](basic_mlflow_evaluation.py), which you can use for evaluating the (created) models using new data and check for drifts.
+
+As always for the most effective learning, try to use the MLflow documentation and figure out how to solve the exercises yourself first before consulting the basic MLflow scripts.
 
 ### Exercise 0: Installation
 
 Make sure MLflow and scipy is installed:
-`pip install MLflow`
+`pip install mlflow`
 `pip install scipy`
 `pip install scikit-learn`
 
 
 ### Exercise 1: Run an ML experiment
 
-This text needs to be replace with an explanation of what a single MLflow run really is and how different models can be logged. Basically follow https://mlflow.org/docs/latest/ml/tracking/quickstart/
+For this exercise, the goal is to use MLflow to create an experiment and log relevant artifacts and metrics for different ML models. Much of what you need for this is under the https://mlflow.org/docs/latest/ml/tracking/quickstart/ page.
 
-For 
+MLflow has a lot of in-built "flavours" that make it easy to run experiments for well-known ML libraries such as SKlearn or Tensorflow. For this exercise we can use the SKlearn model in 
 
 
-1. <details> <summary> Log example model with MLflow</summary>
+1. <details> <summary> Edit the example_model.py script to log model run with MLflow</summary>
    First <code>import mlflow</code>
    
    Then set the MLflow experiment via <code>mlflow.set_experiment("My experiment name")</code>
@@ -72,7 +78,7 @@ For
    </details>
    
 2. <details> <summary> Run training with different parameters</summary> 
-   In the terminal, run <code>git init</code>
+   For example set alpha in params to 0.5.
    </details>
 
 3. <details> <summary> Compare the two models </summary>
@@ -82,7 +88,7 @@ For
    </details>
 
 4. <details><summary>What exactly is logged for each run?</summary>
-   Check the mlruns directory or through the UI
+   Check the mlruns directory or through the UI under "artifacts"
   </details>
 
 5. <details><summary>Try to use autologging</summary>
@@ -91,8 +97,7 @@ For
 
 ### Exercise 2: Running a custom model
 
-Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own.
-
+Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own. Since we actually know the data generating function in data_util.py, we could simply create a model that predicts f(x) = x.
 
 
 1. <details><summary>Define a pyfunc.PythonModel</summary>
@@ -144,4 +149,5 @@ Here we test how we can log two things: data drift, which is when your input var
 2. <details> <summary> Run the data evaluation with the data drift evaluation </summary></details>
 3. <details> <summary> Run the model evaluation with the concept drift data </summary></details>
 
-This was a very preliminary example of working together on code. There are more aspects to it, such as branching strategies, code reviews and pull requests, but that will be covered in later lectures. For now, pat yourselves on the back for actually starting a data science project with a more clear strategy than 80% of companies!
+
+And that is it! You can do a lot more with MLflow, and you might see some more complex commands later in the course, but remember: start simple and then add complexity later.
