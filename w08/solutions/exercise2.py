@@ -10,20 +10,20 @@ from mlflow.pyfunc import PythonModel
 
 
 class BasicModel(PythonModel):
-    def linear(self, numbers, offset=0):
-        return np.array([x[0]+offset for x in numbers])  # implement a simple linear function
+    def linear(self, numbers):
+        return np.array([x[0] for x in numbers])  # implement a simple linear function
 
     def predict(self, context, model_input) -> np.ndarray[float]:
         if isinstance(model_input, pd.DataFrame):
             model_input = list(model_input.values)
-        return self.linear(model_input, context.get("offset", 0))
+        return self.linear(model_input)
 
 
 # Load data
 X_train, X_test, y_train, y_test = get_data()
 
 # Define the model hyperparameters
-params = {"offset": 2}
+params = {}
 
 # Train the model
 lr = BasicModel()

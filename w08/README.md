@@ -132,7 +132,7 @@ Sometimes you can't use a standard SKLearn or similarly supported model, so you 
     ```python
     mlflow.pyfunc.log_model(
         python_model=lr,
-        name="basic_linear_model",
+        name="Basic Linear Model",
     )
     ```
   </details>
