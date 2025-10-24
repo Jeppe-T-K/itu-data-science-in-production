@@ -4,8 +4,8 @@
 ## Agenda
 
  * [08:15 – 08:45] – Setting up Docker on your machines
- * [08:45 – 09:00] – Quick intro to Docker
- * [09:15 – 12:00] – Follow-along exercises
+ * [08:45 – 09:00] – Project questions (if any)
+ * [09:15 – 12:00] – Quick intro to Docker + Follow-along exercises
 
 ## Preparation
 
