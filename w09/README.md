@@ -36,7 +36,7 @@ For the exercises:
 Before getting started with using Docker, it's a good idea to motivate and explain _what_ Docker actually is so you don't just type commands and see stuff happen.
 
 ## Why?
-![Works on my machine](https://media.licdn.com/dms/image/v2/D4D12AQErd8DR8mH1HQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1690344054617?e=1735171200&v=beta&t=I9ab3xaDdiDDksSkN0bzDAqIW0k-JY_-AsyFxHd7nCs "why docker")
+![Works on my machine](https://blog.codinghorror.com/content/images/2025/05/works-on-my-machine-v2-2025-jon-galloway-2-1.png)
 
 To avoid the above from happening. Or even shorter -- reproducability.
 
