@@ -197,7 +197,7 @@ As described in the previous section, Docker is really a way to run code in a re
    -p (--publish)
    <details><code>docker run -p 10000:8080 iris-train</code></details>
 
-   -v (--volume)
+   -v (--volume) for mounting a directory, allowing you to access files there outside the container.
    <details><code>docker run -v ./artifacts:/usr/local/app/artifacts iris-train</code></details>
 
    -e (--env) is for setting environment variables, which can sometimes be useful whenever using env variables in your code. 
