@@ -7,5 +7,4 @@ pip
 python-dotenv
 tqdm
 typer
-scikit-learn
 -e .
