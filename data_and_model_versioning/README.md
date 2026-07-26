@@ -4,10 +4,11 @@
 
 ### Agenda
 
- * [08:15 – 09:00] – Exercises: DVC
- * [09:15 – 10:00] – Exercises: Continued
- * [10:15 – 11:00] – Lecture: General data versioning strategies
- * [11:15 – 12:00] – Lecture: Continued
+ * [08:15 – 09:00] – Lecture: General data versioning strategies
+ * [09:15 – 10:00] – Lecture: Continued
+ * [10:15 – 11:00] – Exercises: DVC
+ * [11:15 – 12:00] – Exercises: Continued
+
 
 ### Preparation
 
@@ -26,7 +27,6 @@ For the lecture:
 
 ### Notes
 
-* First exercises, then lectures
 * Make sure to install DVC and test that the `dvc` command works for you.
 * Slides uploaded to [learnit](https://learnit.itu.dk/course/view.php?id=3023571#section-6).
 
