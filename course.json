@@ -1,0 +1,21 @@
+{
+  "authors": [
+    {
+      "name": "Jeppe Theiss Kristensen",
+      "company": "Maersk"
+    }
+  ],
+  "title": "Data Science in Production: MLOps and Software Engineering",
+  "subtitle": "for Data Scientists (BSDSPMS1KU'26)",
+  "frontendMastersLink": "",
+  "social": {
+    "linkedin": "jeppetk",
+    "github": "Jeppe-T-K",
+    "twitter": ""
+  },
+  "description": "Data Science in Production: MLOps and Software Engineering",
+  "keywords": ["MLOps", "Software Engineering", "Data Science", "Production"],
+  "productionBaseUrl": "/itu-dsip",
+  "csvPath": "./out/lessons.csv",
+  "llmFullTextPath": ""
+}

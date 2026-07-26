@@ -1,0 +1,6 @@
+{
+  "title": "Containers and Docker",
+  "shortTitle": "Docker",
+  "description": "Introduction to Docker for reproducible ML environments",
+  "order": ["A-introduction", "B-notes", "C-exercise-setup", "D-exercise-dockerfile", "E-exercise-build", "F-exercise-run", "G-exercise-push-pull", "H-exercise-cleanup"]
+}

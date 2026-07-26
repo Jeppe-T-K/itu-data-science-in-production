@@ -1,0 +1,6 @@
+{
+  "title": "MLOps Projects Overview",
+  "shortTitle": "MLOps Projects",
+  "description": "Overview of MLOps project structures using Cookiecutter Data Science",
+  "order": ["A-introduction", "B-cookiecutter-setup", "C-project-structure", "D-project-teaser", "E-collaboration"]
+}

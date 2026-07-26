@@ -1,0 +1,6 @@
+{
+  "title": "Model Experimentation",
+  "shortTitle": "Model Experimentation",
+  "description": "ML experiment tracking with MLflow, custom models, and performance monitoring",
+  "order": ["A-introduction", "B-mlflow-basics", "C-custom-models", "D-model-monitoring"]
+}
