@@ -15,7 +15,7 @@
   },
   "description": "Data Science in Production: MLOps and Software Engineering",
   "keywords": ["MLOps", "Software Engineering", "Data Science", "Production"],
-  "productionBaseUrl": "/itu-dsip",
+  "productionBaseUrl": "/itu-data-science-in-production",
   "csvPath": "./out/lessons.csv",
   "llmFullTextPath": ""
 }
