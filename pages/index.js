@@ -18,7 +18,7 @@ export default function Lessons({ sections }) {
         <meta name="og:title" content={courseInfo.title}></meta>
         <meta
           name="og:image"
-          content={`${process.env.BASE_URL}/images/social-share-cover.jpg`}
+          content={`${process.env.BASE_URL}/images/social-share-cover.png`}
         ></meta>
         <meta name="twitter:card" content="summary_large_image"></meta>
       </Head>
@@ -49,7 +49,7 @@ export default function Lessons({ sections }) {
           </div>
           <div className="courseIcon">
             <img
-              src={`${process.env.BASE_URL}/images/course-icon.png`}
+              src={`${process.env.BASE_URL}/images/course-icon.jpg`}
               alt="course icon"
             />
           </div>
@@ -71,13 +71,32 @@ export default function Lessons({ sections }) {
                     </div>
                     <div className="lesson-text">
                       <h2 className="lesson-section-title">{section.title}</h2>
-                      <ol>
-                        {section.lessons.map((lesson) => (
-                          <li key={lesson.slug}>
-                            <Link href={lesson.fullSlug}>{lesson.title}</Link>
-                          </li>
-                        ))}
-                      </ol>
+                      {section.subsections && section.subsections.length > 0 ? (
+                        section.subsections.map((subsection) => (
+                          <div key={subsection.title} className="subsection">
+                            <h3 className="subsection-title">{subsection.title}</h3>
+                            {subsection.lessons && subsection.lessons.length > 0 ? (
+                              <ol>
+                                {subsection.lessons.map((lesson) => (
+                                  <li key={lesson.slug}>
+                                    <Link href={lesson.fullSlug}>{lesson.title}</Link>
+                                  </li>
+                                ))}
+                              </ol>
+                            ) : (
+                              <p className="subsection-empty">(to be filled out)</p>
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <ol>
+                          {section.lessons.map((lesson) => (
+                            <li key={lesson.slug}>
+                              <Link href={lesson.fullSlug}>{lesson.title}</Link>
+                            </li>
+                          ))}
+                        </ol>
+                      )}
                     </div>
                     <Corner />
                   </div>

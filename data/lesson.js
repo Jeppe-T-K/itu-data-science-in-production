@@ -83,7 +83,10 @@ export async function getLessons() {
       icon = meta.icon;
     }
 
-    const lessons = [];
+    // Build a map of all lessons in this section
+    const lessonsMap = {};
+    const allLessons = [];
+    
     for (let lessonFilename of lessonsDir) {
       if (lessonFilename.slice(-3) !== ".md") {
         continue;
@@ -102,13 +105,69 @@ export async function getLessons() {
 
       const title = getTitle(slug, data.title);
 
-      lessons.push({
+      const lesson = {
         slug,
         fullSlug: `/lessons/${sectionSlug}/${slug}`,
         title,
         order: `${sectionOrder}${lessonOrder.toUpperCase()}`,
         path: filePath,
         description: data.description ? data.description : "",
+      };
+      
+      lessonsMap[lessonFilename] = lesson;
+      lessonsMap[slug] = lesson;
+      allLessons.push(lesson);
+    }
+
+    // Check if meta has nested sections
+    let subsections = [];
+    if (meta.sections && Array.isArray(meta.sections)) {
+      // Use the new nested structure
+      for (const subsection of meta.sections) {
+        const subsectionLessons = [];
+        if (subsection.order && Array.isArray(subsection.order)) {
+          for (const lessonSlug of subsection.order) {
+            // lessonSlug could be filename (A-introduction) or just slug (introduction)
+            const lesson = lessonsMap[lessonSlug] || lessonsMap[lessonSlug + ".md"];
+            if (lesson) {
+              subsectionLessons.push(lesson);
+            }
+          }
+        }
+        subsections.push({
+          title: subsection.title || subsection.name,
+          lessons: subsectionLessons,
+        });
+      }
+    } else if (meta.order && Array.isArray(meta.order)) {
+      // Use the old flat order array for backward compatibility
+      const orderedLessons = [];
+      const orderedSlugs = new Set();
+      for (const lessonSlug of meta.order) {
+        const lesson = lessonsMap[lessonSlug] || lessonsMap[lessonSlug + ".md"];
+        if (lesson) {
+          orderedLessons.push(lesson);
+          // Track both the filename format and the slug format
+          orderedSlugs.add(lessonSlug);
+          orderedSlugs.add(lessonSlug + ".md");
+          orderedSlugs.add(lesson.slug);
+        }
+      }
+      // If there are lessons not in the order, add them at the end
+      for (const lesson of allLessons) {
+        if (!orderedSlugs.has(lesson.slug)) {
+          orderedLessons.push(lesson);
+        }
+      }
+      subsections.push({
+        title: sectionTitle,
+        lessons: orderedLessons,
+      });
+    } else {
+      // No order specified, use all lessons
+      subsections.push({
+        title: sectionTitle,
+        lessons: allLessons,
       });
     }
 
@@ -116,7 +175,8 @@ export async function getLessons() {
       icon,
       title: sectionTitle,
       slug: sectionSlug,
-      lessons,
+      subsections,
+      lessons: allLessons, // Keep for backward compatibility
       order: sectionOrder,
     });
   }
@@ -125,106 +185,102 @@ export async function getLessons() {
 }
 
 export async function getLesson(targetDir, targetFile) {
-  const dir = await fs.readdir(lessonsPath);
+  const sections = await getLessons();
+  
+  // Find the target section
+  const targetSection = sections.find((section) => section.slug === targetDir);
+  if (!targetSection) {
+    return false;
+  }
 
-  for (let i = 0; i < dir.length; i++) {
-    const dirPath = dir[i];
-    const dirStats = await fs.lstat(path.join(lessonsPath, dirPath));
-    if (!dirStats.isDirectory()) {
-      continue;
+  // Get all lessons from the section (flatten subsections if they exist)
+  let allLessons = [];
+  if (targetSection.subsections && targetSection.subsections.length > 0) {
+    for (const subsection of targetSection.subsections) {
+      allLessons = allLessons.concat(subsection.lessons);
     }
-    if (dirPath.endsWith(targetDir)) {
-      const lessonDir = (
-        await fs.readdir(path.join(lessonsPath, dirPath))
-      ).filter((str) => str.endsWith(".md"));
+  } else {
+    allLessons = targetSection.lessons || [];
+  }
 
-      for (let j = 0; j < lessonDir.length; j++) {
-        const slugPath = lessonDir[j];
-        if (slugPath.endsWith(targetFile + ".md")) {
-          const filePath = path.join(lessonsPath, dirPath, slugPath);
-          const file = await fs.readFile(filePath);
-          const { data, content } = matter(file.toString());
-          const html = marked.parse(content);
-          const title = getTitle(targetFile, data.title);
-          const meta = await getMeta(dirPath);
+  // Find the current lesson index
+  const currentIndex = allLessons.findIndex((lesson) => {
+    // Compare by slug (without the leading order character)
+    const lessonSlug = lesson.slug;
+    const targetSlug = targetFile;
+    
+    // Handle both formats: "A-introduction" vs "introduction"
+    const lessonParts = lessonSlug.split("-");
+    const lessonOrder = lessonParts.shift();
+    const lessonBaseSlug = lessonParts.join("-");
+    
+    return lessonSlug === targetSlug || lessonBaseSlug === targetSlug;
+  });
 
-          const section = getTitle(targetDir, meta.title);
-          const icon = meta.icon ? meta.icon : DEFAULT_ICON;
+  if (currentIndex === -1) {
+    return false;
+  }
 
-          let nextSlug;
-          let prevSlug;
+  const lesson = allLessons[currentIndex];
+  const filePath = lesson.path;
+  const file = await fs.readFile(filePath);
+  const { data, content } = matter(file.toString());
+  const html = marked.parse(content);
+  const title = getTitle(targetFile, data.title);
 
-          // get next
-          if (lessonDir[j + 1]) {
-            // has next in section
-            const { slug: next } = slugify(lessonDir[j + 1]);
-            nextSlug = `${targetDir}/${next.replace(/\.md$/, "")}`;
-          } else if (dir[i + 1]) {
-            // has next in next section
-            const nextDirStats = await fs.lstat(
-              path.join(lessonsPath, dir[i + 1])
-            );
-            if (!nextDirStats.isDirectory()) {
-              nextSlug = null;
-            } else {
-              const nextDir = (
-                await fs.readdir(path.join(lessonsPath, dir[i + 1]))
-              ).filter((str) => str.endsWith(".md"));
-              const nextDirSlug = slugify(dir[i + 1]).slug;
-              const nextLessonSlug = slugify(nextDir[0]).slug.replace(
-                /\.md$/,
-                ""
-              );
-              nextSlug = `${nextDirSlug}/${nextLessonSlug}`;
-            }
-          } else {
-            // last section
-            nextSlug = null;
-          }
+  const meta = await getMeta(targetDir);
+  const section = getTitle(targetDir, meta.title);
+  const icon = meta.icon ? meta.icon : DEFAULT_ICON;
 
-          // get prev
-          if (lessonDir[j - 1]) {
-            // has prev in section
-            const { slug: prev } = slugify(lessonDir[j - 1]);
-            prevSlug = `${targetDir}/${prev.replace(/\.md$/, "")}`;
-          } else if (dir[i - 1]) {
-            // has prev in prev section
-            const prevDirStats = await fs.lstat(
-              path.join(lessonsPath, dir[i - 1])
-            );
-            if (!prevDirStats.isDirectory()) {
-              prevSlug = null;
-            } else {
-              const prevDir = (
-                await fs.readdir(path.join(lessonsPath, dir[i - 1]))
-              ).filter((str) => str.endsWith(".md"));
-              const prevDirSlug = slugify(dir[i - 1]).slug;
-              const prevLessonSlug = slugify(
-                prevDir[prevDir.length - 1]
-              ).slug.replace(/\.md$/, "");
-              prevSlug = `${prevDirSlug}/${prevLessonSlug}`;
-            }
-          } else {
-            // first section
-            prevSlug = null;
-          }
+  let nextSlug = null;
+  let prevSlug = null;
 
-          return {
-            attributes: data,
-            html,
-            markdown: content,
-            slug: targetFile,
-            title,
-            section,
-            icon,
-            filePath,
-            nextSlug: nextSlug ? `/lessons/${nextSlug}` : null,
-            prevSlug: prevSlug ? `/lessons/${prevSlug}` : null,
-          };
-        }
+  // get next
+  if (currentIndex < allLessons.length - 1) {
+    const nextLesson = allLessons[currentIndex + 1];
+    nextSlug = `/lessons/${targetDir}/${nextLesson.slug}`;
+  } else {
+    // Try to find next in the next section
+    const currentSectionIndex = sections.findIndex((s) => s.slug === targetDir);
+    if (currentSectionIndex < sections.length - 1) {
+      const nextSection = sections[currentSectionIndex + 1];
+      const nextSectionLessons = nextSection.subsections && nextSection.subsections.length > 0
+        ? nextSection.subsections.flatMap((ss) => ss.lessons)
+        : nextSection.lessons || [];
+      if (nextSectionLessons.length > 0) {
+        nextSlug = `/lessons/${nextSection.slug}/${nextSectionLessons[0].slug}`;
       }
     }
   }
 
-  return false;
+  // get prev
+  if (currentIndex > 0) {
+    const prevLesson = allLessons[currentIndex - 1];
+    prevSlug = `/lessons/${targetDir}/${prevLesson.slug}`;
+  } else {
+    // Try to find prev in the previous section
+    const currentSectionIndex = sections.findIndex((s) => s.slug === targetDir);
+    if (currentSectionIndex > 0) {
+      const prevSection = sections[currentSectionIndex - 1];
+      const prevSectionLessons = prevSection.subsections && prevSection.subsections.length > 0
+        ? prevSection.subsections.flatMap((ss) => ss.lessons)
+        : prevSection.lessons || [];
+      if (prevSectionLessons.length > 0) {
+        prevSlug = `/lessons/${prevSection.slug}/${prevSectionLessons[prevSectionLessons.length - 1].slug}`;
+      }
+    }
+  }
+
+  return {
+    attributes: data,
+    html,
+    markdown: content,
+    slug: targetFile,
+    title,
+    section,
+    icon,
+    filePath,
+    nextSlug,
+    prevSlug,
+  };
 }

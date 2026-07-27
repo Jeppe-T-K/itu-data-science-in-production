@@ -19,7 +19,7 @@ export default function Header(props) {
         ) : null}
         {section ? (
           <h2>
-            {section} <i className={`fas fa-${icon}`} /> {title}
+            {section} <i className="fas fa-chevron-right" /> {title}
           </h2>
         ) : null}
       </div>

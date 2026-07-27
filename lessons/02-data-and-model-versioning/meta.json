@@ -2,5 +2,18 @@
   "title": "Data and Model Versioning",
   "shortTitle": "Data and Model Versioning",
   "description": "Introduction to DVC for tracking data and model versions in ML projects",
-  "order": ["A-introduction", "B-exercise-setup", "C-exercise-tracking", "D-exercise-remote", "E-exercise-versions", "F-exercise-import"]
+  "sections": [
+    {
+      "title": "Introduction",
+      "order": ["A-introduction"]
+    },
+    {
+      "title": "Lecture",
+      "order": []
+    },
+    {
+      "title": "Exercises",
+      "order": ["B-exercise-setup", "C-exercise-tracking", "D-exercise-remote", "E-exercise-versions", "F-exercise-import"]
+    }
+  ]
 }
