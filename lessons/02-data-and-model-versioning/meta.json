@@ -5,15 +5,23 @@
   "sections": [
     {
       "title": "Introduction",
-      "order": ["A-introduction"]
+      "order": ["iA-introduction"]
     },
     {
       "title": "Lecture",
-      "order": []
+      "order": [
+        "lA-lecture-intro",
+        "lB-levels-of-data-versioning",
+        "lC-data-version-operations",
+        "lD-storage",
+        "lE-stages",
+        "lF-stages-in-ml",
+        "lG-summary"
+      ]
     },
     {
       "title": "Exercises",
-      "order": ["B-exercise-setup", "C-exercise-tracking", "D-exercise-remote", "E-exercise-versions", "F-exercise-import"]
+      "order": ["eB-exercise-setup", "eC-exercise-tracking", "eD-exercise-remote", "eE-exercise-versions", "eF-exercise-import"]
     }
   ]
 }

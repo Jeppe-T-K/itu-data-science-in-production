@@ -231,7 +231,13 @@ export async function getLesson(targetDir, targetFile) {
   const filePath = lesson.path;
   const file = await fs.readFile(filePath);
   const { data, content } = matter(file.toString());
-  const html = marked.parse(content);
+  let html = marked.parse(content);
+  
+  // Rewrite image src paths to include BASE_URL for static export
+  if (process.env.BASE_URL) {
+    html = html.replace(/(<img[^>]*src=")\/images\//g, `$1${process.env.BASE_URL}/images/`);
+  }
+  
   const title = getTitle(targetFile, data.title);
 
   const meta = await getMeta(targetDir);
