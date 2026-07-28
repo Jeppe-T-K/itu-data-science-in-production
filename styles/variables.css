@@ -1,6 +1,6 @@
 :root {
-  --primary: #dfa067;
-  --secondary: #93aca7;
+  --primary: #ffffff;
+  --secondary: #42B0D5;
   --highlight: #224159;
 
   --lesson-text: rgb(8, 8, 8);
@@ -29,7 +29,7 @@
 
  [data-theme="dark"] {
   --primary: #224159;
-  --secondary: #93aca7;
+  --secondary: #42B0D5;
   --highlight: #dfa067;
 
   --text-header: var(--primary);

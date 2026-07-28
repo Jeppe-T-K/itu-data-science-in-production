@@ -195,9 +195,15 @@ export async function getLesson(targetDir, targetFile) {
 
   // Get all lessons from the section (flatten subsections if they exist)
   let allLessons = [];
+  let lessonToSubsectionMap = new Map();
+  
   if (targetSection.subsections && targetSection.subsections.length > 0) {
     for (const subsection of targetSection.subsections) {
-      allLessons = allLessons.concat(subsection.lessons);
+      for (const subLesson of subsection.lessons) {
+        allLessons.push(subLesson);
+        // Map lesson slug to subsection title
+        lessonToSubsectionMap.set(subLesson.slug, subsection.title);
+      }
     }
   } else {
     allLessons = targetSection.lessons || [];
@@ -231,6 +237,12 @@ export async function getLesson(targetDir, targetFile) {
   const meta = await getMeta(targetDir);
   const section = getTitle(targetDir, meta.title);
   const icon = meta.icon ? meta.icon : DEFAULT_ICON;
+  
+  // Get subsection title if available
+  let subsectionTitle = null;
+  if (targetSection.subsections && targetSection.subsections.length > 0) {
+    subsectionTitle = lessonToSubsectionMap.get(lesson.slug);
+  }
 
   let nextSlug = null;
   let prevSlug = null;
@@ -278,6 +290,7 @@ export async function getLesson(targetDir, targetFile) {
     slug: targetFile,
     title,
     section,
+    subsection: subsectionTitle,
     icon,
     filePath,
     nextSlug,

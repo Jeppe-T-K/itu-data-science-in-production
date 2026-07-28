@@ -6,14 +6,19 @@ import getCourseConfig from "../data/course";
 import { Provider as HeaderProvider } from "../context/headerContext";
 import { Provider as CourseInfoProvider } from "../context/courseInfoContext";
 
-function Layout({ children, className = "" }) {
+function Layout({ children, className = "", headerData }) {
   const courseInfo = getCourseConfig();
   const headerHook = useState({});
   return (
     <CourseInfoProvider value={courseInfo}>
       <HeaderProvider value={headerHook}>
         <div className={`remix-app ${className}`.trim()}>
-          <Header title={courseInfo.title} />
+          <Header 
+            courseTitle={courseInfo.title} 
+            section={headerData?.section}
+            subsection={headerData?.subsection}
+            title={headerData?.title}
+          />
           <div className="content-container">
             <div className="main">{children}</div>
           </div>

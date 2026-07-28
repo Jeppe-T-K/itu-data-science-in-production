@@ -1,6 +1,11 @@
 {
-  "title": "Introduction",
+  "title": "Overview",
   "shortTitle": "Introduction",
   "description": "Course overview, prerequisites, and welcome to Data Science in Production",
-  "order": ["A-welcome"]
+  "sections": [
+    {
+      "title": "Introduction",
+      "order": ["A-welcome", "B-prerequisites"]
+    }
+  ]
 }

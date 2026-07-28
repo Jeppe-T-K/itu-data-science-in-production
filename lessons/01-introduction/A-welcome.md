@@ -73,7 +73,3 @@ Assessment details will be provided on LearnIT. The course emphasizes hands-on e
 ## Contact
 
 For questions about the course material, please refer to the course page on LearnIT or contact the course instructor.
-
----
-
-[Next: Data and Model Versioning](../data-and-model-versioning/A-introduction.md)

@@ -17,8 +17,15 @@ const openSans = Open_Sans({
 });
 
 export default function App({ Component, pageProps }) {
+  // Extract header data from pageProps if available (for lesson pages)
+  const headerData = pageProps.post ? {
+    section: pageProps.post.section,
+    subsection: pageProps.post.subsection,
+    title: pageProps.post.title,
+  } : null;
+  
   return (
-    <Layout className={openSans.variable}>
+    <Layout className={openSans.variable} headerData={headerData}>
       <Head>
         <link
           rel="apple-touch-icon"

@@ -24,6 +24,7 @@ export default function LessonSlug({ post }) {
   useEffect(() => {
     setHeader({
       section: post.section,
+      subsection: post.subsection,
       title: post.title,
       icon: post.icon,
     });
