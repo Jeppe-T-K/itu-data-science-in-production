@@ -21,7 +21,14 @@
     },
     {
       "title": "Exercises",
-      "order": ["eB-exercise-setup", "eC-exercise-tracking", "eD-exercise-remote", "eE-exercise-versions", "eF-exercise-import"]
+      "order": [
+        "eA-exercise-intro", 
+        "eB-exercise-setup", 
+        "eC-exercise-tracking",
+        "eD-exercise-remote",
+        "eE-exercise-versions", 
+        "eF-exercise-import"
+      ]
     }
   ]
 }
