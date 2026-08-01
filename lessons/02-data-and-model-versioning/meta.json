@@ -12,15 +12,15 @@
       "order": [
         "lA-lecture-intro",
         "lB-motivation",
-        "lC-complexity-of-ds",
-        "lB-levels-of-data-versioning",
-        "lC-data-version-operations",
-        "lD-storage-cost",
-        "lD-data-types",
-        "lD-storage-architectures",
-        "lE-stages",
-        "lF-stages-in-ml",
-        "lG-summary"
+        "lC-complexity-of-data-science-projects",
+        "lD-levels-of-data-versioning",
+        "lE-data-version-operations",
+        "lF-storage-cost",
+        "lG-data-formats",
+        "lH-storage-architectures",
+        "lI-metadata",
+        "lJ-data-stages",
+        "lK-summary"
       ]
     },
     {

@@ -4,7 +4,6 @@
 ## Outline
 
 The lecture covers the following topics:
-<img src="/images/data-and-model-versioning/coco-judging.png" alt="Coco judging" height="200" style="float: right; margin-right: 160px;">
 
 1. Why data versioning?
 2. Data storage
@@ -13,3 +12,4 @@ The lecture covers the following topics:
 5. Metadata for versions
 6. Data stages in ML
 
+![Coco judging](/images/data-and-model-versioning/coco-judging.png)
