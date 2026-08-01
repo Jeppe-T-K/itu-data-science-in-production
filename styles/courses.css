@@ -17,7 +17,6 @@ h6 {
 
 img {
   max-width: 100%;
-  height: auto;
 }
 
 * {
@@ -310,7 +309,7 @@ header .cta-btn {
 
 .lesson-content img {
   margin: 5px auto;
-  display: block;
+  max-width: 100%;
 }
 
 .lesson-flex {
@@ -352,10 +351,6 @@ blockquote > *:last-child {
 
 blockquote > *:first-child {
   margin-top: 0;
-}
-
-.lesson-content img {
-  max-width: 100%;
 }
 
 .main-card {

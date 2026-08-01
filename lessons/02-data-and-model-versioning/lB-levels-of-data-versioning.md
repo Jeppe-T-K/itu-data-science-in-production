@@ -1,30 +1,36 @@
 # Levels of Data Versioning
 
-## Why Data Versioning?
-
-Data versioning is essential for maintaining reproducibility and traceability in machine learning projects. Without it, you cannot reliably:
-- Reproduce previous experiments
-- Track which data version produced which model
-- Roll back to a working state
+---
 
 ## Multiple Levels of Data Versioning
 
-There are several levels of data versioning, each with increasing complexity and capabilities.
+4 levels according to the [MLE book, chapter 3.11](https://www.mlebook.com/wiki/doku.php)
 
-### Level 0: Unversioned Data
+| Level 0 | Level 1 | Level 2 | Level 3 |
+|---------|---------|---------|---------|
+| Data is unversioned | Data is versioned as a snapshot | Data and code are versioned | Data and code are versioned through specialised tools |
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 0: Unversioned Data</summary>
 
 The simplest (and least recommended) approach is to have no versioning at all. Data is simply stored and overwritten as needed.
 
-**Pros:**
+![Manual version control](/images/data-and-model-versioning/manual-version-control.png)
+
 - Simple to implement
-- No overhead
-
-**Cons:**
+    - No overhead
 - No history
-- No ability to revert
-- No reproducibility
+    - Not possible to revert
+- Note: many tools have _something_ built in
 
-### Level 1: Snapshots
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 1: Snapshots</summary>
 
 Create snapshots of your data at different points in time. This allows you to restore previous versions.
 
@@ -32,12 +38,22 @@ Create snapshots of your data at different points in time. This allows you to re
 
 From https://lakefs.io/blog/data-versioning/
 
-**Tools:**
-- LakeFS
-- Delta Lake
-- Iceberg
 
-### Level 2: Data and Code as One Asset
+- Duplicate all relevant data
+    - Storage intensive → cloud
+    - Manual tracking of versions
+
+- Viable if:
+    - Infrequent updates
+    - Few models 
+
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 2: Data and Code as One Asset</summary>
 
 Version data alongside code using Git with large file support.
 
@@ -45,46 +61,34 @@ Version data alongside code using Git with large file support.
 
 From https://git-lfs.com/
 
-**Pros:**
-- Unified version control
-- Familiar Git workflow
+- Version control with Git
+    - Metadata saved for large files
 
-**Cons:**
-- Not efficient for large datasets
-- Can slow down repositories
+- Large files stored in cloud
+    - Efficient formats
 
-### Level 3: Specialized Versioning
+- Tools:
+    - DVC
+    - Git Large Files Storage 
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 3: Specialized Versioning</summary>
 
 Use specialized tools designed for data versioning that handle large files efficiently.
-
-![DVC Versioning](/images/data-and-model-versioning/dvc-versioning.png)
-
-From https://dvc.org/doc/use-cases/versioning-data-and-models
 
 ![DVC Experiment Tracking](/images/data-and-model-versioning/dvc-experiment-tracking.png)
 
 From https://dvc.org/doc/use-cases/experiment-tracking
 
-**Tools:**
-- DVC (Data Version Control)
-- Pachyderm
-- MLflow
+- Tool-specific solutions
 
-**Pros:**
-- Optimized for large datasets
-- Handles data lineage
-- Integrates with ML workflows
+- Comes with a lot extra functionality
+    - Pipelines
+    - Experiment tracking
+    - Etc etc
 
-## Package Solutions
-
-DVC provides a comprehensive solution for data versioning in ML projects.
-
-![DVC Package Solution](/images/data-and-model-versioning/dvc-versioning.png)
-
-From https://dvc.org/doc/use-cases/versioning-data-and-models
-
-Key features:
-- Track data files alongside code
-- Store data in remote storage (S3, GCS, Azure, SSH, etc.)
-- Version data with Git
-- Share and collaborate on datasets
+</details>

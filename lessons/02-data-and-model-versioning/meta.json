@@ -11,9 +11,13 @@
       "title": "Lecture",
       "order": [
         "lA-lecture-intro",
+        "lB-motivation",
+        "lC-complexity-of-ds",
         "lB-levels-of-data-versioning",
         "lC-data-version-operations",
-        "lD-storage",
+        "lD-storage-cost",
+        "lD-data-types",
+        "lD-storage-architectures",
         "lE-stages",
         "lF-stages-in-ml",
         "lG-summary"
