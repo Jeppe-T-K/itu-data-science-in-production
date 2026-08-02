@@ -1,3 +1,7 @@
+---
+title: Remote
+---
+
 # Exercise 3: Using a remote
 
 Remotes work in a similar way as with git: it's some place else that keeps track of you data. DVC stores the data in an efficient binary format and allows you to fetch the data again easily and quickly when needed for e.g. ML stuff.

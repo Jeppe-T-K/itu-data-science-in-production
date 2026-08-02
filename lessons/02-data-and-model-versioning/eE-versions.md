@@ -1,3 +1,7 @@
+---
+title: Versions
+---
+
 # Exercise 4: Switching between data versions
 
 Quite often you don't use the raw data directly in your models but run it through a data pipeline to create a cleansed or ML-ready dataset. That also means that the files/artifacts you create and want to keep track of can change with every run of your code.

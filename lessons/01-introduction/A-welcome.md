@@ -1,3 +1,7 @@
+---
+title: Welcome
+---
+
 # Welcome to Data Science in Production: MLOps and Software Engineering
 
 Welcome to the course **Data Science in Production: MLOps and Software Engineering** at the IT University of Copenhagen.
@@ -65,11 +69,6 @@ To get started with the course:
 - [Course GitHub Repository](https://github.com/Jeppe-T-K/itu-data-science-in-production)
 - [LearnIT Course Page](https://learnit.itu.dk/course/view.php?id=3023571)
 - [ML-Ops.org](https://ml-ops.org/) - Comprehensive MLOps resource
+- [ML Engineering book](https://www.mlebook.com/wiki/doku.php)
+- [A Multivocal Review of MLOps Practices, Challenges and Open Issues](https://arxiv.org/pdf/2406.09737v2)
 
-## Assessment
-
-Assessment details will be provided on LearnIT. The course emphasizes hands-on exercises and project work.
-
-## Contact
-
-For questions about the course material, please refer to the course page on LearnIT or contact the course instructor.

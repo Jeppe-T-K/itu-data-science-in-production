@@ -1,3 +1,7 @@
+---
+title: Storage Cost
+---
+
 # Data Storage Cost
 
 ![Data center](/images/data-and-model-versioning/data-center.png)

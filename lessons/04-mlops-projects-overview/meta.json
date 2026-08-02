@@ -1,6 +1,40 @@
 {
   "title": "MLOps Projects Overview",
-  "shortTitle": "MLOps Projects",
+  "shortTitle": "MLOps Projects", 
   "description": "Overview of MLOps project structures using Cookiecutter Data Science",
-  "order": ["A-introduction", "B-cookiecutter-setup", "C-project-structure", "D-project-teaser", "E-collaboration"]
+  "sections": [
+    {
+      "title": "Introduction",
+      "order": ["eA-introduction"]
+    },
+    {
+      "title": "Lecture",
+      "order": [
+        "lA-lecture-intro",
+        "lB-mlops-vs-devops",
+        "lC-mlops-components", 
+        "lD-project-success-factors",
+        "lE-organisation-maturity",
+        "lF-stage-0-manual-process",
+        "lG-stage-1-ml-automation",
+        "lH-stage-2-cicd-pipeline",
+        "lI-additional-drilldown",
+        "lJ-three-levels-ml-software",
+        "lK-data",
+        "lL-models",
+        "lM-code",
+        "lN-deployment-strategies",
+        "lO-summary"
+      ]
+    },
+    {
+      "title": "Exercises", 
+      "order": [
+        "eB-cookiecutter-setup",
+        "eC-project-structure",
+        "eD-project-teaser", 
+        "eE-collaboration"
+      ]
+    }
+  ]
 }

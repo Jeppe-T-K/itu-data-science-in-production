@@ -1,3 +1,7 @@
+---
+title: Project Structure
+---
+
 # Exercise 1: Inspect Project Structure
 
 3. <details> <summary>Inspect the structure of the resulting repo </summary>
@@ -61,4 +65,4 @@
 
    </details>
 
-[Next: Exercise 2 - Project Teaser](D-project-teaser.md)
+[Next: Exercise 2 - Project Teaser](eD-project-teaser.md)

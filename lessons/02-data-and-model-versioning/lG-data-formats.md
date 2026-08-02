@@ -1,3 +1,7 @@
+---
+title: Data Formats
+---
+
 # Data Formats
 
 ![Data formats](/images/data-and-model-versioning/Big-Data-data-formats.png)

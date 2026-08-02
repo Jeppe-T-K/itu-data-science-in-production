@@ -1,3 +1,7 @@
+---
+title: Initialization
+---
+
 # Exercise 1: Initialise DVC in repository
 
 Next we want to start using DVC with one of our projects. Let's follow DVC's documentation on [getting started](https://dvc.org/doc/start):

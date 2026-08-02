@@ -1,3 +1,7 @@
+---
+title: Import
+---
+
 # Exercise 5: Import from URL
 
 Sometimes you rely on external data sources, for example if a remote system updates the data file or if DVC is not used by that system. In order to do that, we can import directly from a url:

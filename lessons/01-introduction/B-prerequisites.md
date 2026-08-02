@@ -1,3 +1,7 @@
+---
+title: Prerequisites
+---
+
 # Prerequitsites
 
 This section provides an overview of the steps you need to do to prepare your laptop for the course and literature used in the course

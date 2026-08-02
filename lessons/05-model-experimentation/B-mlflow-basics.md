@@ -1,3 +1,7 @@
+---
+title: MLflow Basics
+---
+
 # Exercise 1: Run an ML Experiment
 
 For this exercise, the goal is to use MLflow to create an experiment and log relevant artifacts and metrics for different ML models. Much of what you need for this is under the https://mlflow.org/docs/latest/ml/tracking/quickstart/ page.

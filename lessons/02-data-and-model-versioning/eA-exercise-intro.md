@@ -1,3 +1,7 @@
+---
+title: Exercise Intro
+---
+
 # Background
 
 Data versioning has plenty of similarities but also differences to normal version control that you have just worked with. 

@@ -1,3 +1,7 @@
+---
+title: Introduction
+---
+
 # MLOps Projects Overview and Pipelines
 
 ## Overview
@@ -40,10 +44,10 @@ Slides are available on [LearnIT](https://learnit.itu.dk/course/view.php?id=3025
 
 The following exercises will guide you through setting up MLOps projects:
 
-- [Exercise 0-1: Cookiecutter Setup](B-cookiecutter-setup.md) - Install and initialize Cookiecutter Data Science
-- [Exercise 1: Project Structure](C-project-structure.md) - Inspect and understand the CCDS structure
-- [Exercise 2: Project Teaser](D-project-teaser.md) - Preview of MLOps project structure
-- [Exercise 3: Collaboration](E-collaboration.md) - Setting up GitHub and working together
+- [Exercise 0-1: Cookiecutter Setup](eB-cookiecutter-setup.md) - Install and initialize Cookiecutter Data Science
+- [Exercise 1: Project Structure](eC-project-structure.md) - Inspect and understand the CCDS structure
+- [Exercise 2: Project Teaser](eD-project-teaser.md) - Preview of MLOps project structure
+- [Exercise 3: Collaboration](eE-collaboration.md) - Setting up GitHub and working together
 
 ## Learning Goals
 

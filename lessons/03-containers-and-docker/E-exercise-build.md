@@ -1,3 +1,7 @@
+---
+title: Exercise Build
+---
+
 # Exercise 2: Build the image
 
 1. <details> <summary> Build the train.dockerfile </summary>

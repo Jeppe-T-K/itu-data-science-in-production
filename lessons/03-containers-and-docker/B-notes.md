@@ -1,3 +1,7 @@
+---
+title: Notes
+---
+
 # Prelude
 
 Before getting started with using Docker, it's a good idea to motivate and explain _what_ Docker actually is so you don't just type commands and see stuff happen.

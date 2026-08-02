@@ -1,3 +1,7 @@
+---
+title: Exercise Run
+---
+
 # Exercise 3: Run your image
 
 1. <details> <summary> Run your latest image </summary>

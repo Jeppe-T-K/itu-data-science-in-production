@@ -1,3 +1,7 @@
+---
+title: Summary
+---
+
 # Summary
 
 1. **Data and model versioning**

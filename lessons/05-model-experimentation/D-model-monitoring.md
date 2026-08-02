@@ -1,3 +1,7 @@
+---
+title: Model Monitoring
+---
+
 # Exercise 3: Check performance of deployed model
 
 Once a model is deployed, you need to monitor the performance and such.

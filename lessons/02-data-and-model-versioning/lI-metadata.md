@@ -1,3 +1,7 @@
+---
+title: Metadata
+---
+
 # Metadata
 
 Metadata is crucial for understanding and managing data versions.

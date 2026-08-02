@@ -1,3 +1,7 @@
+---
+title: Exercise Dockerfile
+---
+
 # Exercise 1: Create a training Dockerfile
 
 > [!NOTE]

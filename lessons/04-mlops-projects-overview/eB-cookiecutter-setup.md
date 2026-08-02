@@ -1,3 +1,7 @@
+---
+title: Cookiecutter Setup
+---
+
 # Exercise 0-1: Installation and Setup
 
 Make sure Cookiecutter Datascience is installed:
@@ -32,4 +36,4 @@ Next we want to start using Cookiecutter with one of our projects. Let's be insp
 
   </details>
 
-[Next: Exercise 1 - Project Structure](C-project-structure.md)
+[Next: Exercise 1 - Project Structure](eC-project-structure.md)

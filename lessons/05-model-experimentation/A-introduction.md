@@ -1,3 +1,7 @@
+---
+title: Introduction
+---
+
 # Model Experimentation, Selection and Monitoring
 
 ## Overview
@@ -20,14 +24,10 @@ For the lecture:
 * https://www.datadoghq.com/knowledge-center/dora-metrics/ (or other DORA metric google searches is fine)
 * https://neptune.ai/blog/how-to-monitor-your-models-in-production-guide (skimming it is fine)
 * https://dvc.org/doc/use-cases/experiment-tracking (skimming it is fine)
+* [Overview of different MLOps tools](https://arxiv.org/html/2601.20415v1) (skimming it is fine)
 
 ### Notes
 
-* Have fun!
-
-## Slides
-
-Slides are available on [LearnIT](https://learnit.itu.dk/).
 
 ## Exercises
 

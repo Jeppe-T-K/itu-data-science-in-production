@@ -1,3 +1,7 @@
+---
+title: Storage Architectures
+---
+
 # Data Storage Architectures
 
 ![Databricks Data Warehouse](/images/data-and-model-versioning/data-architecture-history.svg)

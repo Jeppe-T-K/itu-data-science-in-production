@@ -1,3 +1,7 @@
+---
+title: Exercise Push Pull
+---
+
 # Exercise 4: Push and pull
 
 1. <details><summary> Find an interesting <a href="https://hub.docker.com/search?categories=Machine+Learning+%26+AI">AI/ML image</a> and pull it</summary>

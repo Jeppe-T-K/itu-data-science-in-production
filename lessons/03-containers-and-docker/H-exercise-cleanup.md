@@ -1,3 +1,7 @@
+---
+title: Exercise Cleanup
+---
+
 # Exercise 5: Clean up
 
 1. <details> <summary>Check local images</summary>

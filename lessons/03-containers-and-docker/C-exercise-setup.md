@@ -1,3 +1,7 @@
+---
+title: Exercise Setup
+---
+
 # Exercise 0: Installation
 
 As described in the previous section, Docker is really a way to run code in a reproducible way.

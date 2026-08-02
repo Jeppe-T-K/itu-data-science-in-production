@@ -1,3 +1,7 @@
+---
+title: Tracking
+---
+
 # Exercise 2: Start tracking files
 
 It's time to add files that we want to track with DVC. We don't want to include the files in our repo but instead track and use references to the data stored elsewhere.

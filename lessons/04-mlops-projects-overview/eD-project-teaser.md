@@ -1,3 +1,7 @@
+---
+title: Project Teaser
+---
+
 # Exercise 2: Project Teaser
 
 Let's take a step back and reflect on what we have done so far, and more importantly, _why_ and _how_ it ties into what you've learned so far.
@@ -33,4 +37,4 @@ Each of these are explained in more detail in the link, so you are encouraged to
 #### Project teaser
 Given this information, let's see how an MLOps project that is very close to the actual implementation could look like: [MLOps monolith notebook](https://github.com/lasselundstenjensen/itu-sdse-project/blob/main/notebooks/main.ipynb)
 
-[Next: Exercise 3 - Collaboration](E-collaboration.md)
+[Next: Exercise 3 - Collaboration](eE-collaboration.md)
