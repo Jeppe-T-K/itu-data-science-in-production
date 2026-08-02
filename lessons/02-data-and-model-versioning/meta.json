@@ -27,11 +27,11 @@
       "title": "Exercises",
       "order": [
         "eA-exercise-intro", 
-        "eB-exercise-setup", 
-        "eC-exercise-tracking",
-        "eD-exercise-remote",
-        "eE-exercise-versions", 
-        "eF-exercise-import"
+        "eB-initialization", 
+        "eC-tracking",
+        "eD-remote",
+        "eE-versions", 
+        "eF-import"
       ]
     }
   ]

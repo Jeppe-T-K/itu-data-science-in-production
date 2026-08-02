@@ -17,5 +17,5 @@
   "keywords": ["MLOps", "Software Engineering", "Data Science", "Production"],
   "productionBaseUrl": "/itu-data-science-in-production",
   "csvPath": "./out/lessons.csv",
-  "llmFullTextPath": ""
+  "llmFullTextPath": "./out/llm_full_text.json"
 }
