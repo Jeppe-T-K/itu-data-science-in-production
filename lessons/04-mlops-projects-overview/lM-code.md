@@ -1,39 +1,81 @@
 ---
-title: Code
+title: Code Component
 ---
 
-# 13 Code
+# Code Component
 
-## Slide 1
+---
 
-<number>
+## Different use-cases, different patterns
 
-From https://ml-ops.org/content/three-levels-of-ml-software
-
-<number>
-
-From https://ml-ops.org/content/three-levels-of-ml-software
 
 ![ml-ops-org-serving-matrix.png](/images/mlops-projects-overview/ml-ops-org-serving-matrix.png)
-
-## Slide 2
-
-<number>
-
 From https://ml-ops.org/content/three-levels-of-ml-software
 
-<number>
+---
 
-From https://ml-ops.org/content/three-levels-of-ml-software
+## Model serving
 
-![ml-ops-org-serving-taxonomy.png](/images/mlops-projects-overview/ml-ops-org-serving-taxonomy.png)
+![model-serving.png](/images/mlops-projects-overview/batch-vs-realtime-serving.svg)
 
-## Slide 3
+Adapted from https://www.iguazio.com/glossary/model-serving-pipeline/
 
-Which serving pattern does the project follow?
+- First training, then "inference"
 
-<number>
+- Modes of serving
+    - In batch
+    - On demand
 
-Which serving pattern does the project follow?
+- Other consideration
+    - Sanity/confidence check input/output
+    - Serving to humans or machines?
+    - Fallback methods
+    - Interpreting output outside of model
 
-<number>
+---
+
+## Model logging/monitoring
+
+![grafana-monitoring.gif](/images/mlops-projects-overview/grafana-monitoring.gif)
+From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-production-with-grafana-and-clearml/
+
+
+- Log predictions
+
+- Performance deteriorates
+
+- Data changes
+
+- Abuse/adversarial
+
+→ More next lesson
+
+
+---
+
+## Model maintenance
+
+
+- Model freshness
+
+- Retraining time
+
+- Deployment cost
+
+![grafana-monitoring.gif](/images/mlops-projects-overview/coco-puppy.jpg)
+
+
+
+---
+
+## Course project?
+
+<details><summary style="font-style: italic;">What pattern does that follow?</summary>
+
+- Offline training
+
+- On-demand through REST API
+
+</details>
+
+

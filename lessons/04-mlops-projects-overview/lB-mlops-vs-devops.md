@@ -6,7 +6,7 @@ title: MLOps vs DevOps
 
 ---
 
-## First -- DevOps
+## First: DevOps
 
 ![Dynatrace DevOps with logos](/images/mlops-projects-overview/dynatrace-devops-with-logos.svg)
 
@@ -57,7 +57,10 @@ From https://ml-ops.org/content/mlops-principles
 
 ---
 
-## Data adds complexity
+## Data and models add complexity
+
+![conference talk tweet.png](/images/mlops-projects-overview/conference-talk-tweet.png)
+Source for original graphic: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
 
 ![Page view evolution](/images/mlops-projects-overview/page-view-evolution.png)
 Page views over time

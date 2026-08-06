@@ -1,95 +1,51 @@
 ---
-title: Data
+title: Data Component
 ---
 
-# 11 Data
+# Data Component
 
-## Slide 1
+---
 
-Extraction/ingestion
+## Garbage in, garbage out
 
-<number>
+![garbage collect](/images/mlops-projects-overview/garbage-collection.png)
 
-Determine sources
+From Shutterstock, because I couldn't find a good non-AI image.
 
-Compliance/sensitive data
+---
 
-Test data split
+## Data extraction/ingestion
 
+![Data extraction/ingestion](/images/mlops-projects-overview/data-extraction-ingestion.png)
 From https://firsteigen.com/blog/10-data-ingestion-tools-to-fortify-your-data-strategy/
 
-Extraction/ingestion
+- Determine sources
 
-<number>
+- Compliance/sensitive data
 
-Determine sources Compliance/sensitive data Test data split
+- Test data split
 
-From https://firsteigen.com/blog/10-data-ingestion-tools-to-fortify-your-data-strategy/
+---
 
-![data-extraction-ingestion.png](/images/mlops-projects-overview/data-extraction-ingestion.png)
+## Data exploration and validation
 
-## Slide 2
+![Data exploration](/images/mlops-projects-overview/great-expectations-data.png)
+From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_discovery/ 
 
-Exploration, validation and cleaning
+- How does the data look like?
+    - Mean, std
+    - Data types
+    - Missing values
 
-<number>
+- Useful for alerts
 
-How does the data look like?
+---
 
-Mean, std
+## Data preparation/wrangling/cleaning
 
-Data types
+- Transformations
+    - Fill missing values
+    - Remove outliers
+    - Remove irrelevant data
 
-Transformations
-
-Missing values/outliers
-
-“Silver” layer
-
-From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_discovery/
-
-Exploration, validation and cleaning
-
-<number>
-
-How does the data look like? Mean, std Data types Transformations Missing values/outliers “Silver” layer
-
-From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_discovery/
-
-![great-expectations-data.png](/images/mlops-projects-overview/great-expectations-data.png)
-
-## Slide 3
-
-Models
-
-<number>
-
-Models
-
-<number>
-
-## Slide 4
-
-Steps
-
-<number>
-
-Model training
-
-Model evaluation
-
-Model validation/testing
-
-Model packaging
-
-From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
-
-Steps
-
-<number>
-
-Model training Model evaluation Model validation/testing Model packaging
-
-From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
-
-![mlmastery-training-graph.png](/images/mlops-projects-overview/mlmastery-training-graph.png)
+- “Silver” layer

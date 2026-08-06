@@ -2,7 +2,7 @@
 title: Lecture Intro
 ---
 
-# MLOps projects overview and pipelines
+# MLOps Projects Overview and Pipelines
 
 ---
 

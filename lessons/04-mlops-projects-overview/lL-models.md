@@ -1,95 +1,66 @@
 ---
-title: Models
+title: Model Component
 ---
 
-# 12 Modes
+# Model Component
 
-## Slide 1
+---
 
-A note about training
+## Black box
 
-<number>
+![Model black box](/images/mlops-projects-overview/black-box.svg)
 
-Don’t get too attached to one model
+---
 
-Feature + model engineering
+## Model training
 
-Random search for hyperparameters
+![mlmastery-training-graph.png](/images/mlops-projects-overview/mlmastery-training-graph.png)
+From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
+
+- Don’t get too attached to one model
+
+- Feature + model engineering
+
+- Random search for hyperparameters
 
 → Robustness is important
 
-From https://encord.com/blog/what-is-ensemble-learning/
+---
 
-A note about training
+## Model evaluation/testing
 
-<number>
+![Ensemble training](/images/mlops-projects-overview/encord-training-note.png)
+From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
 
-Don’t get too attached to one model Feature + model engineering Random search for hyperparameters → Robustness is important
+- Holdout test set
 
-From https://encord.com/blog/what-is-ensemble-learning/
+- Multiple metrics to measure…
+    - Error
+    - Bias
 
-![encord-training-note.png](/images/mlops-projects-overview/encord-training-note.png)
+- Must be better than baseline
 
-## Slide 2
+---
 
-Evaluating and validating the model
+## Model validation/packaging
 
-<number>
+| Format | Open-Format | Vendor | File Extension | License | ML Tools & Platforms Support | Human-readable | Compression |
+|---|---|---|---|---|---|---|---|
+| "almagnation" | — | — | — | — | — | — | ✅ |
+| PMML | ✅ | DMG | .pmml | AGPL | R, Python, Spark | ✅ (XML) | ❌ |
+| PFA | ✅ | DMG | JSON | | PFA-enabled runtime | ✅ (JSON) | ❌ |
+| ONNX | ✅ | SIG LFAI | .onnx | | TF, CNTK, Core ML, MXNet, ML.NET | ❌ | ✅ |
+| TF Serving Format | ✅ | Google | .pf | | Tensor Flow | ❌ | g-zip |
+| Pickle Format | ✅ |  | .pkl | | scikit-learn | ❌ | g-zip |
+| JAR/POJO | ✅ |  | .jar | | H2O | ❌ | ✅ |
+| HDF | ✅ |  | .h5 | | Keras | ❌ | ✅ |
+| MLEAP | ✅ |  | .jar/.zip | | Spark, TF, scikit-learn | ❌ | g-zip |
+| Torch Script | ❌ |  | .pt | | PyTorch | ❌ | ✅ |
+| Apple .mlmodel | ❌ | Apple | .mlmodel | | TensorFlow, scikit-learn, Core ML | — | ✅ |
 
-Holdout test set
+Adapted from https://ml-ops.org/content/three-levels-of-ml-software#model-machine-learning-pipelines
 
-Multiple metrics to measure…
+- Unit/integration testing
 
-Error
+- Different models, different save formats
 
-Bias
-
-From https://mlflow.org/docs/2.21.3/getting-started/quickstart-2
-
-Evaluating and validating the model
-
-<number>
-
-Holdout test set Multiple metrics to measure… Error Bias
-
-From https://mlflow.org/docs/2.21.3/getting-started/quickstart-2
-
-![mlflow-dashboard.png](/images/mlops-projects-overview/mlflow-dashboard.png)
-
-## Slide 3
-
-Code
-
-<number>
-
-Code
-
-<number>
-
-## Slide 4
-
-Steps
-
-<number>
-
-Model serving
-
-Model performance monitoring
-
-Model performance logging
-
-From https://www.kdnuggets.com/top-7-model-deployment-and-serving-tools
-
-https://www.kdnuggets.com/top-7-model-deployment-and-serving-tools
-
-Steps
-
-<number>
-
-Model serving Model performance monitoring Model performance logging
-
-https://www.kdnuggets.com/top-7-model-deployment-and-serving-tools
-
-From https://www.kdnuggets.com/top-7-model-deployment-and-serving-tools
-
-![model-serving.png](/images/mlops-projects-overview/model-serving.png)

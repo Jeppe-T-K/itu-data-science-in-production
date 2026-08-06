@@ -1,51 +1,34 @@
 ---
-title: Three Levels ML Software
+title: Three Components of ML Software
 ---
 
-# 10 Three Eves M Software
+# Three Components of ML Software
 
-## Slide 1
+Based on https://ml-ops.org/content/three-levels-of-ml-software
 
-Data
+---
 
-<number>
+## Our beloved triangle
 
-Data
+Data: data engineering pipelines
 
-<number>
+Model: ML pipelines
 
-## Slide 2
+Code: deployment pipelines
 
-Steps
+![mlops-triangle.png](/images/mlops-projects-overview/mlops-triangle.png)
+From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
 
-<number>
+---
 
-Data extraction/ingestion
+## Same idea in Cookiecutter for Data Science
 
-Data analysis/exploration
+![ccds-notebook-naming.png](/images/mlops-projects-overview/ccds-notebook-naming.png)
+From https://cookiecutter-data-science.drivendata.org/using-the-template/
 
-Data preparation/wrangling
 
-Data splitting
+- **Data**: 0 - 2
 
-From https://www.bing.com/images/create/ "Garbage In Garbage Out" in data analysis. It has to have a Maersk theme and be appropriate for a lecture slide”
+- **Model**: 2 - 3
 
-Steps
-
-<number>
-
-Data extraction/ingestion Data analysis/exploration Data preparation/wrangling Data splitting
-
-From https://www.bing.com/images/create/ "Garbage In Garbage Out" in data analysis. It has to have a Maersk theme and be appropriate for a lecture slide”
-
-![garbage-in-garbage-out.png](/images/mlops-projects-overview/garbage-in-garbage-out.png)
-
-## Slide 3
-
-<number>
-
-<number>
-
-![coco-dobby.png](/images/mlops-projects-overview/coco-dobby.png)
-
-![coco-puppy.jpg](/images/mlops-projects-overview/coco-puppy.jpg)
+- **Code**: 4

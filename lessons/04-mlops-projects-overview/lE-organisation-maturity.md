@@ -2,112 +2,31 @@
 title: "Organisation Maturity - Overview"
 ---
 
-# 05 Organisation Maturity
+# Organisation Maturity
 
-## Slide 1
+---
 
-Success of DS projects
+## Overview of frameworks
 
-How many DS projects fail?
+<div style="overflow-x: auto; margin: 0 auto; width: fit-content;">
 
-My experience: >50%
+| Company/Paper | Maturity Level Proposed(s) |
+|---------------|----------------------------|
+| Google | Level 0: Manual Process<br>Level 1: ML Pipeline Automation<br>Level 2: Automated Training |
+| Microsoft | Level 0: No MLOps<br>Level 1: DevOps but No MLOps<br>Level 2: Automated Training<br>Level 3: Automated Model Deployment<br>Level 4: Full MLOps Automated Operations |
+| Amazon | Level 1: Initial Phase<br>Level 2: Repeatable Phase<br>Level 3: Reliable Phase<br>Level 4: Scalable Phase |
+| IBM | Level 0: No MLOps<br>Level 1: ML Pipeline Automation<br>Level 2: CI/CD Pipeline Integration<br>Level 3: Advanced MLOps |
+| Meenu Mary et al. | Level A: Automated Data Collection<br>Level B: Automated Model Deployment<br>Level C: Semi-automated Model Monitoring<br>Level D: Fully-automated Model Monitoring |
 
-What do you think “ fail ” means?
+</div>
 
-Typically: run in production
+From _Navigating MLOps: Insights into Maturity, Lifecycle, Tools, and Careers_ (https://arxiv.org/html/2503.15577v1)
 
-Why do you think they fail?
 
-<number>
+### Generic breakdown
 
-I see a number
+- **Level 0**: No MLOps/manual process
 
-Success of DS projects
+- **Level 1**: Semi-automated data/model/code pipelines
 
-How many DS projects fail? My experience: >50% What do you think “ fail ” means? Typically: run in production Why do you think they fail?
-
-<number>
-
-I see a number
-
-![stonks.png](/images/mlops-projects-overview/stonks.png)
-
-## Slide 2
-
-Reasons for failure
-
-Bad data
-
-Lack of integration
-
-Lack of diverse expertise
-
-Unclear business involvement
-
-Changing anything changes everything
-
-<number>
-
-Source for original graphic:
-
-https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-Reasons for failure
-
-Bad data Lack of integration Lack of diverse expertise Unclear business involvement Changing anything changes everything
-
-<number>
-
-Source for original graphic: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-![conference-talk-tweet.png](/images/mlops-projects-overview/conference-talk-tweet.png)
-
-## Slide 3
-
-Tech debt
-
-Complex Models Erode Boundaries
-
-Data Dependencies Cost More than Code Dependencies
-
-Feedback Loops
-
-ML-System Anti-Patterns
-
-Configuration Debt
-
-Dealing with Changes in the External World
-
-Other Areas of ML-related Debt
-
-<number>
-
-Source:
-
-https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-Complex Models: complex models with a lot of various dependencies and consumers
-
-Data dependencies: Unstable, unused and/or legacy data
-
-Feedback loops: Both direct and hidden
-
-Anti-patterns: glue code, pipeline jungles, dead experimental paths, abstractions, common smells
-
-Config debt: Different data types/sources may have different requirements/validity/configs, etc
-
-Dealing with changes: ML systems that can take action affect world
-
-Other areas: data testing, reproducibility, systems with many models, cultural debt
-
-Tech debt
-
-Complex Models Erode Boundaries Data Dependencies Cost More than Code Dependencies Feedback Loops ML-System Anti-Patterns Configuration Debt Dealing with Changes in the External World Other Areas of ML-related Debt
-
-<number>
-
-Complex Models: complex models with a lot of various dependencies and consumers Data dependencies: Unstable, unused and/or legacy data Feedback loops: Both direct and hidden Anti-patterns: glue code, pipeline jungles, dead experimental paths, abstractions, common smells Config debt: Different data types/sources may have different requirements/validity/configs, etc Dealing with changes: ML systems that can take action affect world Other areas: data testing, reproducibility, systems with many models, cultural debt
-
-Source: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-![neurips-mlops-blocks.png](/images/mlops-projects-overview/neurips-mlops-blocks.png)
+- **Level 2**: Fully automated

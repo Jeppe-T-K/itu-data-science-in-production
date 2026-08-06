@@ -1,14 +1,14 @@
 ---
-title: MLOps Components
+title: MLOps Elements
 ---
 
-# MLOps Components
+# MLOps Elements
 
 Based on https://ml-ops.org/content/mlops-principles
 
 ---
 
-## Three Levels of MLOps Pipelines
+## Three Components of MLOps Pipelines
 
 <div style="text-align: center;">
   <img src="/images/mlops-projects-overview/mlops-triangle.png" alt="MLOps levels in course" style="width: 80%;" />
@@ -16,19 +16,36 @@ Based on https://ml-ops.org/content/mlops-principles
 
 From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
 
+_What's going on in each step?_
+
 <details><summary style="font-weight: bold; color: #8a9faf; font-size: 1.5em">Data</summary>
-Something about data
+
+- <details><summary>1. </summary> Extraction </details>
+- <details><summary>2. </summary> Validation </details>
+- <details><summary>3. </summary> Preparation </details>
 
 </details>
 
 
 <details><summary style="font-weight: bold; color: #51bdf2; font-size: 1.5em">Model</summary>
-Something about model
 
+- <details><summary>1. </summary> Training </details>
+- <details><summary>2. </summary> Evaluation </details>
+- <details><summary>3. </summary> Validation </details>
 </details>
 
 <details><summary style="font-weight: bold; color: #25506c; font-size: 1.5em">Code</summary>
-Something about code
+
+- <details><summary>1. </summary> Deployment </details>
+- <details><summary>2. </summary> Serving </details>
+- <details><summary>3. </summary> Monitoring </details>
+</details>
+
+<details><summary style="font-size:1.2em; font-style: italic;"> Modularizing things, diagrammatically </summary>
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/mlops-pipeline.svg" alt="MLOps pipeline" style="width: 80%;" />
+</div>
 
 </details>
 

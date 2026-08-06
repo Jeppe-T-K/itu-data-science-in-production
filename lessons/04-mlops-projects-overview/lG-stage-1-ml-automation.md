@@ -1,89 +1,35 @@
 ---
-title: "Organisation Maturity - Stage 1: ML Automation"
+title: "Organisation Maturity - Stage 1: Data/Model/Code Automation"
 ---
 
-# 07 Stage 1 M Automation
+# Data/model/code semi-automation
 
-## Slide 1
+---
 
-Dealing with the challenges
-
-Actively monitor quality
-
-Frequently retrain model
-
-Continuously experiment
-
-→ ML Automation
-
-<number>
-
-Dealing with the challenges
-
-Actively monitor quality Frequently retrain model Continuously experiment → ML Automation
-
-<number>
-
-## Slide 2
-
-Stage 1 : ML automation - characteristics
-
-Rapid experiment
-
-Continuous model delivery/testing
-
-Modularized and re-used code
-
-No training-serving skew
-
-Whole ML pipeline deployments
-
-<number>
-
-Stage 1 : ML automation - characteristics
-
-Rapid experiment Continuous model delivery/testing Modularized and re-used code No training-serving skew Whole ML pipeline deployments
-
-<number>
-
-## Slide 3
-
-<number>
-
-From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
-
-<number>
-
-From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
+## Overview
 
 ![google-mlops-architecture.png](/images/mlops-projects-overview/google-mlops-architecture.png)
+From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
 
-## Slide 4
 
-Dealing with breaking models
+- Rapid experiment
+- Continuous model delivery/testing
+- Modularized and re-used code
+    - No training-serving skew
+- Whole ML pipeline deployments
 
-Data validation
+---
 
-Data schema skews
-
-Data values skews
-
-Model validation
-
-Offline vs. online
-
-Evaluation metric
-
-“DevOps”
-
-→ Pipeline triggers next lecture
-
-<number>
-
-Dealing with breaking models
-
-Data validation Data schema skews Data values skews Model validation Offline vs. online Evaluation metric “DevOps” → Pipeline triggers next lecture
-
-<number>
+## Dealing with breaking models
 
 ![breaking-models.png](/images/mlops-projects-overview/breaking-models.png)
+
+- Data validation
+    - Data schema skews
+    - Data values skews
+- Model validation
+- Offline vs. online
+- Evaluation metric
+- “DevOps”
+
+→ Pipeline triggers next lecture

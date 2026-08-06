@@ -5,7 +5,7 @@
   "sections": [
     {
       "title": "Introduction",
-      "order": ["eA-introduction"]
+      "order": ["iA-introduction"]
     },
     {
       "title": "Lecture",
@@ -18,7 +18,6 @@
         "lF-stage-0-manual-process",
         "lG-stage-1-ml-automation",
         "lH-stage-2-cicd-pipeline",
-        "lI-additional-drilldown",
         "lJ-three-levels-ml-software",
         "lK-data",
         "lL-models",
@@ -30,6 +29,7 @@
     {
       "title": "Exercises", 
       "order": [
+        "eA-introduction",
         "eB-cookiecutter-setup",
         "eC-project-structure",
         "eD-project-teaser", 

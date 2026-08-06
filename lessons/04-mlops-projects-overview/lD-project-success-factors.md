@@ -6,83 +6,53 @@ title: Project Success Factors
 
 ![stonks.png](/images/mlops-projects-overview/stonks.png)
 
-## Slide 2
+---
 
-Reasons for failure
+## Questions for you
 
-Bad data
+<details><summary style="font-weight: italic; font-size: 1.2em">How many DS projects fail?</summary>
 
-Lack of integration
+- My experience: >50%
+- [VentureBeat 2019: 87%](https://venturebeat.com/business/why-do-87-of-data-science-projects-never-make-it-into-production)
+- [Gartner 2018: 85%](https://www.gartner.com/en/documents/4003368)
 
-Lack of diverse expertise
+</details>
 
-Unclear business involvement
+<details><summary style="font-weight: italic; font-size: 1.2em">What do you think “fail” means?</summary>
 
-Changing anything changes everything
+- Typically: run in production
+- Personal criterion: X users over Y years
+- Academic: [DS PRO-S](https://www.mdpi.com/2076-3417/16/5/2551)
 
-<number>
+</details>
 
-Source for original graphic:
+<details><summary style="font-weight: italic; font-size: 1.2em">Why do you think they fail?</summary>
 
-https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
+- Bad data
+- Lack of integration
+- Lack of diverse expertise
+- Unclear business involvement
+- Changing anything changes everything
+</details>
 
-Reasons for failure
 
-Bad data Lack of integration Lack of diverse expertise Unclear business involvement Changing anything changes everything
+---
 
-<number>
-
-Source for original graphic: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-![conference-talk-tweet.png](/images/mlops-projects-overview/conference-talk-tweet.png)
-
-## Slide 3
-
-Tech debt
-
-Complex Models Erode Boundaries
-
-Data Dependencies Cost More than Code Dependencies
-
-Feedback Loops
-
-ML-System Anti-Patterns
-
-Configuration Debt
-
-Dealing with Changes in the External World
-
-Other Areas of ML-related Debt
-
-<number>
-
-Source:
-
-https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
-
-Complex Models: complex models with a lot of various dependencies and consumers
-
-Data dependencies: Unstable, unused and/or legacy data
-
-Feedback loops: Both direct and hidden
-
-Anti-patterns: glue code, pipeline jungles, dead experimental paths, abstractions, common smells
-
-Config debt: Different data types/sources may have different requirements/validity/configs, etc
-
-Dealing with changes: ML systems that can take action affect world
-
-Other areas: data testing, reproducibility, systems with many models, cultural debt
-
-Tech debt
-
-Complex Models Erode Boundaries Data Dependencies Cost More than Code Dependencies Feedback Loops ML-System Anti-Patterns Configuration Debt Dealing with Changes in the External World Other Areas of ML-related Debt
-
-<number>
-
-Complex Models: complex models with a lot of various dependencies and consumers Data dependencies: Unstable, unused and/or legacy data Feedback loops: Both direct and hidden Anti-patterns: glue code, pipeline jungles, dead experimental paths, abstractions, common smells Config debt: Different data types/sources may have different requirements/validity/configs, etc Dealing with changes: ML systems that can take action affect world Other areas: data testing, reproducibility, systems with many models, cultural debt
-
-Source: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
+## Tech debt
 
 ![neurips-mlops-blocks.png](/images/mlops-projects-overview/neurips-mlops-blocks.png)
+From https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
 
+- **Complex Models Erode Boundaries**: many various dependencies and consumers
+
+- **Data Dependencies Cost More than Code Dependencies**: unstable, unused and/or legacy data
+
+- **Feedback Loops**: both direct and hidden
+
+- **ML-System Anti-Patterns**: glue code, pipeline jungles, dead experimental paths, abstractions, common smells
+
+- **Configuration Debt**: different data types/sources may have different requirements/validity/configs, etc
+
+- **Dealing with Changes in the External World**: ML systems that can take action affect the world
+
+- **Other Areas of ML-related Debt**: data testing, reproducability, systems with many models, cultural debt
