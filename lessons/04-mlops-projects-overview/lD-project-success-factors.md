@@ -4,6 +4,10 @@ title: Project Success Factors
 
 # Project success factors
 
+Small diversion before going into details.
+
+---
+
 ![stonks.png](/images/mlops-projects-overview/stonks.png)
 
 ---
@@ -38,7 +42,7 @@ title: Project Success Factors
 
 ---
 
-## Tech debt
+<details><summary style="font-size: 1.5em">Tech debt</summary>
 
 ![neurips-mlops-blocks.png](/images/mlops-projects-overview/neurips-mlops-blocks.png)
 From https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
@@ -56,3 +60,5 @@ From https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf
 - **Dealing with Changes in the External World**: ML systems that can take action affect the world
 
 - **Other Areas of ML-related Debt**: data testing, reproducability, systems with many models, cultural debt
+
+</details>

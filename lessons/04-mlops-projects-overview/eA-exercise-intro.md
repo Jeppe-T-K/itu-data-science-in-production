@@ -34,6 +34,8 @@ The following exercises will guide you through setting up MLOps projects:
 - [Exercise 2: Project Teaser](eD-project-teaser.md) - Preview of MLOps project structure
 - [Exercise 3: Collaboration](eE-collaboration.md) - Setting up GitHub and working together
 
+---
+
 # Exercise 0: Setup
 
 Make sure Cookiecutter Data Science is installed:

@@ -12,7 +12,7 @@ title: Model Component
 
 ---
 
-## Model training
+<details><summary style="font-size:1.5em">Model training</summary>
 
 ![mlmastery-training-graph.png](/images/mlops-projects-overview/mlmastery-training-graph.png)
 From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
@@ -25,7 +25,11 @@ From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-l
 
 → Robustness is important
 
+</details>
+
 ---
+
+<details><summary style="font-size:1.5em">Model evaluation/testing</summary>
 
 ## Model evaluation/testing
 
@@ -40,9 +44,11 @@ From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-l
 
 - Must be better than baseline
 
+</details>
+
 ---
 
-## Model validation/packaging
+<details><summary style="font-size:1.5em">Model validation/packaging</summary>
 
 | Format | Open-Format | Vendor | File Extension | License | ML Tools & Platforms Support | Human-readable | Compression |
 |---|---|---|---|---|---|---|---|
@@ -64,3 +70,4 @@ Adapted from https://ml-ops.org/content/three-levels-of-ml-software#model-machin
 
 - Different models, different save formats
 
+</details>

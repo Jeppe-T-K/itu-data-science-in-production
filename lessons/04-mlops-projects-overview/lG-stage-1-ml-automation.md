@@ -4,9 +4,13 @@ title: "Organisation Maturity - Stage 1: Data/Model/Code Automation"
 
 # Data/model/code semi-automation
 
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-jacket.png" alt="Coco in a jacket" style="width: 50%;" />
+</div>
+
 ---
 
-## Overview
+<details><summary style="font-size:1.5em">Overview</summary>
 
 ![google-mlops-architecture.png](/images/mlops-projects-overview/google-mlops-architecture.png)
 From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
@@ -18,9 +22,11 @@ From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automat
     - No training-serving skew
 - Whole ML pipeline deployments
 
+</details>
+
 ---
 
-## Dealing with breaking models
+<details><summary style="font-size:1.5em">Dealing with breaking models</summary>
 
 ![breaking-models.png](/images/mlops-projects-overview/breaking-models.png)
 
@@ -33,3 +39,5 @@ From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automat
 - “DevOps”
 
 → Pipeline triggers next lecture
+
+</details>

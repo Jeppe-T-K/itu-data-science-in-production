@@ -14,7 +14,8 @@ From Shutterstock, because I couldn't find a good non-AI image.
 
 ---
 
-## Data extraction/ingestion
+<details><summary style="font-size:1.5em">Data extraction/ingestion</summary>
+
 
 ![Data extraction/ingestion](/images/mlops-projects-overview/data-extraction-ingestion.png)
 From https://firsteigen.com/blog/10-data-ingestion-tools-to-fortify-your-data-strategy/
@@ -25,7 +26,11 @@ From https://firsteigen.com/blog/10-data-ingestion-tools-to-fortify-your-data-st
 
 - Test data split
 
+</details>
+
 ---
+
+<details><summary style="font-size:1.5em">Data exploration and validation</summary>
 
 ## Data exploration and validation
 
@@ -39,7 +44,11 @@ From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_di
 
 - Useful for alerts
 
+</details>
+
 ---
+
+<details><summary style="font-size:1.5em">Data preparation/wrangling/cleaning</summary>
 
 ## Data preparation/wrangling/cleaning
 
@@ -49,3 +58,5 @@ From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_di
     - Remove irrelevant data
 
 - “Silver” layer
+
+</details>

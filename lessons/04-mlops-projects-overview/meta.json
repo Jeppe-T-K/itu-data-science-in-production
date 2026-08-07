@@ -29,7 +29,7 @@
     {
       "title": "Exercises", 
       "order": [
-        "eA-introduction",
+        "eA-exercise-intro",
         "eB-cookiecutter-setup",
         "eC-project-structure",
         "eD-project-teaser", 

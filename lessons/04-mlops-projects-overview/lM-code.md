@@ -14,7 +14,7 @@ From https://ml-ops.org/content/three-levels-of-ml-software
 
 ---
 
-## Model serving
+<details><summary style="font-size:1.5em">Model serving</summary>
 
 ![model-serving.png](/images/mlops-projects-overview/batch-vs-realtime-serving.svg)
 
@@ -32,9 +32,11 @@ Adapted from https://www.iguazio.com/glossary/model-serving-pipeline/
     - Fallback methods
     - Interpreting output outside of model
 
+</details>
+
 ---
 
-## Model logging/monitoring
+<details><summary style="font-size:1.5em">Model logging/monitoring</summary>
 
 ![grafana-monitoring.gif](/images/mlops-projects-overview/grafana-monitoring.gif)
 From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-production-with-grafana-and-clearml/
@@ -50,10 +52,11 @@ From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-p
 
 → More next lesson
 
+</details>
 
 ---
 
-## Model maintenance
+<details><summary style="font-size:1.5em">Model maintenance</summary>
 
 
 - Model freshness
@@ -64,11 +67,12 @@ From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-p
 
 ![grafana-monitoring.gif](/images/mlops-projects-overview/coco-puppy.jpg)
 
-
+</details>
 
 ---
 
-## Course project?
+<details><summary style="font-size:1.5em">Course project</summary>
+
 
 <details><summary style="font-style: italic;">What pattern does that follow?</summary>
 
@@ -78,4 +82,4 @@ From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-p
 
 </details>
 
-
+</details>

@@ -4,9 +4,14 @@ title: "Organisation Maturity - Overview"
 
 # Organisation Maturity
 
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-baby.png" alt="Coco baby" style="width: 50%;" />
+</div>
+
 ---
 
-## Overview of frameworks
+
+<details><summary style="font-size: 1.5em">Frameworks</summary>
 
 <div style="overflow-x: auto; margin: 0 auto; width: fit-content;">
 
@@ -22,11 +27,16 @@ title: "Organisation Maturity - Overview"
 
 From _Navigating MLOps: Insights into Maturity, Lifecycle, Tools, and Careers_ (https://arxiv.org/html/2503.15577v1)
 
+</details>
 
-### Generic breakdown
+---
+
+<details><summary style="font-size: 1.5em">Generic breakdown</summary>
 
 - **Level 0**: No MLOps/manual process
 
 - **Level 1**: Semi-automated data/model/code pipelines
 
 - **Level 2**: Fully automated
+
+</details>

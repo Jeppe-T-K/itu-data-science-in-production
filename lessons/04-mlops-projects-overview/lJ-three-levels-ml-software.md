@@ -10,18 +10,12 @@ Based on https://ml-ops.org/content/three-levels-of-ml-software
 
 ## Our beloved triangle
 
-Data: data engineering pipelines
-
-Model: ML pipelines
-
-Code: deployment pipelines
-
 ![mlops-triangle.png](/images/mlops-projects-overview/mlops-triangle.png)
 From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
 
 ---
 
-## Same idea in Cookiecutter for Data Science
+<details><summary style="font-size:1.5em">Same idea in Cookiecutter for Data Science</summary>
 
 ![ccds-notebook-naming.png](/images/mlops-projects-overview/ccds-notebook-naming.png)
 From https://cookiecutter-data-science.drivendata.org/using-the-template/
@@ -32,3 +26,5 @@ From https://cookiecutter-data-science.drivendata.org/using-the-template/
 - **Model**: 2 - 3
 
 - **Code**: 4
+
+</details>
