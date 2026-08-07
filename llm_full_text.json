@@ -1,0 +1,2954 @@
+# Welcome
+
+# Welcome to Data Science in Production: MLOps and Software Engineering
+
+Welcome to the course **Data Science in Production: MLOps and Software Engineering** at the IT University of Copenhagen.
+
+## Course Overview
+
+This course focuses on the practical aspects of bringing data science and machine learning models into production. You'll learn about:
+
+- Version control for data and models
+- Structuring MLOps projects
+- Model experimentation and tracking
+- Containerization with Docker
+- Best practices for reproducible and maintainable ML systems
+
+## Course Information
+
+- **Course Code:** BSDSPMS1KU
+- **Institution:** IT University of Copenhagen
+- **Level:** Bachelor's level
+
+## Prerequisites
+
+Before starting this course, you should have:
+
+- Basic knowledge of Python programming
+- Familiarity with machine learning concepts
+- Experience with Git and version control
+- Access to a computer with administrative privileges for software installation
+
+## Learning Objectives
+
+By the end of this course, you will be able to:
+
+1. Set up and maintain version control for both code and data
+2. Structure data science projects following MLOps best practices
+3. Track and manage ML experiments using industry-standard tools
+4. Containerize ML applications for reproducibility
+5. Collaborate effectively on data science projects
+6. Monitor model performance in production
+
+## Course Structure
+
+The course is organized into the following lessons:
+
+1. **[Introduction](A-welcome.md)** - Course overview and prerequisites
+2. **[Data and Model Versioning](../data-and-model-versioning/A-introduction.md)** - Using DVC for data and model tracking
+3. **[MLOps Projects Overview](../mlops-projects-overview/A-introduction.md)** - Structuring projects with Cookiecutter Data Science
+4. **[Model Experimentation](../model-experimentation/A-introduction.md)** - Experiment tracking with MLflow
+5. **[Containers and Docker](../containers-and-docker/A-introduction.md)** - Containerizing ML applications
+
+## Slides
+
+Slides for each week are available on [LearnIT](https://learnit.itu.dk/).
+
+## Getting Started
+
+To get started with the course:
+
+1. Review the prerequisites and ensure you have the necessary tools installed
+2. Familiarize yourself with the course structure and lesson plan
+3. Begin with the first lesson on Data and Model Versioning
+
+## Resources
+
+- [Course GitHub Repository](https://github.com/Jeppe-T-K/itu-data-science-in-production)
+- [LearnIT Course Page](https://learnit.itu.dk/course/view.php?id=3023571)
+- [ML-Ops.org](https://ml-ops.org/) - Comprehensive MLOps resource
+- [ML Engineering book](https://www.mlebook.com/wiki/doku.php)
+- [A Multivocal Review of MLOps Practices, Challenges and Open Issues](https://arxiv.org/pdf/2406.09737v2)
+
+=================
+
+# Prerequisites
+
+# Prerequitsites
+
+This section provides an overview of the steps you need to do to prepare your laptop for the course and literature used in the course
+
+## Tools
+
+- [DVC](https://dvc.org/)
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/)
+- [MLflow](https://mlflow.org/)
+
+## Resources
+
+- [Course GitHub Repository](https://github.com/Jeppe-T-K/itu-data-science-in-production)
+- [LearnIT Course Page](https://learnit.itu.dk/course/view.php?id=3023571)
+- [ML-Ops.org](https://ml-ops.org/) - Comprehensive MLOps resource
+- [ML Engineering book](https://www.mlebook.com/wiki/doku.php) - Specific sections will be used for different parts but it's a good resource for everything
+
+=================
+
+# Exercise Intro
+
+# Background
+
+Data versioning has plenty of similarities but also differences to normal version control that you have just worked with. 
+
+The main thing that we want to accomplish with data version control is to be able to always go back to one version of the data and see how it looked like at a given time -- similar to normal version control. If you want to evaluate your model's performance at time $t_1$, it does not make sense to use data from time $t_2$.
+
+One big difference is that it is simply not possible to meaningfully look at the differences between data versions and review it through a PR. Good PRs tend to only touch a few lines of code at a time, but data can be millions of rows/lines. Not only would it take _you_ ages, but it can also greatly slow down any version control software that has to calculate all the differences. And the data can be enormous, so checking out the whole repo would be impossible on your "small" laptop.
+
+![PR Lines of code](/images/data-and-model-versioning/code%20review%20strategy.jpeg "True story")
+
+So what's a good strategy to keep track of changes to your data? Briefly explained, you store the data in a remote location and version control _references_ to the data instead.
+
+For that purpose, we will use the tool _Data Version Control_ (DVC). It can also be used for model versioning and experiment tracking, but we'll touch on that in later lectures. Similar tools include Git Large File Storage (GitLFS) or Pachyderm. Each of these tools have their pros and cons, and DVC might struggle with performance if you have a lot of files, but it serves our purpose of refreshing our git skills and motivate the thinking of storing data remotely well enough.
+
+![Project version control](/images/data-and-model-versioning/project-versions.png "From https://dvc.org/doc/use-cases/versioning-data-and-models")
+
+The goal of the following exercises is to take you through the journey of linking data to your project.
+
+## Exercises
+
+The following exercises will guide you through using DVC for data and model versioning:
+
+- [Exercise 1: Initialization](eB-setup.md) - Initialize in your repository
+- [Exercise 2: Start Tracking Files](eC-tracking.md) - Add files to DVC tracking
+- [Exercise 3: Using a Remote](eD-remote.md) - Configure and use remote storage
+- [Exercise 4: Switching Between Versions](eE-versions.md) - Manage and switch between data versions
+- [Exercise 5: Import from URL](eF-import.md) - Import external data
+
+# Exercise 0: Setup
+
+Make sure DVC is installed:
+`dvc --version`
+Does this command run and show a version number above 3.something? Great!
+
+=================
+
+# Initialization
+
+# Exercise 1: Initialise DVC in repository
+
+Next we want to start using DVC with one of our projects. Let's follow DVC's documentation on [getting started](https://dvc.org/doc/start):
+
+1. Run `dvc init` 
+   <details> <summary>Getting an <i>ERROR: failed to initiate DVC - path is not tracked by any supported SCM tool (e.g. Git)</i> error? </summary> 
+
+   Make sure you have initialised git in your directory. Run the following to start a git repo <pre>git init</pre>
+
+   If this does not work, try and run it with the --subdir argument if you are initialising this in a subdirectory of your project. <pre> dvc init --subdir</pre>
+</details>
+
+2. Check which files DVC added to the repo (_what is each file used for?_)
+   <details> <summary>Hint </summary>
+   <tt> git status </tt>
+   
+   1. .dvc/.gitignore (dvc-specific things for git to ignore, like local config.local)
+   2. .dvc/config (project-level dvc config, keeps tracks of various settings like remotes, local path to auth, etc)
+   3. .dvcignore (file types for dvc to ignore if e.g. adding directories)
+ </details>
+
+3. Git commit new files
+   <details> <summary>Hint </summary> 
+   <tt> git commit -m "YOUR COMMIT MSG"</tt>
+ </details>
+
+=================
+
+# Tracking
+
+# Exercise 2: Start tracking files
+
+It's time to add files that we want to track with DVC. We don't want to include the files in our repo but instead track and use references to the data stored elsewhere.
+
+There's multiple [storage solutions in DVC](https://dvc.org/doc/user-guide/data-management/remote-storage). Generally they require some kind of authentication so that you can read and write from the location but that is beyond the scope for now. Instead we will just use a "local" remote -- that is, just a different directory on your laptop than this project and pretend it's a "remote" remote.
+
+1. Fetch data locally:
+    ```bash
+    mkdir -p data/raw
+    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/w04/resources/coco_small.jpg -P data/raw/
+    ```
+
+2. Add file to tracking with DVC
+   <details> <summary>Hint: It's essentially the same as git</summary> 
+    <pre> dvc add data
+    </pre>
+    </details>
+
+3. Ensure metadata files are tracked by git (_which files are added?_)
+   <details> <summary>Hint: add and commit newly created files</summary> 
+    <pre> git add data.dvc .gitignore
+    git commit -m "Added data/ to dvc"
+    </pre>
+    </details>
+
+4. What info does each .dvc file contain?
+   <details> <summary>Hint: Open the files in a text editor or on unix based systems (e.g. Linux or Mac) you can use `less` or `cat` in the terminal to view them </summary> 
+    less (view individual files): 
+    <pre> 
+       less *.dvc # use :n, :p, q, to go to next file, previous file and quit
+    </pre>
+    cat (prints the contents of all files):
+      <pre> 
+       cat *.dvc
+    </pre>
+    note: The * here just means anything so in this case any file name with the .dvc extension
+    </details>
+
+=================
+
+# Remote
+
+# Exercise 3: Using a remote
+
+Remotes work in a similar way as with git: it's some place else that keeps track of you data. DVC stores the data in an efficient binary format and allows you to fetch the data again easily and quickly when needed for e.g. ML stuff.
+
+> **Note**: we will simply download the data locally and work with it there, but if you have a remote set up already with data, you can follow [this method](https://dvc.org/doc/user-guide/data-management/importing-external-data#how-importing-external-data-works) for using "external data" (not necessary for now).
+
+1. Configure remote ("local") with `dvc remote add -d <remote_name> /localpath/to/remote`
+   <details> <summary>Want to use actual remote?</summary> 
+    You're welcome to try and set it up. Take your pick from <a href="https://dvc.org/doc/user-guide/data-management/remote-storage"> all these options </a>
+    </details>
+
+2. Add and commit changes to .dvc/config
+   <details> <summary>Hint: you know the flow now with git</summary> 
+    <pre> git add .dvc/config
+    git commit -m "Added remote to dvc" </pre>
+    </details>
+
+3. Push DVC data to remote
+   <details> <summary>Hint: It's essentially the same as git</summary> 
+    <pre> dvc push </pre>
+    </details>
+
+4. You accidentally (or intentionally) deleted your local data in /data/raw. How would you fetch it again?
+   <details> <summary>Hint: It's essentially the same as git</summary> 
+    <pre> dvc pull </pre>
+    </details>
+
+=================
+
+# Versions
+
+# Exercise 4: Switching between data versions
+
+Quite often you don't use the raw data directly in your models but run it through a data pipeline to create a cleansed or ML-ready dataset. That also means that the files/artifacts you create and want to keep track of can change with every run of your code.
+
+For this exercise, we will essentially follow the steps in Exercise 1, but in addition we will switch to another branch in git and make changes to our cleansed data. The challenge is then to recover the original data on the main branch!
+
+1. Create a "cleansed" version of your data (or use this pre-made)
+    ```sh
+    mkdir -p data/cleansed
+    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/w04/resources/coco_edited_small.jpg -P data/cleansed
+    ```
+
+2. Add new data to dvc + git
+   <details> <summary>Hint: repeat steps 2-3 from Exercise 1</summary> 
+    <pre> 
+    dvc add data/
+    git add data.dvc
+    git commit -m "Added cleansed data"
+    (git push)
+    dvc push
+    </pre>
+    </details>
+
+3. Create new branch in git
+   <details> <summary>Hint</summary> 
+    <pre> git checkout -b "my_branch_name"
+    </pre>
+    </details>
+
+4. Modify your cleansed data (_save to same file name!_)
+
+
+5. Add changed file to dvc + git
+   <details> <summary>Hint: repeat steps from step 2</summary> 
+    <pre> 
+    dvc add data/
+    git add data.dvc
+    git commit -m "Added cleansed data from new method"
+    (git push)
+    dvc push
+    </pre>
+    </details>
+
+6. To back to the main branch and check out your cleansed data (_is it the same that you originally added to dvc?_)
+   <details> <summary>Hint</summary> 
+    No, it's not. Not unless you made a mistake, anyway.
+
+    To go back to the main branch, you can run `git checkout main`
+
+    <pre> 
+    dvc pull
+    </pre>
+    </details>
+
+=================
+
+# Import
+
+# Exercise 5: Import from URL
+
+Sometimes you rely on external data sources, for example if a remote system updates the data file or if DVC is not used by that system. In order to do that, we can import directly from a url:
+
+1. Import the data 
+   <details> <summary>Hint: Use the import-url command</summary> 
+    <pre> 
+    mkdir data_imported
+    dvc import-url https://raw.githubusercontent.com/Jeppe-T-K/itu_sdse_2024/9b7b05cf2bd3551f7d723d6510b8fdd2a0df9b66/w06/resources/data/cleansed/coco_cropped.png data_imported/coco_edited_highres.jpeg
+    git add data_imported/*
+    git commit -m "Added cleansed data"
+    (git push)
+    dvc push
+    </pre>
+    </details>
+2. How can you avoid downloading data directly? And why would you want that?
+   <details> <summary>There are two commands</summary>
+
+    1. --no-download
+
+    2. --to-remote
+
+    --no-download simply creates the DVC file.
+
+    --to-remote also transfers the file to your DVC remote.
+    </details>
+
+3. How do you make sure the tracked data is updated?
+   <details> <summary>You need to <i>update</i> via DVC</summary>
+   dvc update --to-remote data_imported/coco_edited_highres.jpeg
+    </details>
+
+## Outro
+And that's it! Now you've done the whole flow of tracking raw data, creating + modifying a cleansed dataset, and switching between different data versions.
+
+Much of the same thinking about version control of big files also applies to models. However, the flow for creating, testing, evaluating and deploying models through _experiments_ usually require a bit more infrastructure, so before going crazy with exercises for that, we'll instead focus next time on creating a project that follows a nice, clean structure to make our lives easier.
+
+=================
+
+# Introduction
+
+# Data and Model Versioning
+
+## Overview
+
+### Agenda
+
+ * [08:15 – 09:00] – Lecture: General data versioning strategies
+ * [09:15 – 10:00] – Lecture: Continued
+ * [10:15 – 11:00] – Exercises: DVC
+ * [11:15 – 12:00] – Exercises: Continued
+
+### Preparation
+
+For the exercises:
+
+* [DVC: Install](https://dvc.org/doc/install)
+* [DVC: Getting started](https://dvc.org/doc/start)
+* [DVC: Tutorial](https://dvc.org/doc/use-cases/versioning-data-and-models/tutorial)
+
+For the lecture:
+
+* [DVC](https://dvc.org/doc/)
+* [ML Engineering, Chapter 3.11](http://www.mlebook.com/wiki/doku.php) (http://bit.ly/MLEbook-Chapter3)
+* [ML-Ops.org: Data Engineering Pipelines](https://ml-ops.org/content/three-levels-of-ml-software)
+
+### Notes
+
+* Make sure to install DVC and test that the `dvc` command works for you.
+
+=================
+
+# Lecture Intro
+
+# Data and Model Versioning
+
+---
+
+## Outline
+
+The lecture covers the following topics:
+
+1. Why data versioning?
+2. Data storage
+3. Data stages (medallion)
+4. Data version operations
+5. Metadata for versions
+6. Data stages in ML
+
+![Coco judging](/images/data-and-model-versioning/coco-judging.png)
+
+=================
+
+# Motivation
+
+# Why Data Versioning?
+
+![Github large file error](/images/data-and-model-versioning/git-lf-error.png)
+
+---
+
+## Unique reference to data
+
+![Git version control](/images/data-and-model-versioning/git-branching-strategy.png)
+
+From https://www.pablogonzalez.io/salesforce-git-branching-strategies/ 
+
+Like with git and code:
+
+- **Unique reference**: Each version of your data has a unique identifier
+- **Versioned changes**: Track changes to your data over time
+- **Revert/rollback**: Ability to revert to previous versions when needed
+- **Check previous performance**: Reproduce and verify model performance at any point in
+
+=================
+
+# Complexity of Data Science Projects
+
+# Complexity of Data Science Projects
+
+
+![Complexity of DS projects](/images/data-and-model-versioning/dvc-manual-versioning.png)
+
+From https://dvc.org/doc/use-cases/versioning-data-and-models
+
+
+Familiar?
+
+Happens without planning. Not production viable.
+
+---
+
+# Packaged solutions
+
+![Packaged solution from DVC](/images/data-and-model-versioning/dvc-versioning.png)
+
+From https://dvc.org/doc/use-cases/versioning-data-and-models
+
+- One commit, one "package
+    - Data
+    - Features
+    - Models/artifacts
+
+- Applies to all kinds of data
+    - Images
+    - Tabular
+    - etc
+
+=================
+
+# Levels of Data Versioning
+
+# Levels of Data Versioning
+
+---
+
+## Multiple Levels of Data Versioning
+
+4 levels according to the [MLE book, chapter 3.11](https://www.mlebook.com/wiki/doku.php)
+
+| Level 0 | Level 1 | Level 2 | Level 3 |
+|---------|---------|---------|---------|
+| Data is unversioned | Data is versioned as a snapshot | Data and code are versioned | Data and code are versioned through specialised tools |
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 0: Unversioned Data</summary>
+
+The simplest (and least recommended) approach is to have no versioning at all. Data is simply stored and overwritten as needed.
+
+![Manual version control](/images/data-and-model-versioning/manual-version-control.png)
+
+- Simple to implement
+    - No overhead
+- No history
+    - Not possible to revert
+- Note: many tools have _something_ built in
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 1: Snapshots</summary>
+
+Create snapshots of your data at different points in time. This allows you to restore previous versions.
+
+![LakeFS Snapshots](/images/data-and-model-versioning/lakefs-snapshots.png)
+
+From https://lakefs.io/blog/data-versioning/
+
+
+- Duplicate all relevant data
+    - Storage intensive → cloud
+    - Manual tracking of versions
+
+- Viable if:
+    - Infrequent updates
+    - Few models 
+
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 2: Data and Code as One Asset</summary>
+
+Version data alongside code using Git with large file support.
+
+![Git LFS](/images/data-and-model-versioning/git-lfs.png)
+
+From https://git-lfs.com/
+
+- Version control with Git
+    - Metadata saved for large files
+
+- Large files stored in cloud
+    - Efficient formats
+
+- Tools:
+    - DVC
+    - Git Large Files Storage 
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Level 3: Specialized Versioning</summary>
+
+Use specialized tools designed for data versioning that handle large files efficiently.
+
+![DVC Experiment Tracking](/images/data-and-model-versioning/dvc-experiment-tracking.png)
+
+From https://dvc.org/doc/use-cases/experiment-tracking
+
+- Tool-specific solutions
+
+- Comes with a lot extra functionality
+    - Pipelines
+    - Experiment tracking
+    - Etc etc
+
+</details>
+
+=================
+
+# Data Version Operations
+
+# Data Version Operations
+
+## Standard Flow
+
+The standard workflow for versioning data with DVC follows these steps:
+
+0. Initialize DVC
+1. Add data files to DVC tracking
+2. Add DVC metadata files to git
+3. Commit the changes to git
+4. Push the changes to git
+5. Push data to remote storage
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Demo Time!</summary>
+
+### 0. Initialize DVC
+
+```bash
+dvc init
+```
+
+### 1. Track files with DVC
+
+```bash
+dvc add data.csv
+```
+
+This creates a `.dvc` file that contains metadata about the data file.
+
+### 2. Git add
+
+```bash
+git add data.csv.dvc
+```
+
+### 3. Git commit
+
+```bash
+git commit -m "Add data.csv to DVC tracking"
+```
+
+### 4. Push to Remote
+
+```bash
+dvc push
+```
+
+This uploads the actual data to your configured remote storage.
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Info in .dvc Files</summary>
+
+When you run `dvc add`, a `.dvc` file is created with the following information:
+
+<details>
+<summary style="font-size: 1.2em;">Demo example</summary>
+
+```yaml
+outs:
+- md5: a1b2c3d4e5f6...
+  size: 1048576
+  nfiles: 1
+  path: data.csv
+```
+
+**Metadata explanation:**
+
+- `path`: The relative path to the data file
+- `hash/md5`: The MD5 (or other) hash algorithm/value of the file content
+- `size`: Size of the file in bytes
+- `nfiles`: Number of files (for directories)
+
+</details>
+
+
+<details>
+<summary style="font-size: 1.2em;">Project example</summary>
+
+```yaml
+md5: 4feb90a977597b6b3f3b34dc2d4d3711
+frozen: true
+deps:
+- checksum: '"0fbbe2410507589f580fd0a63f0b10f8"'
+  size: 114686
+  hash: md5
+  path: https://itudsip.hel1.your-objectstorage.com/data/images/metadata.csv
+outs:
+- md5: 0fbbe2410507589f580fd0a63f0b10f8
+  size: 114686
+  hash: md5
+  path: metadata.csv
+```
+
+**Metadata explanation:**
+
+- `md5`: Checksum of the DVC file itself (identifies this specific version of the pipeline stage)
+- `frozen: true`: The stage is locked and will not be re-executed even if its dependencies change, until explicitly unlocked with `dvc unlock`
+- `deps`: Dependency entries. Only present when dvc import or dvc import-url are used to generate this .dvc file
+  - `checksum`: Hash of the dependency file content
+  - `size`: Size of the file in bytes
+  - `hash`: Hash algorithm used (md5, sha256, etc.)
+  - `path`: Path to the dependency (relative to wdir, which defaults to the file's location)
+- `outs` (outputs): Files produced by this stage
+  - `md5`: Hash of the output file content
+  - `size`: Size of the file in bytes
+  - `hash`: Hash algorithm used
+  - `path`: Path to the file or directory relative to working directory
+
+</details>
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Release Tags</summary>
+
+![GPT Timeline](/images/data-and-model-versioning/gpt-timeline.png)
+From https://www.researchgate.net/figure/Illustration-of-GPT-development-history-and-the-rise-of-ChatGPT-The-development-timeline_fig1_374092520
+
+- Do it through git
+  - `git tag -a "v2.0" -m "imagenet v2.0"`
+
+- Examples:
+  - GPT
+  - Do you have any?
+
+</details>
+
+=================
+
+# Storage Cost
+
+# Data Storage Cost
+
+![Data center](/images/data-and-model-versioning/data-center.png)
+
+From https://lpigroup.com/portfolio-item/data-centre-netherlands/
+
+## Storage Costs Money
+
+Guesses for big cloud providers?
+
+<details>
+<summary>Answers:</summary>
+
+<table>
+  <thead>
+    <tr><th>Provider</th><th>Hot / Standard</th><th>Infrequent Access / Cool</th><th>Cold</th><th>Archive</th><th>1TB Hot Storage Cost</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>AWS S3</td><td>$0.023/GB (first 50 TB)</td><td>$0.0125/GB (S3 Standard-IA)</td><td>$0.004/GB (Glacier Instant) · $0.0036/GB (Flexible)</td><td>$0.00099/GB (Glacier Deep Archive)</td><td>$23.00</td></tr>
+    <tr><td>Azure Blob</td><td>$0.018/GB (Hot, LRS)</td><td>$0.010/GB (Cool)</td><td>$0.0045/GB (Cold)</td><td>$0.00099/GB (Archive)</td><td>$18.00</td></tr>
+    <tr><td>Google Cloud Storage</td><td>$0.020/GB (Standard, regional)</td><td>$0.010/GB (Nearline, regional)</td><td>$0.004/GB (Coldline)</td><td>$0.0024/GB (Archive, US/EU multi-region)</td><td>$20.00</td></tr>
+    <tr><td>Oracle OCI</td><td>$0.0255/GB (Object Standard)</td><td>$0.015/GB (Infrequent Access)</td><td>—</td><td>$0.0026/GB (Archive)</td><td>$25.50</td></tr>
+  </tbody>
+</table>
+
+<p>From <a href="https://www.finout.io/blog/cloud-storage-pricing-comparison">https://www.finout.io/blog/cloud-storage-pricing-comparison</a></p>
+</details>
+
+--- 
+<details>
+<summary style="font-size: 1.5em;">Cost Strategies</summary>
+
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Cloud vs On-Premise</summary>
+
+**On-Premise Storage:**
+- Capital expenditure upfront
+- Full control
+- Potential security benefits
+- Maintenance overhead
+
+**Cloud Storage:**
+- Scalable
+- Pay-as-you-go
+- Managed by provider
+- Easy to access from anywhere
+
+</details>
+
+<details>
+<summary  style="font-size: 1.2em; font-weight: bold;">Hot vs Cold Storage</summary>
+
+![Backblaze Storage Costs](/images/data-and-model-versioning/backblaze-storage.png)
+
+From https://www.backblaze.com/blog/whats-the-diff-hot-and-cold-data-storage/
+
+**Hot Storage:**
+- Frequently accessed data
+- Faster access times
+- Higher cost per GB
+- Examples: SSD, fast HDD, in-memory
+
+**Cold Storage:**
+- Rarely accessed data
+- Slower access times
+- Lower cost per GB
+- Examples: Glacier, archive storage, tape
+
+</details>
+
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Retention Policies</summary>
+
+![Data storage costs](/images/data-and-model-versioning/data_storage_cost_dual_axis_dkk.png)
+
+How long different types of data should be kept.
+- Indefinite is tempting
+    - Running costs can explode, though
+- Raw data can be kept for longer
+    - Processed data can be regenerated
+
+</details>
+
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Partitioning</summary>
+
+Split data into logical partitions:
+- By date (year/month/day)
+- By project
+- By data type
+- By version
+
+</details>
+</details>
+
+--- 
+
+<details>
+<summary style="font-size: 1.5em;">Storage Recommendations</summary>
+
+1. **Use appropriate storage tiers**: Hot for active data, cold for archives
+2. **Implement lifecycle policies**: Automatically move data between tiers
+3. **Compress data**: Use appropriate compression for each data type
+4. **Deduplicate**: Avoid storing the same data multiple times
+5. **Monitor costs**: Regularly review storage usage and costs
+
+</details>
+
+=================
+
+# Data Formats
+
+# Data Formats
+
+![Data formats](/images/data-and-model-versioning/Big-Data-data-formats.png)
+
+From Testing Big Data Application - Scientific Figure on ResearchGate. Available from: https://www.researchgate.net/figure/Big-Data-data-formats_fig3_339027369 [accessed 1 Aug 2026]
+
+<details><summary style="font-size: 1.5em;">Structured vs Unstructured Data </summary>
+
+- Structured
+    - Defined schema
+    - Relational, tabular, DB, ...
+- Unstructured
+    - Variable format
+    - Texts, images, ...
+- Semi-structured
+    - JSON text, ...
+
+<details><summary>And this?</summary>
+
+![Image directory overview](/images/data-and-model-versioning/structured-unstructured-data.png)
+</details>
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Common Formats</summary>
+
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Tabular/Relational Data</summary>
+
+Structured data organized in tables with rows and columns.
+
+![Tabular Data](/images/data-and-model-versioning/statology-tabular.png)
+
+From https://www.statology.org/tabular-data/
+
+- One row per ID, organised in tables
+- Commonly associated files:
+    - CSV
+    - Parquet
+    - ORC
+- Easy to query and analyze
+
+</details>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Images (RAW files, compressed)</summary>
+
+Image data comes in various formats with different storage requirements.
+
+![Nikon RAW File Size Options](/images/data-and-model-versioning/nikon-raw.png)
+
+From https://mcpactions.com/nikon-raw-s-file-size-option/
+
+- RAW files are much larger than compressed formats
+- Compression may lose information
+- Different formats for different use cases
+
+_How would you store raw and compressed images? Hot and/or cold?_
+</details>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold;">Semi-structured</summary>
+
+```json
+{
+    "glossary": {
+        "title": "example glossary",
+		"GlossDiv": {
+            "title": "S",
+			"GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+					"SortAs": "SGML",
+					"GlossTerm": "Standard Generalized Markup Language",
+					"Acronym": "SGML",
+					"Abbrev": "ISO 8879:1986",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+            }
+        }
+    }
+}
+```
+
+- Some structure, no schema
+- Commonly used for configurations
+
+</details>
+
+</details>
+
+=================
+
+# Storage Architectures
+
+# Data Storage Architectures
+
+![Databricks Data Warehouse](/images/data-and-model-versioning/data-architecture-history.svg)
+
+Based on https://www.databricks.com/research/lakehouse-a-new-generation-of-open-platforms-that-unify-data-warehousing-and-advanced-analytics
+
+- **Lakes**: raw, unfiltered
+- **Warehouses**: processed, vetted
+- **Lakehouses**: Both?
+- **ELT** vs **ETL**
+    - Extract, Load/Transform
+    - Steps before saving/storing data
+
+---
+
+<details><summary style="font-size: 1.5em;">Data Warehouses</summary>
+
+Optimized for structured data and analytical queries.
+
+<img src="/images/data-and-model-versioning/databricks-data-warehouse.png" alt="Databricks Data Warehouse" height="400" style="display: block; margin: 0 auto;">
+
+From https://www.databricks.com/research/lakehouse-a-new-generation-of-open-platforms-that-unify-data-warehousing-and-advanced-analytics
+
+**Characteristics**
+- Schema-on-write
+- Optimized for SQL queries
+- Good for reporting and BI
+
+**Limitations**
+- Lack of customizability for AI/ML
+- Images and unstructured data
+- Higher cost for large volumes
+
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Data Lakes</summary>
+
+Centralized repositories that hold raw data in its native format, kicked off with Hadoop.
+
+<img src="/images/data-and-model-versioning/databricks-data-lake.png" alt="Databricks Data Lake" height="400" style="display: block; margin: 0 auto;">
+
+From https://www.databricks.com/research/lakehouse-a-new-generation-of-open-platforms-that-unify-data-warehousing-and-advanced-analytics
+
+**Characteristics**
+- Schema-on-read
+- Supports various data types
+- Cost-effective for large volumes
+- Good for exploration and discovery
+
+**Limitations**
+- Requires additional, complex ETL loops
+- Delayed data for BI/analytics
+- Cost of ownership (duplicate data, harder dvc, no [ACID transactions](https://www.databricks.com/blog/what-are-acid-transactions))
+</details>
+
+---
+
+<details>
+<summary style="font-size: 1.5em;">Data Lakehouses</summary>
+
+Combination of data lakes and data warehouses.
+
+<img src="/images/data-and-model-versioning/databricks-data-lakehouse.png" alt="Databricks Data Lakehouse" height="400" style="display: block; margin: 0 auto;">
+
+From https://www.databricks.com/research/lakehouse-a-new-generation-of-open-platforms-that-unify-data-warehousing-and-advanced-analytics
+
+- ACID transactions on data lake storage
+- Support for both structured and unstructured data
+- Optimized for both analytics and AI/ML
+- Open formats (Parquet, Delta, etc.)
+</details>
+
+=================
+
+# Metadata
+
+# Metadata
+
+Metadata is crucial for understanding and managing data versions.
+
+![Metadata Management](/images/data-and-model-versioning/metadata-layer.png)
+
+From https://www.acceldata.io/blog/what-is-metadata-definition-types-and-importance
+
+<details><summary style="font-size: 1.2em;">Descriptive</summary>
+
+- **Description**: Human-readable description of the data
+- **Keywords**: Tags and subjects for categorization
+- **Titles**: Dataset or table names
+- **Authors**: Who created the data
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Structural</summary>
+
+- **Schema**: Data structure, column names, types
+- **Partitioning**: Physical layout rules
+- **Relationships**: How tables and datasets are connected
+- **Statistics**: Min, max, mean, null counts, etc.
+- **Data Quality**: Quality scores, validation results
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Administrative</summary>
+
+- **Author**: Who created or modified the data
+- **Timestamp**: When was it created or modified
+- **Version**: Version identifier (tag, commit hash, etc.)
+- **Changelog**: What changed between versions
+- **Ownership**: Who is responsible for the data
+- **Policy**: Access management, sensitivity labels, permissions
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Technical</summary>
+
+- **Format**: File format (Parquet, CSV, JSON, etc.)
+- **Size**: Dataset size and dimensions
+- **Compression**: Compression method used
+
+- **Resolution**: Data granularity or precision
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Provenance</summary>
+
+- **Lineage**: Where did this data come from (data lineage)
+- **Origin**: Source systems and extraction methods
+- **History**: Complete transformation history
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Usage</summary>
+
+- **Usage**: Monitoring usage and cost estimates
+- **Access patterns**: Who accesses the data and when
+- **Query history**: Track how data is queried
+
+</details>
+
+=================
+
+# Data Stages
+
+# Data Stages
+
+---
+
+## Medallion Architecture
+
+The medallion architecture, popularized by Databricks, is a data organization pattern that structures data into quality layers.
+
+<img src="/images/data-and-model-versioning/medallion-architecture.png" alt="Medallion Architecture" style="clip-path: inset(60px 0 00px 0);"/>
+
+From https://www.databricks.com/glossary/medallion-architecture
+
+<details><summary style="font-size: 1.2em;">🥉 Bronze Layer</summary>
+
+- Raw, unprocessed data
+- High volume, high velocity
+- Schema may evolve over time
+- No or minimal transformations
+
+</details>
+
+<details><summary style="font-size: 1.2em;">🥈 Silver Layer</summary>
+
+- Data has been cleaned (nulls handled, outliers removed)
+- Schema is more stable
+- Some business logic applied
+- Data scientists typical users
+
+</details>
+
+<details><summary style="font-size: 1.2em;">🥇 Gold Layer</summary>
+
+- Enriched with business context
+- Aggregated and summarized
+- Optimized for querying
+- Ready for analytics and ML
+
+</details>
+
+
+<details><summary>Version control where?</summary>
+
+Version control can be applied at different stages:
+
+- **Bronze**: Version the raw data files themselves
+- **Silver**: Version the cleaning/transformation code
+- **Gold**: Version the aggregation and business logic
+
+Best practice: Version at all stages to ensure full reproducibility.
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em;">ML Datasets</summary>
+
+<img src="/images/data-and-model-versioning/raw-cleansed-curated.webp" alt="Raw cleansed curated" style="clip-path: inset(0px 0 0px 0);"/>
+From https://www.rawgeneration.com/products/best-juice-cleanse when searching on Google for "raw cleansed curated".
+
+<details><summary style="font-size: 1.2em;">Raw data</summary>
+
+- Unprocessed
+- May contain errors
+- May have inconsistent formats
+- Often needs significant cleaning
+- Bronze
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Cleansed data</summary>
+
+- Missing values handled
+- Outliers identified or removed
+- Duplicate records removed
+- Consistent formats
+- Silver
+
+</details>
+
+<details><summary style="font-size: 1.2em;">Curated/model-ready data</summary>
+
+- Features engineered
+- Categorical variables encoded
+- Numerical features scaled
+- Balanced classes (if applicable)
+- Ready for model consumption
+- Gold
+
+</details>
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em;">Other Considerations</summary>
+
+<details><summary style="font-size: 1.2em;">Train/validate/test split</summary>
+
+![Train/Test Split](/images/data-and-model-versioning/kaggle-split.png)
+
+From https://www.kaggle.com/discussions/general/516681
+
+<details><summary>_Where in the Medallion structure would you do this?_</summary>
+Between bronze and silver.
+</details>
+</details>
+
+<details><summary style="font-size: 1.2em;">Controlling randomness</summary>
+
+To ensure reproducibility, always set random seeds:
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Set random seeds
+np.random.seed(42)
+pd.options.mode.chained_assignment = None  # default='warn'
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+```
+
+```python
+import tensorflow as tf
+
+# For TensorFlow
+tf.random.set_seed(42)
+```
+
+```python
+import torch
+
+# For PyTorch
+torch.manual_seed(42)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(42)
+```
+</details>
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em;">ML Pipelines</summary>
+
+ML data pipelines move data through various processing stages to prepare it for model training.
+
+![Data Pipeline](/images/data-and-model-versioning/data-pipeline.png)
+
+From https://mlops-guide.github.io/Versionamento/pipelines_dvc/
+
+1. **Preprocessing**: Extract, validate, split, feature engineering, normalization
+2. **Training**: Train/run model, extract outputs 
+3. **Postprocessing**: Format output, evaluate results, monitoring
+
+→ More on this in future lectures
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em;">Best Practices</summary>
+
+1. **Clear boundaries**: Each stage should have well-defined inputs and outputs
+2. **Quality gates**: Validate data quality at each stage
+3. **Documentation**: Document the purpose and transformations of each stage
+4. **Testing**: Test transformations between stages
+5. **DAGs**: Directed acyclic graphs -- watch out for infinite loops 
+</details>
+
+=================
+
+# Summary
+
+# Summary
+
+1. **Data and model versioning**
+    * Version code, data, features & model in one package
+2. **4 versioning levels**
+    * From unversioned to specialized tooling
+3. **DVC as a tool**
+    * Keep large files remote
+4. **Storage considerations**
+    * Cost, data formats
+    * Data warehouse/lake/lakehouse
+    * Metadata
+5. **Data stages**
+    * Medallion architecture
+    * Raw, cleansed, curated
+
+---
+
+## Next lessons
+
+---
+
+### Golang
+
+<div style="background-color: #027d9c; text-align: right;"><img src="/images/data-and-model-versioning/go-ladder.png" alt="Go Logo"></div>
+
+Fundamentals of Go with Lasse.
+
+---
+
+### MLOps Overview and ML Project Structure
+
+**Lecture**: MLOps theory and its 3 aspects (data, model, code), and implementations in organisations.
+
+![Google MLOps](/images/data-and-model-versioning/google-mlops.png)
+
+From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
+
+**Exercises**: Use project templates in Cookiecutter Data Science to ensure consistency across ML projects.
+
+![Cookiecutter Data Science](/images/data-and-model-versioning/cookiecutter.png)
+
+From https://cookiecutter-data-science.drivendata.org/
+
+---
+
+## Resources
+
+- [DVC Documentation](https://dvc.org/doc/)
+- [ML Engineering Book, Chapter 3.11](http://www.mlebook.com/wiki/doku.php)
+- [ML-Ops.org: Data Engineering Pipelines](https://ml-ops.org/content/three-levels-of-ml-software)
+- [LakeFS Blog](https://lakefs.io/blog/data-versioning/)
+- [Git LFS](https://git-lfs.com/)
+
+=================
+
+# Introduction
+
+# Containers and Docker
+
+## Agenda
+
+ * [08:15 – 08:45] – Setting up Docker on your machines
+ * [08:45 – 09:00] – Project questions (if any)
+ * [09:15 – 12:00] – Quick intro to Docker + Follow-along exercises
+
+## Preparation
+
+For the exercises:
+
+* [Docker: Overview](https://docs.docker.com/get-started/docker-overview/)
+* [Docker: Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
+* [Docker: Concepts (basics and building images + containers)](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/)
+  * Skip the following sections 
+    * *The basics -- What is Docker Compose?*
+    * *Building images -- Understanding the image layers*
+    * *Building images -- Multi-stage builds*
+    * *Running containers -- Multi-container applications*
+* [Docker: Get Docker](https://docs.docker.com/get-started/get-docker/)
+* [Docker: Install Docker Engine (can also be done through Docker Desktop)](https://docs.docker.com/engine/install/)
+* [Docker: Introduction](https://docs.docker.com/get-started/introduction/)
+
+## Slides
+
+Slides are available on [LearnIT](https://learnit.itu.dk/).
+
+## Exercises
+
+The following exercises will guide you through setting up Docker and using it for your data science projects:
+
+- [Notes and Theory](B-notes.md) - Understanding Docker concepts
+- [Exercise 0: Installation](C-exercise-setup.md) - Install and test Docker
+- [Exercise 1: Create a Dockerfile](D-exercise-dockerfile.md) - Build Dockerfile for training
+- [Exercise 2: Build the Image](E-exercise-build.md) - Build and tag your image
+- [Exercise 3: Run your Image](F-exercise-run.md) - Run containers with various options
+- [Exercise 4: Push and Pull](G-exercise-push-pull.md) - Work with registries
+- [Exercise 5: Clean up](H-exercise-cleanup.md) - Remove unused images
+
+=================
+
+# Notes
+
+# Prelude
+
+Before getting started with using Docker, it's a good idea to motivate and explain _what_ Docker actually is so you don't just type commands and see stuff happen.
+
+## Why?
+![Works on my machine](https://blog.codinghorror.com/content/images/2025/05/works-on-my-machine-v2-2025-jon-galloway-2-1.png)
+
+To avoid the above from happening. Or even shorter -- reproducability.
+
+Docker essentially allows running code in an isolated and agnostic way from the operating system, making it crucial for reproducible, automated workflows for both normal DevOps and MLOps.
+
+Itemised list for convenience:
+
+* Reproducible and consistent delivery
+* CI/CD pipelines
+* Portable and collaborative
+* Efficient use of resources
+
+## What?
+
+> [!NOTE]
+> Fun fact: Docker is written in Go.
+
+Docker is a way to create a virtual instance of a compute resources. However, unlike virtual machines with their own complete operating system, Docker uses lightweight containers instead.
+
+The key thing is these containers have their own filesystem, dependencies, processes and such, which allows you to run an application in isolation of your operating system.
+
+There are three main components to Docker:
+
+1. Dockerfiles
+2. Docker images
+3. Docker containers
+
+You will explore each of these components more closely through the upcoming exercises, but a short introduction is in order.
+
+**Dockerfiles** are a set of instructions that will be used to build a **Docker image**. These instructions include information about the *base image* and the *commands* that will be executed (such as installing packages etc).
+
+A **Docker image** is the output from building the **Dockerfile**. They are immutable, but you can build on top of other images by using them as *base images*.
+
+These images can be tagged and versioned, which also makes it easy to roll back and such to other versions. While we will not touch on this too much, you typically also have image repositories that you can push and pull your images to/from ([Docker Hub](https://hub.docker.com/) being the default).
+
+They also have a layered structure where each command/instruction is essentially cached. That means fast and efficient build times when only making changes in parts of the code.
+
+When you want to run the **Docker image**, it spins it up in a **Docker container** as an isolated runtime environment. Once complete, the container shuts down and releases the resources (compute and storage).
+
+Although they are based on the immutable **Docker image**, it is possible to customize the **Docker container** at runtime. This can also be a way to ensure the same environment for *dev* and *prod* work.
+
+But enough theory for now. Let's start with the exercises!
+
+[Next: Exercise 0 - Installation](C-exercise-setup.md)
+
+=================
+
+# Exercise Setup
+
+# Exercise 0: Installation
+
+As described in the previous section, Docker is really a way to run code in a reproducible way.
+
+## Exercise 0: Installation
+
+1. <details> <summary> Install Docker Desktop+Engine</summary>
+   If you haven't already, you need to make sure to install <a href="https://docs.docker.com/engine/install/">Docker Engine</a>. The easiest way is to do it through <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. For Windows users, you will also need to install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a> if you haven't already.
+   </details>
+2. <details> <summary> Test your Docker installation is working</summary>
+   In the terminal, run <code>docker run hello-world</code>
+
+   If it works, great! If not, try googling the issue.
+
+   A common issue is that the Docker daemon not running. If you installed it with Docker Desktop, make sure that program is running.
+   </details>
+
+[Next: Exercise 1 - Create a Dockerfile](D-exercise-dockerfile.md)
+
+=================
+
+# Exercise Dockerfile
+
+# Exercise 1: Create a training Dockerfile
+
+> [!NOTE]
+> **Learning outcomes**
+> <i> By the end of the exercises, we expect you to be able to do the following:</i>
+> <ul>
+> <li>Write/create a basic Dockerfile that can run a basic DS project [e.g., CCDS]</li>
+> <li>Explain the workflow and processes for using Docker</li>
+> <li>Motivate the typical ways why you would modify Docker containers at runtime</li>
+> <li>Describe image repositories and explain their usage</li>
+> </ul>
+
+
+1. <details> <summary> Build out our CCDS repo with a train.py script </summary>
+   Go to where you have your projects and run <code>ccds</code>. You can also initialise git with <code>git init</code>.
+
+   To make it easy, there is a [../resources/train.py](../resources/train.py) that you can copy to your project. So for example:
+
+   <pre><code>cp ../resources/train.py path/to/project/modeling/train.py</code></pre>
+
+   </details>
+2. <details> <summary> Create train.dockerfile </summary>
+   You can use your favourite tool to do this. Or do:
+
+   <pre><code>touch path/to/project/train.dockerfile</code></pre>
+   </details>
+3. <details> <summary> Find appropiate base-image </summary>
+   python:3.9 for example.
+   </details>
+4. <details> <summary> Modify example Dockerfile to fit our use-case</summary>
+   Inspired from <a href="https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile/">this website:</a>
+
+   <pre><code>
+   FROM python:3.12
+   WORKDIR /usr/local/app
+   # Install the application dependencies
+   COPY requirements.txt ./
+   RUN pip install --no-cache-dir -r requirements.txt
+   # Copy in the source code
+   COPY src ./src
+   EXPOSE 5000
+   # Setup an app user so the container doesn't run as the root user
+   RUN useradd app
+   USER app
+   CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+   </code></pre>
+   </details>
+
+[Next: Exercise 2 - Build the Image](E-exercise-build.md)
+
+=================
+
+# Exercise Build
+
+# Exercise 2: Build the image
+
+1. <details> <summary> Build the train.dockerfile </summary>
+   Normally you just need to run <code>docker build .</code>, but since we want to use a specific .dockerfile, we have to modify it slightly:
+   <details><summary>Hint:</summary><code>docker build -f train.dockerfile .</code></details>
+
+   </details>
+
+2. <details> <summary> Add a meaningful name by version/tag </summary>
+   Just building the image can make it hard to find again.
+
+   Adding tags when building the image is typically the easiest way to deal with this. You can also add tags after it has been built but then you need to know the image id.
+
+   <details><summary>Hint:</summary><code>docker build -f train.dockerfile -t iris-train:1.0.0 .</code></details>
+   </details>
+
+3. <details> <summary> Changing files/fixing errors </summary>
+   It's possible that you need to rebuild the image because of some errors. Can you spot what the error is now?
+   
+   <details><summary>Hint:</summary>Python version and requirements.txt does not have scikit-learn</details>
+   
+   <pre>Question: why is it faster building it now?</pre>
+   </details>
+
+[Next: Exercise 3 - Run your Image](F-exercise-run.md)
+
+=================
+
+# Exercise Run
+
+# Exercise 3: Run your image
+
+1. <details> <summary> Run your latest image </summary>
+   The basic <code>docker run &lt;image&gt;</code> is pretty straight-forward. But what is your image id?
+
+   <details><summary>Hint to find list of images</summary><code>docker images</code></details>
+   </details>
+
+2. <details> <summary> Solving issues with different arguments </summary>
+   <a href="https://docs.docker.com/reference/cli/docker/container/run/">Full list of arguments here</a>
+  
+   -i (--interactive) for going "into" the container and run commands interactively.
+
+   -d (--detach) to don't have the process run in your terminal but detached in the background instead.
+
+   -p (--publish)
+   <details><code>docker run -p 10000:8080 iris-train</code></details>
+
+   -v (--volume) for mounting a directory, allowing you to access files there outside the container.
+   <details><code>docker run -v ./artifacts:/usr/local/app/artifacts iris-train</code></details>
+
+   -e (--env) is for setting environment variables, which can sometimes be useful whenever using env variables in your code. 
+   </details>
+
+3. <details> <summary> Check running containers </summary>
+   Checking running containers can be done by <code>docker ps</code>. What about stopped containers?
+   <details><code>docker ps -a</code></details>
+
+   </details>
+
+[Next: Exercise 4 - Push and Pull](G-exercise-push-pull.md)
+
+=================
+
+# Exercise Push Pull
+
+# Exercise 4: Push and pull
+
+1. <details><summary> Find an interesting <a href="https://hub.docker.com/search?categories=Machine+Learning+%26+AI">AI/ML image</a> and pull it</summary>
+   <code>docker pull jupyter/scipy-notebook</code>
+
+   Or run it directly:
+   <code>docker run jupyter/scipy-notebook</code>
+
+   <pre>Question: Suggested arguments for running this image?</pre> 
+   <details><summary>My suggestions:</summary><code>-p 10000:8888 -d</code></details>
+   </details>
+
+2. <details><summary> Pushing your image</summary>
+   This will require setting up a user that can push to whichever registry you want to push it to. Generally it would follow this structure:
+   <pre><code>
+   docker login &lt;REGISTRY_HOST&gt;:&lt;REGISTRY_PORT&gt;
+   docker tag &lt;IMAGE_ID&gt; &lt;REGISTRY_HOST&gt;:&lt;REGISTRY_PORT&gt;/&lt;APPNAME&gt;:&lt;APPVERSION&gt;
+   docker push &lt;REGISTRY_HOST&gt;:&lt;REGISTRY_PORT&gt;/&lt;APPNAME&gt;:&lt;APPVERSION&gt;
+   </code></pre>
+
+   An example would look like:
+   <pre><code>
+   docker login repo.company.com:3456
+   docker tag 19fcc4aa71ba repo.company.com:3456/myapp:0.1
+   docker push repo.company.com:3456/myapp:0.1
+   </code></pre>
+
+   Or in our case with default Docker Hub:
+
+   <pre><code>
+   docker login --username jeppetk
+   docker tag 90c46295c455 jeppetk/iris-train:initial
+   docker push jeppetk/iris-train
+   </code></pre>
+   </details>
+
+3. <details><summary> What do the hashes represent when pushing/pulling?</summary>
+   It's the different layers. This can be confirmed with the  command <code>docker inspect 90c46295c455</code>
+   </details>  
+
+[Next: Exercise 5 - Clean up](H-exercise-cleanup.md)
+
+=================
+
+# Exercise Cleanup
+
+# Exercise 5: Clean up
+
+1. <details> <summary>Check local images</summary>
+   <code>docker images</code>
+   </details>
+
+2. <details> <summary>Remove images</summary>
+   <code>docker rmi IMAGEID</code>
+   </details>
+
+---
+
+[Back to Introduction](A-introduction.md)
+
+=================
+
+# Exercise Intro
+
+# Background
+
+Whenever you start a coding project, there's always the question of how you will structure the code.
+
+Where is the main entry point into the code? What util functions do you need to add? Which components does your project require?
+
+There is obviously not _one_ correct way of doing it, and it very much depends on what kind of project you're building. A good starting point for that is [_Cookiecutter_](https://cookiecutter.readthedocs.io/en/stable/README.html), which is a tool that can help you set up various projects using whichever [template](https://www.cookiecutter.io/templates) that suits your purpose.
+
+![Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/ccds.png "Cookiecutter Data Science AI overlord logo")
+
+For these exercises, we will use a specific template for Data Science, called [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/). This is not by any means the only way to structure a data science project, and we will in the subsequent lessons work on adding extra pieces to our project, but the template has [well-reasoned arguments](https://cookiecutter-data-science.drivendata.org/opinions/) as to why.
+
+## Learning Goals
+
+> [!NOTE]
+> **Learning goals**
+> <i>By the end of the exercises, we expect you to be able to do the following:</i>
+> <ul>
+> <li>Start a data science project with version control that follows the CCDS format</li>
+> <li>Explain the motivation for the structure of a data science project</li>
+> <li>Share your repo with others and work on the same code</li>
+> </ul>
+
+## Exercises
+
+The following exercises will guide you through setting up MLOps projects:
+
+- [Exercise 1: Cookiecutter Setup](eB-cookiecutter-setup.md) - Initialize Cookiecutter Data Science
+- [Exercise 1: Project Structure](eC-project-structure.md) - Inspect and understand the CCDS structure
+- [Exercise 2: Project Teaser](eD-project-teaser.md) - Preview of MLOps project structure
+- [Exercise 3: Collaboration](eE-collaboration.md) - Setting up GitHub and working together
+
+---
+
+# Exercise 0: Setup
+
+Make sure Cookiecutter Data Science is installed:
+`ccds --version`
+Does this command run and show a version number above 2.something? Great!
+
+=================
+
+# Cookiecutter Setup
+
+# Exercise 0-1: Installation and Setup
+
+Make sure Cookiecutter Datascience is installed:
+`pipx install cookiecutter-data-science`
+
+Try running it with:
+`ccds --version`
+
+Does this command run and show a version number above 2.something? Great!
+
+### Exercise 1: Start your DS project
+
+Next we want to start using Cookiecutter with one of our projects. Let's be inspired by CCDS's documentation on [their homepage](https://cookiecutter-data-science.drivendata.org/using-the-template/):
+
+1. <details> <summary> Initialise CCDS in directory </summary>
+   In the terminal, run <code>ccds</code>
+
+   <pre><i><u>Discuss in pairs what each option does</u></i></pre>
+   </details>
+   
+2. <details> <summary> Initialise git in the repo (if relevant)</summary> 
+   In the terminal, run <code>git init</code>
+   </details>
+
+3. <details><summary>Start tracking new files with git</summary>
+   <tt> git add .</tt>
+
+   <tt> git commit -m "Initial DDCS commit"</tt>
+
+   <pre><i><u>What does <code>git add .</code> do?
+   Also: what's in .gitignore?</u></i></pre>
+
+  </details>
+
+[Next: Exercise 1 - Project Structure](eC-project-structure.md)
+
+=================
+
+# Project Structure
+
+# Exercise 1: Inspect Project Structure
+
+3. <details> <summary>Inspect the structure of the resulting repo </summary>
+
+   ```
+
+   ├── LICENSE            <- Open-source license if one is chosen
+   ├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
+   ├── README.md          <- The top-level README for developers using this project.
+   ├── data
+   │   ├── external       <- Data from third party sources.
+   │   ├── interim        <- Intermediate data that has been transformed.
+   │   ├── processed      <- The final, canonical data sets for modeling.
+   │   └── raw            <- The original, immutable data dump.
+   │
+   ├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+   │
+   ├── models             <- Trained and serialized models, model predictions, or model summaries
+   │
+   ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+   │                         the creator's initials, and a short `-` delimited description, e.g.
+   │                         `1.0-jqp-initial-data-exploration`.
+   │
+   ├── pyproject.toml     <- Project configuration file with package metadata for 
+   │                         {{ cookiecutter.module_name }} and configuration for tools like black
+   │
+   ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+   │
+   ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
+   │   └── figures        <- Generated graphics and figures to be used in reporting
+   │
+   ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+   │                         generated with `pip freeze > requirements.txt`
+   │
+   ├── setup.cfg          <- Configuration file for flake8
+   │
+   └── {{ cookiecutter.module_name }}   <- Source code for use in this project.
+      │
+      ├── __init__.py             <- Makes {{ cookiecutter.module_name }} a Python module
+      │
+      ├── config.py               <- Store useful variables and configuration
+      │
+      ├── dataset.py              <- Scripts to download or generate data
+      │
+      ├── features.py             <- Code to create features for modeling
+      │
+      ├── modeling                 
+      │   ├── __init__.py 
+      │   ├── predict.py          <- Code to run model inference with trained models          
+      │   └── train.py            <- Code to train models
+      │
+      └── plots.py                <- Code to create visualizations   
+   ```
+
+   <pre><i><u>Discuss in pairs how this structure makes sense to you</u>
+
+   <li>Do you understand where the ML code goes?</li>
+   <li>What does each of the pre-generated files do?</li>
+   <li>Any terms that you don't know what they mean?</li>
+   <li>Other confusing things?</li></i></pre>
+
+   </details>
+
+[Next: Exercise 2 - Project Teaser](eD-project-teaser.md)
+
+=================
+
+# Project Teaser
+
+# Exercise 2: Project Teaser
+
+Let's take a step back and reflect on what we have done so far, and more importantly, _why_ and _how_ it ties into what you've learned so far.
+
+<figure>
+  <img src="https://cloud.google.com/static/architecture/images/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-2-manual-ml.svg" alt="my alt text"/>
+  <figcaption><i>Google's ML Maturity level 0, from <a href="https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning</a></i></figcaption>
+</figure>
+
+ML projects quite often follow a very manual process. For example, you might have a Python notebook that does some processing of your data and outputs it _somewhere_. You then run another notebook or script that takes this data, does _some_ training (maybe also the evaluation all at once) before sharing the results _somehow_.
+
+This is not sustainable for a productionised ML project multiple reasons.
+
+1. People will have _no_ idea how to re-use/contribute to any of your code.
+2. If you go on vacation and nobody is there to re-run the model, tough luck to the company (_and no, while it seems tempting to make yourself indispensible to the company this way, it's not worth it_).
+3. Notebooks are terrible for any production code!
+   1. You _always_ end up with code with a non-linear flow where you have to run cell 1&rarr;3&rarr;2&rarr;5&rarr;12&rarr;etc before it runs "correctly".
+   2. Version control of notebooks is... weird.
+   3. They tend to do everything at once.
+   4. [Kaggle competitions](https://www.kaggle.com/code) != production-ready code 
+
+There are more bad coding patterns than it's possible to list, so let's instead turn to some guiding principles that you can follow. Based on [this list of opinions from CCDS](https://cookiecutter-data-science.drivendata.org/opinions), these relate to:
+
+* Data versioning strategy (essentially Week 4's lecture)
+* Notebooks for exploration, source code for repetition
+* Keep your modeling organized
+* Build from the environment up
+* Keep secrets and configuration out of version control
+* Adapt to your use-case
+
+Each of these are explained in more detail in the link, so you are encouraged to read it through yourself.
+
+#### Project teaser
+Given this information, let's see how an MLOps project that is very close to the actual implementation could look like: [MLOps monolith notebook](https://github.com/lasselundstenjensen/itu-sdse-project/blob/main/notebooks/main.ipynb)
+
+[Next: Exercise 3 - Collaboration](eE-collaboration.md)
+
+=================
+
+# Collaboration
+
+# Exercise 3: Collaboration
+
+You have your project set up locally, and you are tracking the relevant files through git. But what you really want is to make sure you set up a remote, say, in Github, so you can start collaborating on the same codebase.
+
+Since you will be using github.com in this course, now is a good time to get started. If you don't want to use your normal github.com user (if you have one, not the ITU one) for this course, feel free to create a dummy one.
+
+For this exercise, we want to simulate a a workflow where you (and a partner, if possible) contribute with code to a public repository. In this exercise you will therefore try out 1) setting up a new github repo, 2) push and pull new code to the repo, and 3) clone your partner's code.
+
+1. <details> <summary> Create new repo on github.com </summary></details>
+2. <details> <summary> Push your code to this new remote (<i>hint: <a href="https://lasselundstenjensen.github.io/itu-bds-sdse/lessons/git-basics/remote-and-fetch">these lessons covered it</a></i>)</summary>
+   <tt>git remote add origin git@github.com:&lt;username&gt;/&lt;new_repo&gt;.git</tt>
+
+   <tt>git push</tt>
+
+   <pre><i><u>We are actually missing an argument to git push. Can you find out what?</u></i></pre>
+   <details><summary>Hint:</summary>
+   <tt>git push --set-upstream origin main</tt>
+   </details>
+   </details>
+3. <details> <summary> Try to work on a partner's repo </summary>
+   Go to a new unversioned/ungitted directory (<i>~/Projects for me</i>) and clone a partner's repo:
+
+   <tt>git clone git@github.com:&lt;username&gt;/&lt;new_repo&gt;.git</tt>
+
+   Now you have a local copy of the code that you can work with!
+   </details>
+4. <details> <summary> Try and push changes to your partner's repo </summary>
+   Good developer practice is to not work directly on main since that is reserved for production code. Instead create a new branch:
+
+   <tt>git checkout -b w07-model-training-script</tt>
+
+   Next step is to make some meaningful changes. As hinted with the branch name, maybe you want to create the training script for the model.
+
+   For now let's not be concerned with how train.py should look like. It depends on the project and such, but it generally takes data and model configurations as input and outputs a trained model. For now, let's just <tt>touch &lt;project_name&gt;/modeling/train.py</tt>.
+
+   And then follow the typical git flow:
+
+   <tt>git add &lt;project_name&gt;/modeling/train.py</tt>
+   
+   <tt>git commit -m "feat: model training script added"</tt>
+   
+   <tt>git push</tt>
+
+   <pre><i><u>How does this git push differ from when you pushed to your own repo?</u></i></pre>
+
+   </details>
+
+This was a very preliminary example of working together on code. There are more aspects to it, such as branching strategies, code reviews and pull requests, but that will be covered in later lectures. For now, pat yourselves on the back for actually starting a data science project with a more clear strategy than 80% of companies!
+
+[Back to Introduction](eA-introduction.md)
+
+=================
+
+# Introduction
+
+# MLOps Projects Overview and Pipelines
+
+## Overview
+
+### Agenda
+
+ * [08:15 – 09:00] – Lecture: MLOps vs DevOps
+ * [09:15 – 10:00] – Lecture: MLOps stages
+ * [10:15 – 11:00] – Follow-along exercises: Cookiecutter Data Science + project teaser
+ * [11:15 – 12:00] – Follow-along exercises: CCDS
+
+
+### Preparation
+
+For the exercises:
+
+* [Cookiecutter Data Science: Install](https://cookiecutter-data-science.drivendata.org/)
+* [Cookiecutter Data Science: Opinions on structure](https://cookiecutter-data-science.drivendata.org/opinions/)
+* [Cookiecutter Data Science: Using the template](https://cookiecutter-data-science.drivendata.org/using-the-template/)
+* [Cookiecutter Data Science: Github repo](https://github.com/drivendataorg/cookiecutter-data-science)
+
+For the lecture:
+
+* [ML-Ops.org: Motivation](https://ml-ops.org/content/motivation)
+* [ML-Ops.org: MLOps principles](https://ml-ops.org/content/mlops-principles)
+* [ML-Ops.org: Three levels of ML Software](https://ml-ops.org/content/three-levels-of-ml-software)
+* [ML-Ops.org: End-to-End ML](https://ml-ops.org/content/end-to-end-ml-workflow)
+* [Google & MLOps levels](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
+* [ML Engineering, Chapter 2](http://www.mlebook.com/wiki/doku.php) (http://bit.ly/MLEbook-Chapter2)
+
+### Notes
+
+* The exercises will be a follow-along coding session, mainly using terminal/CLI
+* Make sure to install Cookiecutter Data Science and test that the `ccds` command works for you.
+
+=================
+
+# Lecture Intro
+
+# MLOps Projects Overview and Pipelines
+
+---
+
+## Outline
+
+1. MLOps vs DevOps
+2. MLOps principles
+3. MLOps in organisations
+4. Stages of maturity
+5. ML software levels
+    - Data processing
+    - Model experimentation
+    - Code deployment
+
+![Coco looking](/images/mlops-projects-overview/coco-looking.png)
+
+
+---
+
+## Continuous Feedback Board https://miro.com/app/board/uXjVJQwy4bs=/
+
+![miro-board.png](/images/mlops-projects-overview/miro-board.png)
+
+=================
+
+# MLOps vs DevOps
+
+# MLOps vs DevOps
+
+---
+
+<details><summary style="font-size: 1.5em"> First: DevOps</summary>
+
+![Dynatrace DevOps with logos](/images/mlops-projects-overview/dynatrace-devops-with-logos.svg)
+
+Modified, from https://www.dynatrace.com/news/blog/what-is-devops/
+
+<details><summary style="font-size: 1.2em">Development</summary>
+
+- **Plan**: Write down goals, tasks, and project rules, organize code with _CCDS_.
+- **Code**: Write the code, version control with _Git_.
+- **Build**: Package the program, build with _Docker_.
+- **Test**: Check for bugs and errors, use unit/integration tests.
+</details>
+
+<details><summary style="font-size: 1.2em">Operations</summary>
+
+- **Release**: Prepare software to go live.
+- **Deploy**: Implement it in production, automate with _Github Actions_ and _Dagger_.
+- **Operate**: Keep servers running, organize containers with _Kubernetes_.
+- **Monitor**: Watch system health, visualize and alert with _Grafana_.
+</details>
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em"> And MLOps?</summary>
+
+![Dynatrace MLOps with logos](/images/mlops-projects-overview/dynatrace-mlops-with-logos.svg)
+
+### ML
+- **Data**: External info (vs internal code), version with _DVC_.
+- **Model**: Machine learning model, track with _MLflow_.
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em"> Different graphics</summary>
+
+<details><summary style="font-size: 1.2em"> Slightly less ugly</summary>
+
+![Ubuntu MLOps](/images/mlops-projects-overview/ubuntu-mlops.png)
+
+From https://ubuntu.com/blog/what-is-mlops 
+
+![ml-ops.org MLOps](/images/mlops-projects-overview/ml-ops-org-circles.png)
+
+From https://ml-ops.org/content/mlops-principles 
+
+</details>
+
+<details><summary style="font-size: 1.2em"> Slightly less abstract</summary>
+
+![ml-ops.org MLOps](/images/mlops-projects-overview/ml-ops-org-pipeline.png)
+
+From https://ml-ops.org/content/mlops-principles 
+
+</details>
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em"> Data and models add complexity</summary>
+
+
+![conference talk tweet.png](/images/mlops-projects-overview/conference-talk-tweet.png)
+Source for original graphic: https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
+
+![Page view evolution](/images/mlops-projects-overview/page-view-evolution.png)
+Page views over time
+
+- Element of unpredictability
+- Data + artifact versioning
+- Changes over time
+
+→ So much to keep track of
+
+</details>
+
+=================
+
+# MLOps Elements
+
+# MLOps Elements
+
+Based on https://ml-ops.org/content/mlops-principles
+
+---
+
+## Three Components of MLOps Pipelines
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/mlops-triangle.png" alt="MLOps levels in course" style="width: 80%;" />
+</div>
+
+From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
+
+
+<details><summary style="font-style: italic"> What's going on in each step? </summary>
+
+<details><summary style="font-weight: bold; color: #8a9faf; font-size: 1.5em">Data</summary>
+
+- <details><summary>1. </summary> Extraction </details>
+- <details><summary>2. </summary> Validation </details>
+- <details><summary>3. </summary> Preparation </details>
+
+</details>
+
+
+<details><summary style="font-weight: bold; color: #51bdf2; font-size: 1.5em">Model</summary>
+
+- <details><summary>1. </summary> Training </details>
+- <details><summary>2. </summary> Evaluation </details>
+- <details><summary>3. </summary> Validation </details>
+</details>
+
+<details><summary style="font-weight: bold; color: #25506c; font-size: 1.5em">Code</summary>
+
+- <details><summary>1. </summary> Deployment </details>
+- <details><summary>2. </summary> Serving </details>
+- <details><summary>3. </summary> Monitoring </details>
+</details>
+
+
+
+<details><summary style="font-size:1.0em; font-style: italic;"> Modularizing things, diagrammatically </summary>
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/mlops-pipeline.svg" alt="MLOps pipeline" style="width: 80%;" />
+</div>
+
+</details>
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.8em">MLOps Principles</summary>
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/mlops-principles.svg" alt="MLOps principles in course" style="width: 80%;" />
+</div>
+
+
+<details><summary style="font-weight: bold; color: blue; font-size: 1.5em">Versioning</summary>
+
+* **Data**
+  1) Data preparation pipelines
+  2) Features store
+  3) Datasets
+  4) Metadata
+
+* **Model**
+  1) ML model training pipeline
+  2) ML model (object)
+  3) Hyperparameters
+  4) Experiment tracking
+
+* **Code**
+  1) Application code
+  2) Configurations
+
+</details>
+
+
+<details><summary style="font-weight: bold; color: orange; font-size: 1.5em">Automation</summary>
+
+* **Data**
+  1) Data transformation
+  2) Feature creation and manipulation
+
+* **Model**
+  1) Data engineering pipeline
+  2) ML model training pipeline
+  3) Hyperparameter/Parameter selection
+
+* **Code**
+  1) ML model deployment with CI/CD
+  2) Application build
+
+</details>
+
+
+
+<details><summary style="font-weight: bold; color: orange; font-size: 1.5em">Reproducibility</summary>
+
+* **Data**
+  1) Backup data
+  2) Data versioning
+  3) Extract metadata
+  4) Versioning of feature engineering
+
+* **Model**
+  1) Hyperparameter tuning is identical between dev and prod
+  2) The order of features is the same
+  3) Ensemble learning: the combination of ML models is same
+  4) The model pseudo-code is documented 
+
+* **Code**
+  1) Versions of all dependencies in dev and prod are identical
+  2) Same technical stack for dev and production environments
+  3) Reproducing results by providing container images or virtual machines 
+
+</details>
+
+
+<details><summary style="font-weight: bold; color: orange; font-size: 1.5em">Deployment</summary>
+
+* **Data**
+  1) Feature store is used in dev and prod environments
+
+* **Model**
+  1) Containerization of the ML stack
+  2) REST API
+  3) On-premise, cloud, or edge 
+
+* **Code**
+  1) On-premise, cloud, or edge
+
+</details>
+
+
+<details><summary style="font-weight: bold; color: green; font-size: 1.5em">Testing</summary>
+
+* **Data**
+  1) Data Validation (error detection)
+  2) Feature creation unit testing
+
+* **Model**
+  1) Model specification is unit tested
+  2) ML model training pipeline is integration tested
+  3) ML model is validated before being operationalized
+  4) ML model staleness test (in production)
+  5) Testing ML model relevance and correctness
+  6) Testing non-functional requirements (security, fairness, interpretability)
+
+* **Code**
+  1) Unit testing
+  2) Integration testing for the end-to-end pipeline
+  
+</details>
+
+
+<details><summary style="font-weight: bold; color: green; font-size: 1.5em">Monitoring</summary>
+
+* **Data**
+  1) Data distribution changes (training vs. serving data)
+  2) Training vs serving features
+
+* **Model**
+  1) ML model decay
+  2) Numerical stability
+  3) Computational performance of the ML model
+
+* **Code**
+  1) Predictive quality of the application on serving data
+
+</details>
+
+</details>
+
+=================
+
+# Project Success Factors
+
+# Project success factors
+
+Small diversion before going into details.
+
+---
+
+![stonks.png](/images/mlops-projects-overview/stonks.png)
+
+---
+
+## Questions for you
+
+<details><summary style="font-weight: italic; font-size: 1.2em">How many DS projects fail?</summary>
+
+- My experience: >50%
+- [VentureBeat 2019: 87%](https://venturebeat.com/business/why-do-87-of-data-science-projects-never-make-it-into-production)
+- [Gartner 2018: 85%](https://www.gartner.com/en/documents/4003368)
+
+</details>
+
+<details><summary style="font-weight: italic; font-size: 1.2em">What do you think “fail” means?</summary>
+
+- Typically: run in production
+- Personal criterion: X users over Y years
+- Academic: [DS PRO-S](https://www.mdpi.com/2076-3417/16/5/2551)
+
+</details>
+
+<details><summary style="font-weight: italic; font-size: 1.2em">Why do you think they fail?</summary>
+
+- Bad data
+- Lack of integration
+- Lack of diverse expertise
+- Unclear business involvement
+- Changing anything changes everything
+</details>
+
+
+---
+
+<details><summary style="font-size: 1.5em">Tech debt</summary>
+
+![neurips-mlops-blocks.png](/images/mlops-projects-overview/neurips-mlops-blocks.png)
+From https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
+
+- **Complex Models Erode Boundaries**: many various dependencies and consumers
+
+- **Data Dependencies Cost More than Code Dependencies**: unstable, unused and/or legacy data
+
+- **Feedback Loops**: both direct and hidden
+
+- **ML-System Anti-Patterns**: glue code, pipeline jungles, dead experimental paths, abstractions, common smells
+
+- **Configuration Debt**: different data types/sources may have different requirements/validity/configs, etc
+
+- **Dealing with Changes in the External World**: ML systems that can take action affect the world
+
+- **Other Areas of ML-related Debt**: data testing, reproducability, systems with many models, cultural debt
+
+</details>
+
+=================
+
+# Organisation Maturity - Overview
+
+# Organisation Maturity
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-baby.png" alt="Coco baby" style="width: 50%;" />
+</div>
+
+---
+
+
+<details><summary style="font-size: 1.5em">Frameworks</summary>
+
+<div style="overflow-x: auto; margin: 0 auto; width: fit-content;">
+
+| Company/Paper | Maturity Level Proposed(s) |
+|---------------|----------------------------|
+| Google | Level 0: Manual Process<br>Level 1: ML Pipeline Automation<br>Level 2: Automated Training |
+| Microsoft | Level 0: No MLOps<br>Level 1: DevOps but No MLOps<br>Level 2: Automated Training<br>Level 3: Automated Model Deployment<br>Level 4: Full MLOps Automated Operations |
+| Amazon | Level 1: Initial Phase<br>Level 2: Repeatable Phase<br>Level 3: Reliable Phase<br>Level 4: Scalable Phase |
+| IBM | Level 0: No MLOps<br>Level 1: ML Pipeline Automation<br>Level 2: CI/CD Pipeline Integration<br>Level 3: Advanced MLOps |
+| Meenu Mary et al. | Level A: Automated Data Collection<br>Level B: Automated Model Deployment<br>Level C: Semi-automated Model Monitoring<br>Level D: Fully-automated Model Monitoring |
+
+</div>
+
+From _Navigating MLOps: Insights into Maturity, Lifecycle, Tools, and Careers_ (https://arxiv.org/html/2503.15577v1)
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em">Generic breakdown</summary>
+
+- **Level 0**: No MLOps/manual process
+
+- **Level 1**: Semi-automated data/model/code pipelines
+
+- **Level 2**: Fully automated
+
+</details>
+
+=================
+
+# Organisation Maturity - Level 0: Manual Process
+
+# Level 0: Manual Process
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-puppy-looking-back.png" alt="Coco puppy looking back" style="width: 50%;" />
+</div>
+
+---
+
+<details><summary style="font-size: 1.5em">Overview</summary>
+
+
+![google-stage-0-manual-ml.png](/images/mlops-projects-overview/google-stage-0-manual-ml.png)
+From https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
+
+
+- Interactive process (e.g., notebooks)
+    - YOU deploy the model
+- DS – engineer disconnect
+    - Training-serving skew
+- No CI/CD
+- No monitoring
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em">Dealing with challenges</summary>
+
+- Actively monitor quality
+- Frequently retrain model
+- Continuously experiment
+
+→ ML Automation
+
+</details>
+
+=================
+
+# Organisation Maturity - Stage 1: Data/Model/Code Automation
+
+# Data/model/code semi-automation
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-jacket.png" alt="Coco in a jacket" style="width: 50%;" />
+</div>
+
+---
+
+<details><summary style="font-size:1.5em">Overview</summary>
+
+![google-mlops-architecture.png](/images/mlops-projects-overview/google-mlops-architecture.png)
+From https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
+
+
+- Rapid experiment
+- Continuous model delivery/testing
+- Modularized and re-used code
+    - No training-serving skew
+- Whole ML pipeline deployments
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Dealing with breaking models</summary>
+
+![breaking-models.png](/images/mlops-projects-overview/breaking-models.png)
+
+- Data validation
+    - Data schema skews
+    - Data values skews
+- Model validation
+- Offline vs. online
+- Evaluation metric
+- “DevOps”
+
+→ Pipeline triggers next lecture
+
+</details>
+
+=================
+
+# Organisation Maturity - Stage 2: Fully Automated
+
+# Stage 2: Fully Automated
+
+<div style="text-align: center;">
+  <img src="/images/mlops-projects-overview/coco-holding-paw.jpeg" alt="Coco lifting paw" style="width: 30%;" />
+</div>
+
+---
+
+<details><summary style="font-size: 1.5em">Overview</summary>
+
+![pulse-cicd.png](/images/mlops-projects-overview/pulse-cicd.png)
+From https://www.linkedin.com/pulse/cicd-what-why-important-rob-larter/
+
+
+Continuous…
+
+… integration (pipelines)
+
+… delivery (pipelines, models)
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em">Further drill down</summary>
+
+![gigaom-ml-maturity-model.png](/images/mlops-projects-overview/gigaom-ml-maturity-model.png)
+From https://gigaom.com/report/delivering-on-the-vision-of-mlops/ https://medium.com/@NickHystax/mlops-maturity-levels-the-most-well-known-models-5b1de94ea285
+
+- Strategy
+- Architecture
+- Modeling
+- Process
+- Governance
+
+</details>
+
+---
+
+<details><summary style="font-size: 1.5em">My company? In my opinion…</summary>
+
+| Strategy | Architecture | Modeling | Process | Governance |
+|----------|--------------|----------|---------|------------|
+| Level 1-4 | Level 2-4 | Level 0-4 | Level 1-4 | Level 1-4 |
+| (4) ML seen as strategic driving company initiatives<br>(1) Small and siloed DS and DE teams<br>(3) CDO + C-level sponsorship | (4) Target ML infra monitored for cost effectiveness<br>(2) Data architecture is mature<br>(3) ML config and infrastructure is managed | (3) Models catalogued through lifecycle<br>(1) Manual ML model training<br>(2) Model dependencies not well understood | (4) Automatic metrics gathering (data drift, etc)<br>(1) DevOps practices like CI/CD for non-ML things<br>(3) All artifacts under version control | (4) End-to-end audit trail for ML<br>(1) Not considered though org may have broader views<br>(3) Ethics consideration for models and ML systems |
+
+</details>
+
+=================
+
+# Three Components of ML Software
+
+# Three Components of ML Software
+
+Based on https://ml-ops.org/content/three-levels-of-ml-software
+
+---
+
+## Our beloved triangle
+
+![mlops-triangle.png](/images/mlops-projects-overview/mlops-triangle.png)
+From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
+
+---
+
+<details><summary style="font-size:1.5em">Same idea in Cookiecutter for Data Science</summary>
+
+![ccds-notebook-naming.png](/images/mlops-projects-overview/ccds-notebook-naming.png)
+From https://cookiecutter-data-science.drivendata.org/using-the-template/
+
+
+- **Data**: 0 - 2
+
+- **Model**: 2 - 3
+
+- **Code**: 4
+
+</details>
+
+=================
+
+# Data Component
+
+# Data Component
+
+---
+
+## Garbage in, garbage out
+
+![garbage collect](/images/mlops-projects-overview/garbage-collection.png)
+
+From Shutterstock, because I couldn't find a good non-AI image.
+
+---
+
+<details><summary style="font-size:1.5em">Data extraction/ingestion</summary>
+
+
+![Data extraction/ingestion](/images/mlops-projects-overview/data-extraction-ingestion.png)
+From https://firsteigen.com/blog/10-data-ingestion-tools-to-fortify-your-data-strategy/
+
+- Determine sources
+
+- Compliance/sensitive data
+
+- Test data split
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Data exploration and validation</summary>
+
+## Data exploration and validation
+
+![Data exploration](/images/mlops-projects-overview/great-expectations-data.png)
+From https://legacy.017.docs.greatexpectations.io/docs/0.14.13/reference/data_discovery/ 
+
+- How does the data look like?
+    - Mean, std
+    - Data types
+    - Missing values
+
+- Useful for alerts
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Data preparation/wrangling/cleaning</summary>
+
+## Data preparation/wrangling/cleaning
+
+- Transformations
+    - Fill missing values
+    - Remove outliers
+    - Remove irrelevant data
+
+- “Silver” layer
+
+</details>
+
+=================
+
+# Model Component
+
+# Model Component
+
+---
+
+## Black box
+
+![Model black box](/images/mlops-projects-overview/black-box.svg)
+
+---
+
+<details><summary style="font-size:1.5em">Model training</summary>
+
+![mlmastery-training-graph.png](/images/mlops-projects-overview/mlmastery-training-graph.png)
+From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
+
+- Don’t get too attached to one model
+
+- Feature + model engineering
+
+- Random search for hyperparameters
+
+→ Robustness is important
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Model evaluation/testing</summary>
+
+## Model evaluation/testing
+
+![Ensemble training](/images/mlops-projects-overview/encord-training-note.png)
+From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-learning-model-performance/
+
+- Holdout test set
+
+- Multiple metrics to measure…
+    - Error
+    - Bias
+
+- Must be better than baseline
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Model validation/packaging</summary>
+
+| Format | Open-Format | Vendor | File Extension | License | ML Tools & Platforms Support | Human-readable | Compression |
+|---|---|---|---|---|---|---|---|
+| "almagnation" | — | — | — | — | — | — | ✅ |
+| PMML | ✅ | DMG | .pmml | AGPL | R, Python, Spark | ✅ (XML) | ❌ |
+| PFA | ✅ | DMG | JSON | | PFA-enabled runtime | ✅ (JSON) | ❌ |
+| ONNX | ✅ | SIG LFAI | .onnx | | TF, CNTK, Core ML, MXNet, ML.NET | ❌ | ✅ |
+| TF Serving Format | ✅ | Google | .pf | | Tensor Flow | ❌ | g-zip |
+| Pickle Format | ✅ |  | .pkl | | scikit-learn | ❌ | g-zip |
+| JAR/POJO | ✅ |  | .jar | | H2O | ❌ | ✅ |
+| HDF | ✅ |  | .h5 | | Keras | ❌ | ✅ |
+| MLEAP | ✅ |  | .jar/.zip | | Spark, TF, scikit-learn | ❌ | g-zip |
+| Torch Script | ❌ |  | .pt | | PyTorch | ❌ | ✅ |
+| Apple .mlmodel | ❌ | Apple | .mlmodel | | TensorFlow, scikit-learn, Core ML | — | ✅ |
+
+Adapted from https://ml-ops.org/content/three-levels-of-ml-software#model-machine-learning-pipelines
+
+- Unit/integration testing
+
+- Different models, different save formats
+
+</details>
+
+=================
+
+# Code Component
+
+# Code Component
+
+---
+
+## Different use-cases, different patterns
+
+
+![ml-ops-org-serving-matrix.png](/images/mlops-projects-overview/ml-ops-org-serving-matrix.png)
+From https://ml-ops.org/content/three-levels-of-ml-software
+
+---
+
+<details><summary style="font-size:1.5em">Model serving</summary>
+
+![model-serving.png](/images/mlops-projects-overview/batch-vs-realtime-serving.svg)
+
+Adapted from https://www.iguazio.com/glossary/model-serving-pipeline/
+
+- First training, then "inference"
+
+- Modes of serving
+    - In batch
+    - On demand
+
+- Other consideration
+    - Sanity/confidence check input/output
+    - Serving to humans or machines?
+    - Fallback methods
+    - Interpreting output outside of model
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Model logging/monitoring</summary>
+
+![grafana-monitoring.gif](/images/mlops-projects-overview/grafana-monitoring.gif)
+From https://grafana.com/blog/2023/08/18/monitoring-machine-learning-models-in-production-with-grafana-and-clearml/
+
+
+- Log predictions
+
+- Performance deteriorates
+
+- Data changes
+
+- Abuse/adversarial
+
+→ More next lesson
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Model maintenance</summary>
+
+
+- Model freshness
+
+- Retraining time
+
+- Deployment cost
+
+![grafana-monitoring.gif](/images/mlops-projects-overview/coco-puppy.jpg)
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Course project</summary>
+
+
+<details><summary style="font-style: italic;">What pattern does that follow?</summary>
+
+- Offline training
+
+- On-demand through REST API
+
+</details>
+
+</details>
+
+=================
+
+# Deployment Strategies
+
+# Deployment Strategies
+
+---
+
+<details><summary style="font-size:1.5em">Docker containers</summary>
+
+![ml-ops-org-cloud-deployment.png](/images/mlops-projects-overview/ml-ops-org-cloud-deployment.png)
+From https://ml-ops.org/content/three-levels-of-ml-software
+
+- Lightweight
+
+- More in Week 9
+
+</details>
+
+---
+
+<details><summary style="font-size:1.5em">Serverless functions</summary>
+
+
+![ml-ops-org-lambda-serving.png](/images/mlops-projects-overview/ml-ops-org-lambda-serving.png)
+
+- Does not require running instance
+
+- More expensive per inference
+
+</details>
+
+=================
+
+# Summary
+
+# Summary
+
+1. **DevOps vs MLOps**
+    * ML + Dev + Ops
+2. **MLOps Principles**
+    * Versioning
+    * Automation
+    * Reproducability
+    * Deployment
+    * Testing
+    * Monitoring
+3. **MLOps Components**
+    * Data
+    * Model
+    * Code
+4. **MLOps in Practice**
+    * Success factors
+    * Company maturity levels (0-2)
+
+---
+
+## Next lessons
+
+---
+
+### Docker
+
+**Lecture + Exercises**: What is Docker, how do you build 
+
+---
+
+### Productionising models
+
+![What does good look like](/images/mlops-projects-overview/what-does-good-look-like.png)
+
+
+![ml-ops.org monitoring](/images/mlops-projects-overview/ml-ops-org-model-decay.png)
+
+**Lecture**: DORA metrics, monitoring and maintenance, what does good look like.
+
+
+![MLflow dashboard](/images/mlops-projects-overview/mlflow-dashboard.png)
+
+
+**Exercises**: Use MLflow to log artifacts and ML experiments across, advanced MLflow.
+
+---
+
+## Resources
+
+* [ML-Ops.org: Motivation](https://ml-ops.org/content/motivation)
+* [ML-Ops.org: MLOps principles](https://ml-ops.org/content/mlops-principles)
+* [ML-Ops.org: Three levels of ML Software](https://ml-ops.org/content/three-levels-of-ml-software)
+* [ML-Ops.org: End-to-End ML](https://ml-ops.org/content/end-to-end-ml-workflow)
+* [Google & MLOps levels](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
+* [ML Engineering, Chapter 2](http://www.mlebook.com/wiki/doku.php) (http://bit.ly/MLEbook-Chapter2)
+
+=================
+
+# Introduction
+
+# Model Experimentation, Selection and Monitoring
+
+## Overview
+
+### Agenda
+
+ * [08:15 – 10:00] – Exercises: MLflow + warnings
+ * [10:15 – 12:00] – Lecture: DORA metrics and model experimentation, selection and monitoring
+
+### Preparation
+
+For the exercises:
+
+* https://MLflow.org/docs/latest/ml/ (use as reference material, don't do exercises)
+
+For the lecture:
+
+* https://www.mlebook.com/wiki/doku.php (Chapter 9.3 + 9.4 + 9.5)
+* https://ml-ops.org/content/mlops-principles (Monitoring in particular)
+* https://www.datadoghq.com/knowledge-center/dora-metrics/ (or other DORA metric google searches is fine)
+* https://neptune.ai/blog/how-to-monitor-your-models-in-production-guide (skimming it is fine)
+* https://dvc.org/doc/use-cases/experiment-tracking (skimming it is fine)
+* [Overview of different MLOps tools](https://arxiv.org/html/2601.20415v1) (skimming it is fine)
+
+### Notes
+
+
+## Exercises
+
+The following exercises will guide you through model experimentation:
+
+- [Exercise 0: Installation](B-mlflow-basics.md#exercise-0-installation) - Install MLflow and dependencies
+- [Exercise 1: Run an ML Experiment](B-mlflow-basics.md) - Create and log ML experiments with MLflow
+- [Exercise 2: Running a Custom Model](C-custom-models.md) - Define and use custom models
+- [Exercise 3: Check Performance of Deployed Model](D-model-monitoring.md) - Monitor for data and concept drift
+
+## Learning Goals
+
+> [!NOTE]
+> **Learning goals**
+> <i>By the end of the exercises, we expect you to be able to do the following:</i>
+> <ul>
+> <li>Organise ML experiments using common tools</li>
+> <li>Motivate how this can be used to deploy models</li>
+> <li>Explain how to detect concept and model drift</li>
+> </ul>
+
+There are 4 python files in this directory for these exercises:
+* [data_util.py](data_util.py), which you can use for generating the data (imagine it is the output of the data processing pipelines)
+* [example_model.py](example_model.py), which you can use as the basic SKLearn model
+* [basic_mlflow_training.py](basic_mlflow_training.py), which you can use to guide you on how to create a custom model/function and set up MLflow
+* [basic_mlflow_evaluation.py](basic_mlflow_evaluation.py), which you can use for evaluating the (created) models using new data and check for drifts.
+
+As always for the most effective learning, try to use the MLflow documentation and figure out how to solve the exercises yourself first before consulting the basic MLflow scripts.
+
+=================
+
+# MLflow Basics
+
+# Exercise 1: Run an ML Experiment
+
+For this exercise, the goal is to use MLflow to create an experiment and log relevant artifacts and metrics for different ML models. Much of what you need for this is under the https://mlflow.org/docs/latest/ml/tracking/quickstart/ page.
+
+MLflow has a lot of in-built "flavours" that make it easy to run experiments for well-known ML libraries such as SKlearn or Tensorflow. For this exercise we can use the SKlearn model in 
+
+### Exercise 0: Installation
+
+Make sure MLflow and scipy is installed:
+`pip install mlflow`
+`pip install scipy`
+`pip install scikit-learn`
+
+### Exercise 1: Run an ML experiment
+
+1. <details> <summary> Edit the example_model.py script to log model run with MLflow</summary>
+   First <code>import mlflow</code>
+   
+   Then set the MLflow experiment via <code>mlflow.set_experiment("My experiment name")</code>
+   
+   Lastly start an MLflow run and log relevant things:
+   ```python
+   with mlflow.start_run():
+       mlflow.log_params(params)
+       mlflow.log_metric("mean_squared_error", mse)
+       mlflow.sklearn.log_model(
+         lr, registered_model_name="lasso_regression_model"
+       )
+   ```
+   </details>
+   
+2. <details> <summary> Run training with different parameters</summary> 
+   For example set alpha in params to 0.5.
+   </details>
+
+3. <details> <summary> Compare the two models </summary>
+   This can be done via the printed output or via the mlflow ui.
+
+   In the terminal run <code>mlflow ui</code>
+   </details>
+
+4. <details><summary>What exactly is logged for each run?</summary>
+   Check the mlruns directory or through the UI under "artifacts"
+   </details>
+
+5. <details><summary>Try to use autologging</summary>
+   Add <code>mlflow.autolog()</code> and remove other MLflow logging
+   </details>
+
+[Next: Exercise 2 - Running a Custom Model](C-custom-models.md)
+
+=================
+
+# Custom Models
+
+# Exercise 2: Running a custom model
+
+Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own. Since we actually know the data generating function in data_util.py, we could simply create a model that predicts f(x) = x.
+
+1. <details><summary>Define a pyfunc.PythonModel</summary>
+    Example:
+
+    ```python
+   import pandas as pd
+   from typing import List, Dict
+   from mlflow.pyfunc import PythonModel
+   from mlflow.models import set_model
+
+
+   class BasicModel(PythonModel):
+      def linear(self, numbers):
+         return [x for x in numbers]
+
+      def predict(self, context, model_input) -> List[float]:
+         if isinstance(model_input, pd.DataFrame):
+               model_input = list(model_input.iloc[0].values())
+         return self.linear(model_input)
+
+
+   # This tells MLflow which object to use for inference
+   set_model(BasicModel())
+    ```
+  </details>
+
+2. <details><summary>Do a run with this model</summary>
+    Skip the training step and replace the lr model with the basic model.
+    
+    Log the model with 
+    ```python
+    mlflow.pyfunc.log_model(
+        python_model=lr,
+        name="Basic Linear Model",
+    )
+    ```
+  </details>
+
+[Next: Exercise 3 - Check Performance of Deployed Model](D-model-monitoring.md)
+
+=================
+
+# Model Monitoring
+
+# Exercise 3: Check performance of deployed model
+
+Once a model is deployed, you need to monitor the performance and such.
+
+Here we test how we can log two things: data drift, which is when your input variable drifts, and concept drift, which is when the fundamental relationship between your dependent and independent variable changes.
+
+1. <details> <summary> Register your model </summary>
+   This can be done when logging the model and adding the `registered_model_name` argument to the function 
+</details>
+
+2. <details> <summary> Run the data evaluation with the data drift data. How do you expect the model error to change? Do you expect to see a difference in the distribution of the X variable?</summary>
+   This is available through the get_data_drift_data function.
+
+   Given our simple linear model, we don't expect the error to change. However, in realistic scenarios, our model might not extrapolate and/or interpolate properly for this new distribution, so we still need to keep an eye on model performance.
+
+   We do expect the distribution of the X variable to change. That is essentially the concept of data drift.
+</details>
+
+3. <details> <summary> Run the model evaluation with the concept drift data. How do you expect the model error to change? Do you expect to see a difference in the distribution of the X variable? </summary>
+   This is available through the get_data_concept_data function.
+
+   Now we expect the error of the model to increase since the fundamental proportional relationship of the data has changed (constant of 10 is added). This will be visible in the MLflow UI.
+
+   The distribution of our X variable is the same, so we don't expect any data drift/distribution change. 
+
+</details>
+
+And that is it! You can do a lot more with MLflow, and you might see some more complex commands later in the course, but remember: start simple and then add complexity later.
+
+[Back to Introduction](A-introduction.md)
