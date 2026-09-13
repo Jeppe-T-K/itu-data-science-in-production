@@ -43,4 +43,4 @@ Sometimes you can't use a standard SKLearn or similarly supported model, so you 
     ```
   </details>
 
-[Next: Exercise 3 - Check Performance of Deployed Model](D-model-monitoring.md)
+[Next: Exercise 3 - Check Performance of Deployed Model](model-monitoring)

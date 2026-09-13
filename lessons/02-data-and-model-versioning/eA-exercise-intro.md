@@ -24,11 +24,11 @@ The goal of the following exercises is to take you through the journey of linkin
 
 The following exercises will guide you through using DVC for data and model versioning:
 
-- [Exercise 1: Initialization](eB-setup.md) - Initialize in your repository
-- [Exercise 2: Start Tracking Files](eC-tracking.md) - Add files to DVC tracking
-- [Exercise 3: Using a Remote](eD-remote.md) - Configure and use remote storage
-- [Exercise 4: Switching Between Versions](eE-versions.md) - Manage and switch between data versions
-- [Exercise 5: Import from URL](eF-import.md) - Import external data
+- [Exercise 1: Initialization](initialization) - Initialize in your repository
+- [Exercise 2: Start Tracking Files](tracking) - Add files to DVC tracking
+- [Exercise 3: Using a Remote](remote) - Configure and use remote storage
+- [Exercise 4: Switching Between Versions](versions) - Manage and switch between data versions
+- [Exercise 5: Import from URL](import) - Import external data
 
 # Exercise 0: Setup
 

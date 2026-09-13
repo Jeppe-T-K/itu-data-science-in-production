@@ -65,4 +65,4 @@ title: Project Structure
 
    </details>
 
-[Next: Exercise 2 - Project Teaser](eD-project-teaser.md)
+[Next: Exercise 2 - Project Teaser](project-teaser)

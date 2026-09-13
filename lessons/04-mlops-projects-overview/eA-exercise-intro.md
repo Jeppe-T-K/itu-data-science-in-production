@@ -29,10 +29,10 @@ For these exercises, we will use a specific template for Data Science, called [C
 
 The following exercises will guide you through setting up MLOps projects:
 
-- [Exercise 1: Cookiecutter Setup](eB-cookiecutter-setup.md) - Initialize Cookiecutter Data Science
-- [Exercise 1: Project Structure](eC-project-structure.md) - Inspect and understand the CCDS structure
-- [Exercise 2: Project Teaser](eD-project-teaser.md) - Preview of MLOps project structure
-- [Exercise 3: Collaboration](eE-collaboration.md) - Setting up GitHub and working together
+- [Exercise 1: Cookiecutter Setup](cookiecutter-setup) - Initialize Cookiecutter Data Science
+- [Exercise 1: Project Structure](project-structure) - Inspect and understand the CCDS structure
+- [Exercise 2: Project Teaser](project-teaser) - Preview of MLOps project structure
+- [Exercise 3: Collaboration](collaboration) - Setting up GitHub and working together
 
 ---
 

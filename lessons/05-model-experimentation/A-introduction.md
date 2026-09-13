@@ -33,10 +33,10 @@ For the lecture:
 
 The following exercises will guide you through model experimentation:
 
-- [Exercise 0: Installation](B-mlflow-basics.md#exercise-0-installation) - Install MLflow and dependencies
-- [Exercise 1: Run an ML Experiment](B-mlflow-basics.md) - Create and log ML experiments with MLflow
-- [Exercise 2: Running a Custom Model](C-custom-models.md) - Define and use custom models
-- [Exercise 3: Check Performance of Deployed Model](D-model-monitoring.md) - Monitor for data and concept drift
+- [Exercise 0: Installation](mlflow-basics#exercise-0-installation) - Install MLflow and dependencies
+- [Exercise 1: Run an ML Experiment](mlflow-basics) - Create and log ML experiments with MLflow
+- [Exercise 2: Running a Custom Model](custom-models) - Define and use custom models
+- [Exercise 3: Check Performance of Deployed Model](model-monitoring) - Monitor for data and concept drift
 
 ## Learning Goals
 

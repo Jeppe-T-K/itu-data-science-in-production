@@ -51,4 +51,4 @@ Although they are based on the immutable **Docker image**, it is possible to cus
 
 But enough theory for now. Let's start with the exercises!
 
-[Next: Exercise 0 - Installation](C-exercise-setup.md)
+[Next: Exercise 0 - Installation](exercise-setup)

@@ -51,4 +51,4 @@ For this exercise, we want to simulate a a workflow where you (and a partner, if
 
 This was a very preliminary example of working together on code. There are more aspects to it, such as branching strategies, code reviews and pull requests, but that will be covered in later lectures. For now, pat yourselves on the back for actually starting a data science project with a more clear strategy than 80% of companies!
 
-[Back to Introduction](eA-introduction.md)
+[Back to Introduction](exercise-intro)

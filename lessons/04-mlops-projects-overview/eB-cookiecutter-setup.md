@@ -36,4 +36,4 @@ Next we want to start using Cookiecutter with one of our projects. Let's be insp
 
   </details>
 
-[Next: Exercise 1 - Project Structure](eC-project-structure.md)
+[Next: Exercise 1 - Project Structure](project-structure)

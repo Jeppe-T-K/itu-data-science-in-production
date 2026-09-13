@@ -26,4 +26,4 @@ title: Exercise Build
    <pre>Question: why is it faster building it now?</pre>
    </details>
 
-[Next: Exercise 3 - Run your Image](F-exercise-run.md)
+[Next: Exercise 3 - Run your Image](exercise-run)

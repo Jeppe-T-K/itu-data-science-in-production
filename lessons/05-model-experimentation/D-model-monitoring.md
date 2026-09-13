@@ -31,4 +31,4 @@ Here we test how we can log two things: data drift, which is when your input var
 
 And that is it! You can do a lot more with MLflow, and you might see some more complex commands later in the course, but remember: start simple and then add complexity later.
 
-[Back to Introduction](A-introduction.md)
+[Back to Introduction](introduction)

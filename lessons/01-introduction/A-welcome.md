@@ -46,11 +46,11 @@ By the end of this course, you will be able to:
 
 The course is organized into the following lessons:
 
-1. **[Introduction](A-welcome.md)** - Course overview and prerequisites
-2. **[Data and Model Versioning](../data-and-model-versioning/A-introduction.md)** - Using DVC for data and model tracking
-3. **[MLOps Projects Overview](../mlops-projects-overview/A-introduction.md)** - Structuring projects with Cookiecutter Data Science
-4. **[Model Experimentation](../model-experimentation/A-introduction.md)** - Experiment tracking with MLflow
-5. **[Containers and Docker](../containers-and-docker/A-introduction.md)** - Containerizing ML applications
+1. **[Introduction](welcome)** - Course overview and prerequisites
+2. **[Data and Model Versioning](/lessons/data-and-model-versioning/introduction)** - Using DVC for data and model tracking
+3. **[MLOps Projects Overview](/lessons/mlops-projects-overview/introduction)** - Structuring projects with Cookiecutter Data Science
+4. **[Model Experimentation](/lessons/model-experimentation/introduction)** - Experiment tracking with MLflow
+5. **[Containers and Docker](/lessons/containers-and-docker/introduction)** - Containerizing ML applications
 
 ## Slides
 

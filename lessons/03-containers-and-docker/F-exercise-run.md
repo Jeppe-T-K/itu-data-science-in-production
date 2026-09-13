@@ -32,4 +32,4 @@ title: Exercise Run
 
    </details>
 
-[Next: Exercise 4 - Push and Pull](G-exercise-push-pull.md)
+[Next: Exercise 4 - Push and Pull](exercise-push-pull)

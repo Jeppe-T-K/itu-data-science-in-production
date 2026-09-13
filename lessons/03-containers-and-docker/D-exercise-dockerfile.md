@@ -50,4 +50,4 @@ title: Exercise Dockerfile
    </code></pre>
    </details>
 
-[Next: Exercise 2 - Build the Image](E-exercise-build.md)
+[Next: Exercise 2 - Build the Image](exercise-build)

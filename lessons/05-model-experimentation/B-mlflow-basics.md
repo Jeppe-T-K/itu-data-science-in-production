@@ -51,4 +51,4 @@ Make sure MLflow and scipy is installed:
    Add <code>mlflow.autolog()</code> and remove other MLflow logging
    </details>
 
-[Next: Exercise 2 - Running a Custom Model](C-custom-models.md)
+[Next: Exercise 2 - Running a Custom Model](custom-models)
