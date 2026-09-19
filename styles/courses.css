@@ -381,7 +381,7 @@ blockquote > *:first-child {
 }
 
 ol.sections-name {
-  counter-reset: my-awesome-counter;
+  counter-reset: my-awesome-counter -1;
   list-style: none;
   padding-left: 40px;
   width: 98%;
@@ -510,6 +510,16 @@ ol.sections-name .lesson-details {
 
 .subsection ol {
   padding-left: 20px;
+  list-style: none;
+  counter-reset: subsection-counter -1;
+}
+
+.subsection li {
+  counter-increment: subsection-counter;
+}
+
+.subsection li::marker {
+  content: counter(subsection-counter) ". ";
 }
 
 .subsection-empty {
