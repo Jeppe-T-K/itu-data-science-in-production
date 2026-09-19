@@ -11,7 +11,7 @@ There's multiple [storage solutions in DVC](https://dvc.org/doc/user-guide/data-
 1. Fetch data locally:
     ```bash
     mkdir -p data/raw
-    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/w04/resources/coco_small.jpg -P data/raw/
+    wget https://raw.githubusercontent.com/Jeppe-T-K/itu-data-science-in-production/main/lessons/02-data-and-model-versioning/resources/coco_small.jpg -P data/raw/
     ```
 
 2. Add file to tracking with DVC
