@@ -1,5 +1,5 @@
 ---
-title: Exercise Dockerfile
+title: Exercise 1 - Create a Dockerfile
 ---
 
 # Exercise 1: Create a training Dockerfile
@@ -50,4 +50,4 @@ title: Exercise Dockerfile
    </code></pre>
    </details>
 
-[Next: Exercise 2 - Build the Image](exercise-build)
+[Next: Exercise 2 - Build the Image](eC-exercise-build)

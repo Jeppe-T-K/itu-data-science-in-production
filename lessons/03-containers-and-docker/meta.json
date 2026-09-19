@@ -2,5 +2,25 @@
   "title": "Containers and Docker",
   "shortTitle": "Docker",
   "description": "Introduction to Docker for reproducible ML environments",
-  "order": ["A-introduction", "B-notes", "C-exercise-setup", "D-exercise-dockerfile", "E-exercise-build", "F-exercise-run", "G-exercise-push-pull", "H-exercise-cleanup"]
+  "sections": [
+    {
+      "title": "Introduction",
+      "order": ["iA-introduction"]
+    },
+    {
+      "title": "Lecture",
+      "order": ["lA-notes"]
+    },
+    {
+      "title": "Exercises",
+      "order": [
+        "eA-exercise-setup",
+        "eB-exercise-dockerfile",
+        "eC-exercise-build",
+        "eD-exercise-run",
+        "eE-exercise-push-pull",
+        "eF-exercise-cleanup"
+      ]
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 ---
-title: Notes
+title: Notes and Theory
 ---
 
 # Prelude
@@ -51,4 +51,4 @@ Although they are based on the immutable **Docker image**, it is possible to cus
 
 But enough theory for now. Let's start with the exercises!
 
-[Next: Exercise 0 - Installation](exercise-setup)
+[Next: Exercise 0 - Installation](eA-exercise-setup)

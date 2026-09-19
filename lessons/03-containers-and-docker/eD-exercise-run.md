@@ -1,5 +1,5 @@
 ---
-title: Exercise Run
+title: Exercise 3 - Run your Image
 ---
 
 # Exercise 3: Run your image
@@ -32,4 +32,4 @@ title: Exercise Run
 
    </details>
 
-[Next: Exercise 4 - Push and Pull](exercise-push-pull)
+[Next: Exercise 4 - Push and Pull](eE-exercise-push-pull)
