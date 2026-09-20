@@ -6,9 +6,9 @@ title: Introduction
 
 ## Agenda
 
- * [08:15 – 08:45] – Setting up Docker on your machines
- * [08:45 – 09:00] – Project questions (if any)
- * [09:15 – 12:00] – Quick intro to Docker + Follow-along exercises
+ * [08:15 – 08:30] – Setting up Docker on your machines
+ * [08:30 – 09:00] – Quick intro to Docker
+ * [09:15 – 12:00] – Follow-along exercises
 
 ## Preparation
 
@@ -20,10 +20,6 @@ For the exercises:
 * [Docker: Get Docker](https://docs.docker.com/get-started/get-docker/)
 * [Docker: Install Docker Engine (can also be done through Docker Desktop)](https://docs.docker.com/engine/install/)
 * [Docker: Introduction](https://docs.docker.com/get-started/introduction/)
-
-## Slides
-
-Slides are available on [LearnIT](https://learnit.itu.dk/).
 
 ## Exercises
 
