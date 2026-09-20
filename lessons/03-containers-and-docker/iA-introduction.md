@@ -29,10 +29,10 @@ Slides are available on [LearnIT](https://learnit.itu.dk/).
 
 The following exercises will guide you through setting up Docker and using it for your data science projects:
 
-- [Notes and Theory](lA-notes) - Understanding Docker concepts
-- [Exercise 0: Installation](eA-exercise-setup) - Install and test Docker
-- [Exercise 1: Create a Dockerfile](eB-exercise-dockerfile) - Build Dockerfile for training
-- [Exercise 2: Build the Image](eC-exercise-build) - Build and tag your image
-- [Exercise 3: Run your Image](eD-exercise-run) - Run containers with various options
-- [Exercise 4: Push and Pull](eE-exercise-push-pull) - Work with registries
-- [Exercise 5: Clean up](eF-exercise-cleanup) - Remove unused images
+- [Notes and Theory](notes) - Understanding Docker concepts
+- [Exercise 0: Installation](exercise-setup) - Install and test Docker
+- [Exercise 1: Create a Dockerfile](exercise-dockerfile) - Build Dockerfile for training
+- [Exercise 2: Build the Image](exercise-build) - Build and tag your image
+- [Exercise 3: Run your Image](exercise-run) - Run containers with various options
+- [Exercise 4: Push and Pull](exercise-push-pull) - Work with registries
+- [Exercise 5: Clean up](exercise-cleanup) - Remove unused images

@@ -1,5 +1,5 @@
 ---
-title: Exercise 4 - Push and Pull
+title: Push and Pull
 ---
 
 # Exercise 4: Push and pull
@@ -42,4 +42,4 @@ title: Exercise 4 - Push and Pull
    It's the different layers. This can be confirmed with the  command <code>docker inspect 90c46295c455</code>
    </details>  
 
-[Next: Exercise 5 - Clean up](eF-exercise-cleanup)
+[Next: Exercise 5 - Clean up](exercise-cleanup)

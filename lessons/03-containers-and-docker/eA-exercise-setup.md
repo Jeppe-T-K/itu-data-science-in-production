@@ -1,5 +1,5 @@
 ---
-title: Exercise 0 - Installation
+title: Installation
 ---
 
 # Exercise 0: Installation
@@ -19,4 +19,4 @@ As described in the previous section, Docker is really a way to run code in a re
    A common issue is that the Docker daemon not running. If you installed it with Docker Desktop, make sure that program is running.
    </details>
 
-[Next: Exercise 1 - Create a Dockerfile](eB-exercise-dockerfile)
+[Next: Exercise 1 - Create a Dockerfile](exercise-dockerfile)

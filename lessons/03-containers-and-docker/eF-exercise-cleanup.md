@@ -1,5 +1,5 @@
 ---
-title: Exercise 5 - Clean up
+title: Clean up
 ---
 
 # Exercise 5: Clean up
@@ -14,4 +14,4 @@ title: Exercise 5 - Clean up
 
 ---
 
-[Back to Introduction](iA-introduction)
+[Back to Introduction](introduction)

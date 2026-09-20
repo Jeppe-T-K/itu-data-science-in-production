@@ -22,8 +22,7 @@ Itemised list for convenience:
 
 ## What?
 
-> [!NOTE]
-> Fun fact: Docker is written in Go.
+> **Note:** Fun fact: Docker is written in Go.
 
 Docker is a way to create a virtual instance of a compute resources. However, unlike virtual machines with their own complete operating system, Docker uses lightweight containers instead.
 
@@ -51,4 +50,4 @@ Although they are based on the immutable **Docker image**, it is possible to cus
 
 But enough theory for now. Let's start with the exercises!
 
-[Next: Exercise 0 - Installation](eA-exercise-setup)
+[Next: Exercise 0 - Installation](exercise-setup)

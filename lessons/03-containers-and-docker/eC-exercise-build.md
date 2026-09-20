@@ -1,5 +1,5 @@
 ---
-title: Exercise 2 - Build the Image
+title: Build the Image
 ---
 
 # Exercise 2: Build the image
@@ -26,4 +26,4 @@ title: Exercise 2 - Build the Image
    <pre>Question: why is it faster building it now?</pre>
    </details>
 
-[Next: Exercise 3 - Run your Image](eD-exercise-run)
+[Next: Exercise 3 - Run your Image](exercise-run)
