@@ -9,7 +9,7 @@
     },
     {
       "title": "Lecture",
-      "order": ["lA-notes"]
+      "order": ["lA-notes", "lB-technical-details", "lC-industry-usage", "lD-alternatives"]
     },
     {
       "title": "Exercises",
