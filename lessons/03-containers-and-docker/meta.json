@@ -21,10 +21,6 @@
         "eE-exercise-push-pull",
         "eF-exercise-cleanup"
       ]
-    },
-    {
-      "title": "Quiz",
-      "order": ["qA-quiz"]
     }
   ]
 }
