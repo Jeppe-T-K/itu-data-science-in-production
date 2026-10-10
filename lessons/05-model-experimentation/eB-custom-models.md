@@ -4,7 +4,7 @@ title: Custom Models
 
 # Exercise 2: Running a custom model
 
-Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own. Since we actually know the data generating function in data_util.py, we could simply create a model that predicts f(x) = x.
+Sometimes you can't use a standard SKLearn or similarly supported model, so you have to define your own. Since we actually know the data generating function in <code>resources/data_util.py</code>, we could simply create a model that predicts f(x) = x.
 
 1. <details><summary>Define a pyfunc.PythonModel</summary>
     Example:

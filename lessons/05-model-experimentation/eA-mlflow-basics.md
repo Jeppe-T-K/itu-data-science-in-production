@@ -17,7 +17,7 @@ Make sure MLflow and scipy is installed:
 
 ### Exercise 1: Run an ML experiment
 
-1. <details> <summary> Edit the example_model.py script to log model run with MLflow</summary>
+1. <details> <summary> Edit the <code>resources/example_model.py</code> script to log model run with MLflow</summary>
    First <code>import mlflow</code>
    
    Then set the MLflow experiment via <code>mlflow.set_experiment("My experiment name")</code>

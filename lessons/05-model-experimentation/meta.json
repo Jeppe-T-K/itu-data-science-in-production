@@ -2,5 +2,39 @@
   "title": "Model Experimentation",
   "shortTitle": "Model Experimentation",
   "description": "ML experiment tracking with MLflow, custom models, and performance monitoring",
-  "order": ["A-introduction", "B-mlflow-basics", "C-custom-models", "D-model-monitoring"]
+  "sections": [
+    {
+      "title": "Introduction",
+      "order": ["iA-introduction"]
+    },
+    {
+      "title": "Lecture",
+      "order": [
+        "lA-lecture-intro",
+        "lB-working-in-a-team",
+        "lC-dora-metrics",
+        "lD-dora-for-mlops",
+        "lE-deployment-frequency",
+        "lF-model-issues",
+        "lG-data-issues",
+        "lH-logging",
+        "lI-lead-time-for-changes",
+        "lJ-experimentation",
+        "lK-putting-it-in-production",
+        "lL-mean-time-to-restore",
+        "lM-mttr-causes",
+        "lN-change-failure-rate",
+        "lO-managing-failures",
+        "lP-summary"
+      ]
+    },
+    {
+      "title": "Exercises",
+      "order": [
+        "eA-mlflow-basics",
+        "eB-custom-models",
+        "eC-model-monitoring"
+      ]
+    }
+  ]
 }
