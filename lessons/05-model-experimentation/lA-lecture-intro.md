@@ -19,6 +19,4 @@ title: Lecture Intro
 
 <img src="/images/model_experimentation/dora-outline.png" alt="DORA metrics outline" width="100%" />
 
-> **Note — Red thread**
-> The DORA metrics for MLOps will be our red thread for explaining why model experimentation, selection and monitoring is important.
 

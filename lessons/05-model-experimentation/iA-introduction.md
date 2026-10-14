@@ -8,9 +8,8 @@ title: Introduction
 
 ### Agenda
 
- * [08:15 – 10:00] – Exercises: MLflow + warnings
- * [10:15 – 12:00] – Lecture: DORA metrics and model experimentation, selection and monitoring
-
+ * [08:15 – 09:00] – Lecture: DORA metrics and model experimentation, selection and monitoring
+ * [09:15 – 12:00] – Exercises: MLFlow basics + model serving
 ### Preparation
 
 For the exercises:
@@ -19,7 +18,7 @@ For the exercises:
 
 For the lecture:
 
-* https://www.mlebook.com/wiki/doku.php (Chapter 9.3 + 9.4 + 9.5)
+* https://www.mlebook.com/wiki/doku.php (Chapter 9)
 * https://ml-ops.org/content/mlops-principles (Monitoring in particular)
 * https://www.datadoghq.com/knowledge-center/dora-metrics/ (or other DORA metric google searches is fine)
 * https://neptune.ai/blog/how-to-monitor-your-models-in-production-guide (skimming it is fine)

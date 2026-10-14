@@ -6,7 +6,7 @@ title: DORA Metrics
 
 **DORA** is the Google team **D**ev**O**ps **R**esearch and **A**ssessment, who publish the yearly "State of DevOps" reports (since ~2013).
 
-> **Note — DORA**
+> **Note**
 > DORA is not an abbreviation of the metrics themselves – it is the name of the research team behind them.
 
 ![DevOps infinity loop](/images/model_experimentation/dynatrace-devops.png)
