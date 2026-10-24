@@ -2,9 +2,11 @@ import pandas as pd
 import scipy
 import mlflow
 
-from sklearn.metrics import mean_squared_error
-
-from data_util import get_data, get_data_drift_data, get_concept_drift_data
+from data_util import (
+    get_classification_data,
+    get_classification_drift_data,
+    get_classification_concept_data,
+)
 
 def detect_data_drift(X_old, X_new):
     drifted_features = []
@@ -14,34 +16,34 @@ def detect_data_drift(X_old, X_new):
             drifted_features.append(i)
     return drifted_features
 
-# Load data
-X_train, X_test, y_train, y_test = get_data_drift_data()
+# The training data, to compare new data against
+X_train, _, y_train, _ = get_classification_data()
 
-model_name = "custom_linear_model"
+model_name = "thresholded_logistic_model"
 model_version = 1  # Or higher if you ran it multiple times
 
-# Load logged model
-lr = mlflow.pyfunc.load_model(
+# Load logged model (the threshold is stored with it)
+model = mlflow.pyfunc.load_model(
     f"models:/{model_name}/{model_version}"
 )
-# Get latest training data from runs
-run = mlflow.get_run(lr.metadata.run_id)
 
-dataset_info = run.inputs.dataset_inputs[0].dataset
-X_train_old = pd.read_csv(mlflow.data.get_source(dataset_info).load()).values
+# The new data the model is meeting "in production".
+# Swap between the two to compare data drift vs. concept drift.
+X_new, X_eval, y_new, y_eval = get_classification_drift_data()
+# X_new, X_eval, y_new, y_eval = get_classification_concept_data()
 
 # Create evaluation dataset
-eval_data = pd.DataFrame(X_test)
-eval_data["target"] = y_test
+eval_data = pd.DataFrame(X_eval)
+eval_data["target"] = y_eval
 
-mlflow.set_experiment("Basic Linear Model")
+mlflow.set_experiment("Thresholded Logistic Regression")
 with mlflow.start_run():
-    data_drift_columns = detect_data_drift(X_train_old, X_test)
-    ... # Log data_drift_columns with MLflow
+    data_drift_columns = detect_data_drift(X_train, X_eval)
+    mlflow.log_metric("data_drifted_features", len(data_drift_columns))
 
     result = mlflow.evaluate(
-        lr,  # Function to evaluate
-        eval_data,  # Evaluation data
+        model,             # Function to evaluate
+        eval_data,         # Evaluation data
         targets="target",  # Target column
-        model_type="regressor",  # Task type
+        model_type="classifier",  # Task type
     )

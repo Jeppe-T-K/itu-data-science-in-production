@@ -2,26 +2,26 @@
 title: MLflow Basics
 ---
 
-# Exercise 1: Run an ML Experiment
+# Exercise 1: MLflow Catch-Up
 
-For this exercise, the goal is to use MLflow to create an experiment and log relevant artifacts and metrics for different ML models. Much of what you need for this is under the https://mlflow.org/docs/latest/ml/tracking/quickstart/ page.
+MLflow should be familiar to you at this point, so this first exercise is a quick catch-up to make sure everyone has a working setup and the core concepts (experiments, runs, parameters, metrics, artifacts) are fresh. If you have never used MLflow before, don't panic — the exercise is a self-contained introduction, and everything you need is under the [MLflow tracking quickstart](https://mlflow.org/docs/latest/ml/tracking/quickstart/).
 
-MLflow has a lot of in-built "flavours" that make it easy to run experiments for well-known ML libraries such as SKlearn or Tensorflow. For this exercise we can use the SKlearn model in 
+MLflow has a lot of built-in "flavours" that make it easy to track models from well-known ML libraries such as scikit-learn or Tensorflow. That is what we use here — the _custom_ models come in the next exercise.
 
 ### Exercise 0: Installation
 
-Make sure MLflow and scipy is installed:
+Make sure MLflow and friends are installed:
 `pip install mlflow`
 `pip install scipy`
 `pip install scikit-learn`
 
-### Exercise 1: Run an ML experiment
+### Exercise 1.1: Run an ML experiment
 
-1. <details> <summary> Edit the <code>resources/example_model.py</code> script to log model run with MLflow</summary>
+1. <details> <summary> Edit the <code>resources/example_model.py</code> script to log the model run with MLflow</summary>
    First <code>import mlflow</code>
-   
+
    Then set the MLflow experiment via <code>mlflow.set_experiment("My experiment name")</code>
-   
+
    Lastly start an MLflow run and log relevant things:
    ```python
    with mlflow.start_run():
@@ -32,8 +32,8 @@ Make sure MLflow and scipy is installed:
        )
    ```
    </details>
-   
-2. <details> <summary> Run training with different parameters</summary> 
+
+2. <details> <summary> Run training with different parameters</summary>
    For example set alpha in params to 0.5.
    </details>
 
@@ -51,4 +51,6 @@ Make sure MLflow and scipy is installed:
    Add <code>mlflow.autolog()</code> and remove other MLflow logging
    </details>
 
-[Next: Exercise 2 - Running a Custom Model](custom-models)
+If all of that went smoothly: great, you are caught up. The interesting part starts in the next exercise, where a model is _more_ than what a standard flavour can express.
+
+[Next: Exercise 2 - A Custom Model Wrapper](custom-models)

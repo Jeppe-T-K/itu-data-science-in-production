@@ -2,7 +2,7 @@
 title: "Organisation Maturity - Stage 1: Data/Model/Code Automation"
 ---
 
-# Data/model/code semi-automation
+# Level 1: Data/model/code semi-automation
 
 <div style="text-align: center;">
   <img src="/images/mlops-projects-overview/coco-jacket.png" alt="Coco in a jacket" style="width: 50%;" />

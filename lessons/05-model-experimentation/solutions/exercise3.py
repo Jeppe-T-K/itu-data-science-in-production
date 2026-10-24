@@ -1,46 +1,60 @@
-import pandas as pd
-import scipy
+import os
+from contextlib import asynccontextmanager
+
 import mlflow
+import pandas as pd
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-from data_util import get_data, get_data_drift_data, get_concept_drift_data
+MODEL_URI = os.environ.get("MODEL_URI", "models:/thresholded_logistic_model/1")
 
-def detect_data_drift(X_old, X_new):
-    drifted_features = []
-    for i in range(X_old.shape[1]):
-        res = scipy.stats.kstest(X_old[:, i], X_new[:, i])
-        if res.pvalue < 0.05:  # significance level
-            drifted_features.append(i)
-    return drifted_features
 
-# Load data
-X_train, X_test, y_train, y_test = get_data()
-# X_train, X_test, y_train, y_test = get_data_drift_data()
-# X_train, X_test, y_train, y_test = get_concept_drift_data()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Load the model once at startup, not per request
+    app.state.model = mlflow.pyfunc.load_model(MODEL_URI)
+    yield
 
-model_name = "custom_linear_model"
-model_version = 1  # Or higher if you ran it multiple times
 
-# Load logged model
-lr = mlflow.pyfunc.load_model(
-    f"models:/{model_name}/{model_version}"
-)
-# Get latest training data from runs
-run = mlflow.get_run(lr.metadata.run_id)
+app = FastAPI(title="Thresholded classifier service", lifespan=lifespan)
 
-dataset_info = run.inputs.dataset_inputs[0].dataset
-X_train_old = pd.read_csv(mlflow.data.get_source(dataset_info).load()).values
 
-# Create evaluation dataset
-eval_data = pd.DataFrame(X_test)
-eval_data["target"] = y_test
+class Invocation(BaseModel):
+    features: list[list[float]]
 
-mlflow.set_experiment("Basic Linear Model")
-with mlflow.start_run():
-    data_drift_columns = detect_data_drift(X_train_old, X_test)
-    mlflow.log_metric("data_drifted_features", len(detect_data_drift(X_train_old, X_test)))
-    result = mlflow.evaluate(
-        lr,  # Function to evaluate
-        eval_data,  # Evaluation data
-        targets="target",  # Target column
-        model_type="regressor",  # Task type
-    )
+
+class Prediction(BaseModel):
+    predictions: list[int]
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.post("/invocations")
+def invocations(payload: Invocation) -> Prediction:
+    df = pd.DataFrame(payload.features)
+    return Prediction(predictions=[int(p) for p in app.state.model.predict(df)])
+
+
+# --- Tests (run with pytest) ---
+
+from fastapi.testclient import TestClient
+
+
+def test_health():
+    response = TestClient(app).get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
+def test_invocations():
+    with TestClient(app) as client:  # enters the lifespan, loads the model
+        response = client.post(
+            "/invocations",
+            json={"features": [[12.0, 34.0], [95.0, 60.0]]},
+        )
+        assert response.status_code == 200
+        assert set(response.json()) == {"predictions"}
+        assert all(p in (0, 1) for p in response.json()["predictions"])

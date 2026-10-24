@@ -2,7 +2,7 @@
 title: "Organisation Maturity - Stage 2: Fully Automated"
 ---
 
-# Stage 2: Fully Automated
+# Level 2: Fully automated
 
 <div style="text-align: center;">
   <img src="/images/mlops-projects-overview/coco-holding-paw.jpeg" alt="Coco lifting paw" style="width: 30%;" />

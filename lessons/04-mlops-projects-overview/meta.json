@@ -32,8 +32,9 @@
         "eA-exercise-intro",
         "eB-cookiecutter-setup",
         "eC-project-structure",
-        "eD-project-teaser", 
-        "eE-collaboration"
+        "eD-local-pipeline",
+        "eE-cloud-storage",
+        "eF-cicd"
       ]
     }
   ]

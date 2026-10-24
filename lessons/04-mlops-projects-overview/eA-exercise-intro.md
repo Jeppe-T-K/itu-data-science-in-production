@@ -12,7 +12,7 @@ There is obviously not _one_ correct way of doing it, and it very much depends o
 
 ![Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/ccds.png "Cookiecutter Data Science AI overlord logo")
 
-For these exercises, we will use a specific template for Data Science, called [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/). This is not by any means the only way to structure a data science project, and we will in the subsequent lessons work on adding extra pieces to our project, but the template has [well-reasoned arguments](https://cookiecutter-data-science.drivendata.org/opinions/) as to why.
+For these exercises, we will use a specific template for Data Science, called [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/). This is not by any means the only way to structure a data science project, but the template has [well-reasoned arguments](https://cookiecutter-data-science.drivendata.org/opinions/) as to why.
 
 ## Learning Goals
 
@@ -22,17 +22,21 @@ For these exercises, we will use a specific template for Data Science, called [C
 > <ul>
 > <li>Start a data science project with version control that follows the CCDS format</li>
 > <li>Explain the motivation for the structure of a data science project</li>
-> <li>Share your repo with others and work on the same code</li>
+> <li>Map the typical MLOps steps (data, models, code) onto a concrete project structure</li>
+> <li>Run an ML pipeline locally from end to end as a set of composable steps</li>
+> <li>Use S3-compatible object storage for data and model artifacts, with credentials kept out of version control</li>
+> <li>Set up a CI/CD workflow that tests your project and produces artifacts on every change</li>
 > </ul>
 
 ## Exercises
 
-The following exercises will guide you through setting up MLOps projects:
+The following exercises take you from an empty directory to a working MLOps project:
 
-- [Exercise 1: Cookiecutter Setup](cookiecutter-setup) - Initialize Cookiecutter Data Science
-- [Exercise 1: Project Structure](project-structure) - Inspect and understand the CCDS structure
-- [Exercise 2: Project Teaser](project-teaser) - Preview of MLOps project structure
-- [Exercise 3: Collaboration](collaboration) - Setting up GitHub and working together
+- [Exercise 1: Cookiecutter Setup](cookiecutter-setup) - Scaffold the repo and push it to GitHub
+- [Exercise 2: Project Structure](project-structure) - Map the MLOps steps from the lecture onto the CCDS structure
+- [Exercise 3: Local Pipeline](local-pipeline) - Implement the steps and run the whole pipeline locally
+- [Exercise 4: Cloud Storage](cloud-storage) - Store data and model artifacts in S3-compatible object storage
+- [Exercise 5: CI/CD](cicd) - Test the project and produce artifacts automatically with GitHub Actions
 
 ---
 
