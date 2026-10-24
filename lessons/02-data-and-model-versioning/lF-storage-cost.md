@@ -23,7 +23,7 @@ Guesses for big cloud providers?
     <tr><td>AWS S3</td><td>$0.023/GB (first 50 TB)</td><td>$0.0125/GB (S3 Standard-IA)</td><td>$0.004/GB (Glacier Instant) · $0.0036/GB (Flexible)</td><td>$0.00099/GB (Glacier Deep Archive)</td><td>$23.00</td></tr>
     <tr><td>Azure Blob</td><td>$0.018/GB (Hot, LRS)</td><td>$0.010/GB (Cool)</td><td>$0.0045/GB (Cold)</td><td>$0.00099/GB (Archive)</td><td>$18.00</td></tr>
     <tr><td>Google Cloud Storage</td><td>$0.020/GB (Standard, regional)</td><td>$0.010/GB (Nearline, regional)</td><td>$0.004/GB (Coldline)</td><td>$0.0024/GB (Archive, US/EU multi-region)</td><td>$20.00</td></tr>
-    <tr><td>Oracle OCI</td><td>$0.0255/GB (Object Standard)</td><td>$0.015/GB (Infrequent Access)</td><td>—</td><td>$0.0026/GB (Archive)</td><td>$25.50</td></tr>
+    <tr><td>Oracle OCI</td><td>$0.0255/GB (Object Standard)</td><td>$0.015/GB (Infrequent Access)</td><td>-</td><td>$0.0026/GB (Archive)</td><td>$25.50</td></tr>
   </tbody>
 </table>
 

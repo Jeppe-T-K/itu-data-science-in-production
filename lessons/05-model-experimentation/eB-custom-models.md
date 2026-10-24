@@ -6,9 +6,9 @@ title: Custom Models
 
 Sometimes you can't use a standard scikit-learn (or otherwise supported) model, so you have to define your own.
 
-A very common case: a **classification threshold**. `LogisticRegression.predict()` classifies based on whether the predicted probability is above 0.5 — but 0.5 is not sacred. If one class is much rarer than the other, or a false positive is much costlier than a false negative, the _useful_ threshold might be 0.3, 0.7, or anywhere else.
+A very common case: a **classification threshold**. `LogisticRegression.predict()` classifies based on whether the predicted probability is above 0.5 - but 0.5 is not sacred. If one class is much rarer than the other, or a false positive is much costlier than a false negative, the _useful_ threshold might be 0.3, 0.7, or anywhere else.
 
-The threshold is a decision you make _with data_ during experimentation, and it belongs _with the model_ when you promote it to production — not hardcoded in some serving script by whoever deploys it. So in this exercise you will wrap a logistic regression in a custom MLflow model that also stores the threshold, using MLflow's [`PythonModel`](https://mlflow.org/docs/latest/api/python_model/):
+The threshold is a decision you make _with data_ during experimentation, and it belongs _with the model_ when you promote it to production - not hardcoded in some serving script by whoever deploys it. So in this exercise you will wrap a logistic regression in a custom MLflow model that also stores the threshold, using MLflow's [`PythonModel`](https://mlflow.org/docs/latest/api/python_model/):
 
 ### Exercise 2.1: Train a classifier (and question the default threshold)
 
@@ -60,13 +60,13 @@ The threshold is a decision you make _with data_ during experimentation, and it 
    )
    ```
 
-   Note that <code>python_model</code> is an <i>instance</i> — everything you store on it is serialized with the model.
+   Note that <code>python_model</code> is an <i>instance</i> - everything you store on it is serialized with the model.
    </details>
 
 3. <details><summary>Load it back and verify</summary>
    Load the model from the registry (<code>mlflow.pyfunc.load_model("models:/thresholded_logistic_model/1")</code>) and predict on the test set.
 
-   <pre><i><u>Verify that the loaded model's predictions equal what you get by manually thresholding <code>predict_proba</code> at your chosen threshold. What happens if you load the scikit-learn flavour instead — does it know anything about your threshold?</u></i></pre>
+   <pre><i><u>Verify that the loaded model's predictions equal what you get by manually thresholding <code>predict_proba</code> at your chosen threshold. What happens if you load the scikit-learn flavour instead - does it know anything about your threshold?</u></i></pre>
    </details>
 
 4. <details><summary>Experiment with the threshold</summary>
@@ -77,9 +77,7 @@ The threshold is a decision you make _with data_ during experimentation, and it 
 
 ### Exercise 2.3: Reflect
 
-<pre><i><u>Discuss in pairs:
+<pre><i><u>Discuss:
 
 <li>The lecture talked about training-serving skew. Where could a threshold reintroduce it if it is NOT stored with the model?</li>
 <li>Which other "extras" could you imagine bundling with a model this way? (hint: feature scaling, label encoders, calibration...)</li></u></i></pre>
-
-[Next: Exercise 3 - Serving with FastAPI](fastapi-serving)

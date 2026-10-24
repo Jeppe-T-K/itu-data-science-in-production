@@ -60,7 +60,7 @@ The following exercises will guide you through model experimentation:
 - [Exercise 3: Serving with FastAPI](fastapi-serving) - Put the model behind an HTTP API
 - [Exercise 4: Check Performance of Deployed Model](model-monitoring) - Monitor for data and concept drift
 
-> **Note — Learning outcomes**
+> **Note - Learning outcomes**
 > <i> By the end of the exercises, we expect you to be able to do the following:</i>
 > <ul>
 > <li>Organise ML experiments using common tools</li>

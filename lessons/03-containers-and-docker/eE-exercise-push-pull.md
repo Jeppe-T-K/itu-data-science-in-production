@@ -41,5 +41,3 @@ title: Push and Pull
 3. <details><summary> What do the hashes represent when pushing/pulling?</summary>
    It's the different layers. This can be confirmed with the  command <code>docker inspect 90c46295c455</code>
    </details>  
-
-[Next: Exercise 5 - Clean up](exercise-cleanup)

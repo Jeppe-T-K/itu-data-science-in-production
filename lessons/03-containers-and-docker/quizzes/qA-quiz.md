@@ -22,10 +22,10 @@ title: Docker Quiz
 
 3. Is Docker always free to use?
 
-   - ✅ No — Docker Desktop requires a paid license for large companies (250+ employees or $10M+ revenue), but Docker Engine is open source, so free alternatives like Podman can be used instead
-   - No — Dockerfiles use proprietary technology, so you lock yourself into the Docker ecosystem and cannot switch later
-   - Yes — all features are free, but you have to pay if you store more than 50 GB of images
-   - Yes — Docker is fully free for everyone, including companies of any size
+   - ✅ No - Docker Desktop requires a paid license for large companies (250+ employees or $10M+ revenue), but Docker Engine is open source, so free alternatives like Podman can be used instead
+   - No - Dockerfiles use proprietary technology, so you lock yourself into the Docker ecosystem and cannot switch later
+   - Yes - all features are free, but you have to pay if you store more than 50 GB of images
+   - Yes - Docker is fully free for everyone, including companies of any size
 
 4. What is the working directory inside the container built from this Dockerfile?
 
@@ -45,8 +45,8 @@ title: Docker Quiz
 
 5. What does the `-v` argument to `docker run` do, and when would you use it?
 
-   - ✅ It mounts a directory from the host into the container — useful when your training script should write artifacts to your own disk, so they survive after the container stops
-   - It sets environment variables inside the container — useful for passing API keys
+   - ✅ It mounts a directory from the host into the container - useful when your training script should write artifacts to your own disk, so they survive after the container stops
+   - It sets environment variables inside the container - useful for passing API keys
    - It makes the container run in verbose mode, printing extra logs
    - It gives the container a custom name, so you can refer to it in later commands
 
@@ -73,7 +73,7 @@ title: Docker Quiz
 
    Why does this happen?
 
-   - ✅ A stopped container based on that image still exists on disk, so the image is still referenced by it — you must remove the container with `docker rm` first
+   - ✅ A stopped container based on that image still exists on disk, so the image is still referenced by it - you must remove the container with `docker rm` first
    - The image is hosted online, so deleting it would break dependencies for other users
    - The image is cached as a base layer for multiple other images, and Docker cannot delete shared layers
    - You can never delete images by name; only by image id
@@ -88,7 +88,7 @@ title: Docker Quiz
 10. What happens when you run `docker run mlflow` but the `mlflow` image is not on your machine?
 
     - ✅ Docker first tries to pull the image from the default registry (Docker Hub) and then runs it, if the pull succeeds
-    - It fails immediately with the error `image not found` — you must pull manually first
+    - It fails immediately with the error `image not found` - you must pull manually first
     - It first tries to build the image from a local `Dockerfile` in your current directory
     - It runs an empty container and waits for you to install mlflow inside it
 

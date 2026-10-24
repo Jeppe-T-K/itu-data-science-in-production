@@ -31,5 +31,3 @@ title: Run your Image
    <details><code>docker ps -a</code></details>
 
    </details>
-
-[Next: Exercise 4 - Push and Pull](exercise-push-pull)

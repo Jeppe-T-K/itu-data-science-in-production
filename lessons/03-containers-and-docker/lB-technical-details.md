@@ -112,5 +112,3 @@ Although they are based on the immutable **Docker image**, it is possible to cus
 This approach also ensures the same environment for *development* and *production* work, eliminating the "works on my machine" problem.
 
 </details>
-
-[Next: Industry Usage](lC-industry-usage)

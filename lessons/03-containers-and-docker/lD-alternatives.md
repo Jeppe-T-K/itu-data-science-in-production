@@ -116,5 +116,3 @@ completeness, here's a list of some for the interested people. Don't spend too m
 - **Project status**: Google archived the original repo in June 2025; it continues via the Chainguard fork maintained by the original creators. Mention this when choosing it for long-term CI infrastructure. [ComputingForGeeks](https://computingforgeeks.com/build-container-images-using-kaniko-in-kubernetes/)
 
 </details>
-
-[Next: Exercise 0 - Installation](eA-exercise-setup)

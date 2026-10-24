@@ -4,9 +4,9 @@ title: MLflow Basics
 
 # Exercise 1: MLflow Catch-Up
 
-MLflow should be familiar to you at this point, so this first exercise is a quick catch-up to make sure everyone has a working setup and the core concepts (experiments, runs, parameters, metrics, artifacts) are fresh. If you have never used MLflow before, don't panic — the exercise is a self-contained introduction, and everything you need is under the [MLflow tracking quickstart](https://mlflow.org/docs/latest/ml/tracking/quickstart/).
+MLflow should be familiar to you at this point, so this first exercise is a quick catch-up to make sure everyone has a working setup and the core concepts (experiments, runs, parameters, metrics, artifacts) are fresh. If you have never used MLflow before, don't panic - the exercise is a self-contained introduction, and everything you need is under the [MLflow tracking quickstart](https://mlflow.org/docs/latest/ml/tracking/quickstart/).
 
-MLflow has a lot of built-in "flavours" that make it easy to track models from well-known ML libraries such as scikit-learn or Tensorflow. That is what we use here — the _custom_ models come in the next exercise.
+MLflow has a lot of built-in "flavours" that make it easy to track models from well-known ML libraries such as scikit-learn or Tensorflow. That is what we use here - the _custom_ models come in the next exercise.
 
 ### Exercise 0: Installation
 
@@ -52,5 +52,3 @@ Make sure MLflow and friends are installed:
    </details>
 
 If all of that went smoothly: great, you are caught up. The interesting part starts in the next exercise, where a model is _more_ than what a standard flavour can express.
-
-[Next: Exercise 2 - A Custom Model Wrapper](custom-models)

@@ -4,103 +4,64 @@ title: Project Structure
 
 # Exercise 2: Inspect Project Structure
 
-### Exercise 2.1: The scaffold
+## Exercise 2.1: The scaffold
 
-Inspect the structure of the resulting repo:
+Inspect the structure of the resulting repo. It may look something like this:
 
-```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for
-│                         {{ cookiecutter.module_name }} and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── {{ cookiecutter.module_name }}   <- Source code for use in this project.
-   │
-   ├── __init__.py             <- Makes {{ cookiecutter.module_name }} a Python module
-   │
-   ├── config.py               <- Store useful variables and configuration
-   │
-   ├── dataset.py              <- Scripts to download or generate data
-   │
-   ├── features.py             <- Code to create features for modeling
-   │
-   ├── modeling
-   │   ├── __init__.py
-   │   ├── predict.py          <- Code to run model inference with trained models
-   │   └── train.py           <- Code to train models
-   │
-   └── plots.py                <- Code to create visualizations
-```
+- **`LICENSE`** — Open-source license if one is chosen
+- **`Makefile`** — Makefile with convenience commands like `make data` or `make train`
+- **`README.md`** — The top-level README for developers using this project.
+- **`data/`** — Directory for storing data locally
+  - **`external/`** — Data from third party sources.
+  - **`interim/`** — Intermediate data that has been transformed.
+  - **`processed/`** — The final, canonical data sets for modeling.
+  - **`raw/`** — The original, immutable data dump.
+- **`docs/`** — A default mkdocs project; see www.mkdocs.org for details
+- **`models/`** — Trained and serialized models, model predictions, or model summaries
+- **`notebooks/`** — Jupyter notebooks. Naming convention is a number (for ordering), the creator's initials, and a short `-` delimited description, e.g. `1.0-jqp-initial-data-exploration`.
+- **`pyproject.toml`** — Project configuration file with package metadata for `{{ cookiecutter.module_name }}` and configuration for tools like black
+- **`references/`** — Data dictionaries, manuals, and all other explanatory materials.
+- **`reports/`** — Generated analysis as HTML, PDF, LaTeX, etc.
+  - **`figures/`** — Generated graphics and figures to be used in reporting
+- **`requirements.txt`** — The requirements file for reproducing the analysis environment, e.g. generated with `pip freeze > requirements.txt`
+- **`setup.cfg`** — Configuration file for flake8
+- **`{{ cookiecutter.module_name }}/`** — Source code for use in this project.
+  - **`__init__.py`** — Makes `{{ cookiecutter.module_name }}` a Python module
+  - **`config.py`** — Store useful variables and configuration
+  - **`dataset.py`** — Scripts to download or generate data
+  - **`features.py`** — Code to create features for modeling
+  - **`modeling/`**
+    - **`__init__.py`**
+    - **`predict.py`** — Code to run model inference with trained models
+    - **`train.py`** — Code to train models
+  - **`plots.py`** — Code to create visualizations
 
-<pre><i><u>Discuss in pairs how this structure makes sense to you</u>
 
-<li>Do you understand where the ML code goes?</li>
-<li>What does each of the pre-generated files do?</li>
-<li>Any terms that you don't know what they mean?</li>
-<li>Other confusing things?</li></i></pre>
+How does this structure make sense to you?
 
-### Exercise 2.2: Where do the MLOps steps live?
+- Do you understand where the ML code goes?
+- What does each of the pre-generated files do?
+- Any terms that you don't know what they mean?
+- Other confusing things?
 
-In the lecture we walked through the typical steps of an ML pipeline, mirroring Google's MLOps maturity levels. For the data component: extraction/ingestion, exploration and validation, and preparation/wrangling. For the model component: training, evaluation/testing, and validation/packaging. Finally the code component: serving, logging/monitoring, and maintenance.
+## Exercise 2.2: Where do the MLOps steps live?
 
-Now map those steps onto your freshly scaffolded project:
+In the lecture we walked through the typical steps of an ML pipeline that consisted of a **data component**, a **model component** and a **code component**. Now it's time to put this into code.
 
-1. <details><summary>Map each step to a directory</summary>
-   For each step below, note _where_ its input and output should live, and _which file_ in <code>&lt;module_name&gt;/</code> should implement it:
+1. Where does each step live in this CCDS structure?
+   - Data extraction/ingestion
+   - Data validation
+   - Data preparation
+   - Model training
+   - Model evaluation
+   - Model packaging
+   - Inference/serving
 
-   <table>
-   <tr><th>Step</th><th>Input (from)</th><th>Output (to)</th><th>Implemented in</th></tr>
-   <tr><td>Data extraction/ingestion</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Data validation</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Data preparation</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Model training</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Model evaluation</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Model packaging</td><td>?</td><td>?</td><td>?</td></tr>
-   <tr><td>Inference/serving</td><td>?</td><td>?</td><td>?</td></tr>
-   </table>
+2. Copy the files in https://github.com/Jeppe-T-K/ccds-dsip-exercise-repo/tree/main/pipeline_steps into your project and validate that you can run the steps.
 
-   <pre><i><u>Notice how the <code>data/</code> directory (raw → interim → processed) already encodes the data steps, while <code>modeling/</code> encodes the model steps. The mapping is not accidental!</u></i></pre>
-   </details>
+3. Where would you put the other code parts that we've covered so far?
+   - Dockerfile(s)
+   - Tests
+   - Workflows
 
-2. <details><summary>Discuss: what makes this a pipeline?</summary>
-   <pre><i><u>In pairs: each step consumes the output of a previous step and produces something the next step consumes. What does that imply about...
-
-<li>how you should design the inputs/outputs of each script?</li>
-<li>what happens if you change one step — which downstream steps must be re-run?</li>
-<li>why you should <b>not</b> commit data and models to git? (check .gitignore)</li></u></i></pre>
-   </details>
-
-3. <details><summary>Look at the Makefile</summary>
-   Open the generated <code>Makefile</code>. CCDS pre-populates it with targets such as <code>data</code>, <code>train</code>, and <code>test</code>.
-
-   <pre><i><u>What is a Make target, and why is a Makefile a convenient way to orchestrate the steps of your pipeline?</u></i></pre>
-   </details>
-
-You now have a mental map of the project. In the next exercise, we make it real: implementing each step so the whole pipeline runs with a single command.
-
-[Next: Exercise 3 - Local Pipeline](local-pipeline)
+You now have a mental map of the project. In the next exercise, you will try to build a pipeline for this using a single command.

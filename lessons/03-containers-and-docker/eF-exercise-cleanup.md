@@ -32,7 +32,7 @@ title: Clean up
 
    Did you get an error like <code>image is being used by stopped container</code>?
 
-   <details><summary>The common issue: images attached to containers</summary>You cannot remove an image that a container is based on. This goes for <b>running</b> containers too: if you try <code>docker rmi</code> on an image that a running container uses, Docker refuses with <code>image is being used by running container</code> — and even <code>docker rmi -f</code> cannot fully delete it while the container is running. You need to stop the container first, remove it (see step 3), and then remove the image. <code>docker rmi -f</code> does force removal past <i>stopped</i> containers — use with care.</details>
+   <details><summary>The common issue: images attached to containers</summary>You cannot remove an image that a container is based on. This goes for <b>running</b> containers too: if you try <code>docker rmi</code> on an image that a running container uses, Docker refuses with <code>image is being used by running container</code> - and even <code>docker rmi -f</code> cannot fully delete it while the container is running. You need to stop the container first, remove it (see step 3), and then remove the image. <code>docker rmi -f</code> does force removal past <i>stopped</i> containers - use with care.</details>
    </details>
 
 3. <details> <summary>Remove containers</summary>
@@ -61,7 +61,7 @@ title: Clean up
 
    <details><summary>What dangling images are</summary>A dangling image is an image layer that no longer has a tag and is not referenced by any tagged image. This typically happens when you rebuild an image with the same tag (like <code>latest</code>): the old image loses its tag and becomes <code>&lt;none&gt;:&lt;none&gt;</code>. They show up in <code>docker images</code> as <code>&lt;none&gt;</code> and are safe candidates for cleanup.</details>
 
-   <b>Warning:</b> pruning cannot be undone. Usually that is fine — you can build your own images again from the Dockerfile, and pull the rest down again. But an image with no Dockerfile behind it is gone for good. <code>docker image prune -a</code> removes <i>all</i> unused images, not just dangling ones, so think twice before adding <code>-a</code>.
+   <b>Warning:</b> pruning cannot be undone. Usually that is fine - you can build your own images again from the Dockerfile, and pull the rest down again. But an image with no Dockerfile behind it is gone for good. <code>docker image prune -a</code> removes <i>all</i> unused images, not just dangling ones, so think twice before adding <code>-a</code>.
    </details>
 
 ---

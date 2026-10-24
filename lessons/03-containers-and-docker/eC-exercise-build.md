@@ -25,5 +25,3 @@ title: Build the Image
    
    <pre>Question: why is it faster building it now?</pre>
    </details>
-
-[Next: Exercise 3 - Run your Image](exercise-run)

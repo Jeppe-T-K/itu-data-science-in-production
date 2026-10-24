@@ -134,5 +134,3 @@ You can tag your images so you can easily find the exact image you want/need.
 5. **Test with CI/CD pipelines** to ensure your containers work correctly
 
 </details>
-
-[Next: Docker Alternatives](lD-alternatives)

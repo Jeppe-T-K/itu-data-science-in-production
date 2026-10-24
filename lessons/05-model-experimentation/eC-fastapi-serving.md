@@ -4,9 +4,9 @@ title: FastAPI Serving
 
 # Exercise 3: Serving with FastAPI
 
-Your model now sits in the MLflow registry, threshold and all — but it isn't serving anyone yet. The last step from "model" to "product" is putting it behind an API, so other systems (or humans) can get predictions on demand.
+Your model now sits in the MLflow registry, threshold and all - but it isn't serving anyone yet. The last step from "model" to "product" is putting it behind an API, so other systems (or humans) can get predictions on demand.
 
-We will use [FastAPI](https://fastapi.tiangolo.com/), the go-to Python framework for model services: it validates requests with [pydantic](https://docs.pydantic.dev/), generates interactive documentation automatically, and is easy to test. The service you build here — a `/health` endpoint plus an `/invocations` endpoint — is exactly the shape you will meet again in the course project.
+We will use [FastAPI](https://fastapi.tiangolo.com/), the go-to Python framework for model services: it validates requests with [pydantic](https://docs.pydantic.dev/), generates interactive documentation automatically, and is easy to test. The service you build here - a `/health` endpoint plus an `/invocations` endpoint - is exactly the shape you will meet again in the course project.
 
 ### Exercise 3.1: A minimal service
 
@@ -25,9 +25,9 @@ We will use [FastAPI](https://fastapi.tiangolo.com/), the go-to Python framework
        return {"status": "ok"}
    ```
 
-   Run it with <code>uvicorn app:app --reload</code> and open http://localhost:8000/health — then http://localhost:8000/docs.
+   Run it with <code>uvicorn app:app --reload</code> and open http://localhost:8000/health - then http://localhost:8000/docs.
 
-   <pre><i><u>What is the /docs page? (hint: OpenAPI). Why does every serious service have a health endpoint — remember the logging/monitoring part of the lecture?</u></i></pre>
+   <pre><i><u>What is the /docs page? (hint: OpenAPI). Why does every serious service have a health endpoint - remember the logging/monitoring part of the lecture?</u></i></pre>
    </details>
 
 ### Exercise 3.2: Serve the model
@@ -75,13 +75,13 @@ We will use [FastAPI](https://fastapi.tiangolo.com/), the go-to Python framework
      -H "Content-Type: application/json" \
      -d '{"features": [[12.0, 34.0], [95.0, 60.0]]}'</code></pre>
 
-   <pre><i><u>What happens if you send a string instead of a number? Or the wrong field name? Watch what FastAPI does for you — and discuss why "sanity check input/output" from the lecture matters.</u></i></pre>
+   <pre><i><u>What happens if you send a string instead of a number? Or the wrong field name? Watch what FastAPI does for you - and discuss why "sanity check input/output" from the lecture matters.</u></i></pre>
    </details>
 
 3. <details><summary>Check the whole contract</summary>
    Send samples with a probability close to your threshold so that the output flips between classes.
 
-   <pre><i><u>Where did the threshold come from in this prediction? (It should come from inside the logged model — if you find yourself re-specifying it in the service, revisit Exercise 2.)</u></i></pre>
+   <pre><i><u>Where did the threshold come from in this prediction? (It should come from inside the logged model - if you find yourself re-specifying it in the service, revisit Exercise 2.)</u></i></pre>
    </details>
 
 ### Exercise 3.3: Test the service
@@ -107,10 +107,8 @@ We will use [FastAPI](https://fastapi.tiangolo.com/), the go-to Python framework
 
 ### Exercise 3.4: Reflect
 
-<pre><i><u>Discuss in pairs:
+<pre><i><u>Discuss:
 
 <li>This is "on demand" serving. When would batch serving (like the one from the MLOps projects lesson) be better?</li>
 <li>Who should be able to call your service? What is missing before you would call this production-ready? (hint: authentication, monitoring, containerization...)</li>
-<li>The lecture said "recent != better" when promoting models. How does the MODEL_URI environment variable let you choose what gets served — and roll back?</li></u></i></pre>
-
-[Next: Exercise 4 - Check Performance of Deployed Model](model-monitoring)
+<li>The lecture said "recent != better" when promoting models. How does the MODEL_URI environment variable let you choose what gets served - and roll back?</li></u></i></pre>

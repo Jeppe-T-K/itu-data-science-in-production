@@ -4,7 +4,7 @@ title: Create a Dockerfile
 
 # Exercise 1: Create a training Dockerfile
 
-> **Note — Learning outcomes**
+> **Note - Learning outcomes**
 > <i> By the end of the exercises, we expect you to be able to do the following:</i>
 > <ul>
 > <li>Write/create a basic Dockerfile that can run a basic DS project</li>
@@ -48,5 +48,3 @@ title: Create a Dockerfile
    CMD ["python", "train.py"]
    </code></pre>
    </details>
-
-[Next: Exercise 2 - Build the Image](exercise-build)

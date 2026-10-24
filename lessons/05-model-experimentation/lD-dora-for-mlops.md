@@ -14,7 +14,7 @@ The four DORA metrics were made for DevOps – software delivery in general. But
 
 From https://ml-ops.org/content/mlops-principles
 
-Talk in pairs about the four metrics:
+Discuss the four metrics:
 
 - How would you measure this?
 - What affects this for ML?

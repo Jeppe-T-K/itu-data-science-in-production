@@ -50,7 +50,7 @@ Note this site doesn't use `next/image` because that requires the server compone
 
 ### public/images/author.jpg
 
-Your image. If you call it this, you won't have to change any code — it's the default for the first author. For a second author, drop another image (e.g. `second-author.jpg`) into `public/images/` and reference it via `authors[].image` in `course.json`.
+Your image. If you call it this, you won't have to change any code - it's the default for the first author. For a second author, drop another image (e.g. `second-author.jpg`) into `public/images/` and reference it via `authors[].image` in `course.json`.
 
 ### public/images/social-share-cover.jpg
 

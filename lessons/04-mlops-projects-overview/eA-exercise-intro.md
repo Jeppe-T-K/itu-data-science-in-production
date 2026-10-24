@@ -16,7 +16,6 @@ For these exercises, we will use a specific template for Data Science, called [C
 
 ## Learning Goals
 
-> [!NOTE]
 > **Learning goals**
 > <i>By the end of the exercises, we expect you to be able to do the following:</i>
 > <ul>
@@ -34,7 +33,7 @@ The following exercises take you from an empty directory to a working MLOps proj
 
 - [Exercise 1: Cookiecutter Setup](cookiecutter-setup) - Scaffold the repo and push it to GitHub
 - [Exercise 2: Project Structure](project-structure) - Map the MLOps steps from the lecture onto the CCDS structure
-- [Exercise 3: Local Pipeline](local-pipeline) - Implement the steps and run the whole pipeline locally
+- [Exercise 3: Local Pipeline](local-pipeline) - Run the whole ML pipeline locally with a single command
 - [Exercise 4: Cloud Storage](cloud-storage) - Store data and model artifacts in S3-compatible object storage
 - [Exercise 5: CI/CD](cicd) - Test the project and produce artifacts automatically with GitHub Actions
 

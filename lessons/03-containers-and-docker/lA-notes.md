@@ -29,5 +29,3 @@ Itemised list for convenience:
 Standardization is key for team collaboration. Without it, data scientists and developers waste time debugging environment differences rather than building out the product. Docker solves this by packaging applications and all their dependencies into consistent, portable units.
 
 </details>
-
-[Next: Technical Details](lB-technical-details)

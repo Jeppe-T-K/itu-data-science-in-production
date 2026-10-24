@@ -52,7 +52,7 @@ From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-l
 
 | Format | Open-Format | Vendor | File Extension | License | ML Tools & Platforms Support | Human-readable | Compression |
 |---|---|---|---|---|---|---|---|
-| "almagnation" | — | — | — | — | — | — | ✅ |
+| "almagnation" | - | - | - | - | - | - | ✅ |
 | PMML | ✅ | DMG | .pmml | AGPL | R, Python, Spark | ✅ (XML) | ❌ |
 | PFA | ✅ | DMG | JSON | | PFA-enabled runtime | ✅ (JSON) | ❌ |
 | ONNX | ✅ | SIG LFAI | .onnx | | TF, CNTK, Core ML, MXNet, ML.NET | ❌ | ✅ |
@@ -62,7 +62,7 @@ From https://machinelearningmastery.com/learning-curves-for-diagnosing-machine-l
 | HDF | ✅ |  | .h5 | | Keras | ❌ | ✅ |
 | MLEAP | ✅ |  | .jar/.zip | | Spark, TF, scikit-learn | ❌ | g-zip |
 | Torch Script | ❌ |  | .pt | | PyTorch | ❌ | ✅ |
-| Apple .mlmodel | ❌ | Apple | .mlmodel | | TensorFlow, scikit-learn, Core ML | — | ✅ |
+| Apple .mlmodel | ❌ | Apple | .mlmodel | | TensorFlow, scikit-learn, Core ML | - | ✅ |
 
 Adapted from https://ml-ops.org/content/three-levels-of-ml-software#model-machine-learning-pipelines
 

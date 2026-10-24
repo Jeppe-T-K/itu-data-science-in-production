@@ -19,7 +19,7 @@ Let's start a new project using Cookiecutter, inspired by CCDS's documentation o
 1. <details> <summary> Initialise CCDS in directory </summary>
    In the terminal, run <code>ccds</code>
 
-   <pre><i><u>Discuss in pairs what each option does</u></i></pre>
+   <pre><i><u>Discuss what each option does</u></i></pre>
    </details>
 
 2. <details> <summary> Initialise git in the repo (if relevant)</summary>
@@ -41,7 +41,7 @@ Let's start a new project using Cookiecutter, inspired by CCDS's documentation o
 The pipeline you will build in the coming exercises ends up being tested in CI/CD, so the code needs a home on github.com. If you don't want to use your normal github.com user for this course, feel free to create a dummy one.
 
 1. <details><summary>Create a new repo on github.com</summary>
-   Create an empty repository (no README, no .gitignore, no license — you already have all of those).
+   Create an empty repository (no README, no .gitignore, no license - you already have all of those).
    </details>
 
 2. <details> <summary> Push your code to this new remote (<i>hint: <a href="https://lasselundstenjensen.github.io/itu-bds-sdse/lessons/git-basics/remote-and-fetch">these lessons covered it</a>)</i></summary>
@@ -63,6 +63,4 @@ The pipeline you will build in the coming exercises ends up being tested in CI/C
    <pre><i><u>Why is it a good idea to keep main "green" (i.e. always working)?</u></i></pre>
    </details>
 
-From here on, work on feature branches and merge them to main via pull requests once the exercises are done — that is the same workflow you will use in any real project.
-
-[Next: Exercise 2 - Project Structure](project-structure)
+From here on, work on feature branches and merge them to main via pull requests once the exercises are done - that is the same workflow you will use in any real project.

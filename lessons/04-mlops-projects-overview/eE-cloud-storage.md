@@ -4,7 +4,7 @@ title: Cloud Storage
 
 # Exercise 4: Data and Models in S3-Compatible Object Storage
 
-Your pipeline now runs locally, but everything it produces lives on your laptop. If a teammate (or a CI machine) clones your repo, `data/raw/` and `models/` are empty. Git is for code — data and model artifacts belong somewhere else.
+Your pipeline now runs locally, but everything it produces lives on your laptop. If a teammate (or a CI machine) clones your repo, `data/raw/` and `models/` are empty. Git is for code - data and model artifacts belong somewhere else.
 
 In practice, that "somewhere else" is almost always an object store speaking the **S3 API**. The S3 protocol started as an AWS service, but is now the de-facto standard supported by everyone: DigitalOcean Spaces, Google Cloud Storage (S3-compatible API), Azure (via gateways), and self-hosted solutions like [MinIO](https://min.io/). Learning the S3 API once means you can talk to all of them.
 
@@ -12,7 +12,7 @@ In this exercise you will make your pipeline pull its raw data from and push its
 
 ### Exercise 4.1: A local object store with MinIO
 
-MinIO is an S3-compatible object store you can run locally — perfect for development, and it means you don't need cloud credentials to do this exercise. You already know the tool for the job from the containers lesson:
+MinIO is an S3-compatible object store you can run locally - perfect for development, and it means you don't need cloud credentials to do this exercise. You already know the tool for the job from the containers lesson:
 
 1. <details><summary>Start MinIO in Docker</summary>
    <pre><code>docker run -d --name minio \
@@ -32,10 +32,10 @@ MinIO is an S3-compatible object store you can run locally — perfect for devel
 
 ### Exercise 4.2: Talk S3 from Python with boto3
 
-`boto3` is the standard Python client for the S3 API — it works against AWS, Spaces, and MinIO alike, you just point it at a different `endpoint_url`.
+`boto3` is the standard Python client for the S3 API - it works against AWS, Spaces, and MinIO alike, you just point it at a different `endpoint_url`.
 
 1. <details><summary>Install and configure credentials <b>outside</b> version control</summary>
-   Add <code>boto3</code> to your project dependencies. Then create a <code>.env</code> file (check that <code>.gitignore</code> ignores it — CCDS does this for you):
+   Add <code>boto3</code> to your project dependencies. Then create a <code>.env</code> file (check that <code>.gitignore</code> ignores it - CCDS does this for you):
 
    <pre><code>AWS_ACCESS_KEY_ID=minioadmin
    AWS_SECRET_ACCESS_KEY=minioadmin
@@ -86,16 +86,12 @@ Now make the pipeline actually use the bucket:
 
 ### Exercise 4.4: Discuss
 
-<pre><i><u>In pairs:
-
-<li>Why do you think basically every MLOps platform (including the tools from the data versioning lesson, whose DVC remotes you have already met) speaks S3?</li>
+<pre><i><u><li>Why do you think basically every MLOps platform (including the tools from the data versioning lesson, whose DVC remotes you have already met) speaks S3?</li>
 <li>What are the trade-offs of storing artifacts in a bucket vs. committing them to git vs. attaching them to a CI run?</li>
 <li>Your MinIO data disappears when you delete the container. What would you use instead for something you care about?</li></u></i></pre>
 
 <details><summary>Optional: try a real provider</summary>
 
-If you have a cloud account (DigitalOcean gives free credit to students), create a Spaces bucket (or an S3 bucket on AWS), generate an access key, and point your <code>.env</code> at it. Nothing in your code should need to change — that is the point of the S3 API being a standard. Note that Spaces uses <code>https://&lt;region&gt;.digitaloceanspaces.com</code> as the endpoint URL.
+If you have a cloud account (DigitalOcean gives free credit to students), create a Spaces bucket (or an S3 bucket on AWS), generate an access key, and point your <code>.env</code> at it. Nothing in your code should need to change - that is the point of the S3 API being a standard. Note that Spaces uses <code>https://&lt;region&gt;.digitaloceanspaces.com</code> as the endpoint URL.
 
 </details>
-
-[Next: Exercise 5 - CI/CD](cicd)

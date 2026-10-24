@@ -11,9 +11,9 @@ We continue with the thresholded classifier from the previous exercises. `resour
 ### Exercise 4.1: Evaluate on drifted data
 
 1. <details> <summary> Load your registered model </summary>
-   Load the wrapper with <code>mlflow.pyfunc.load_model("models:/thresholded_logistic_model/1")</code> — the threshold comes with it, as it should.
+   Load the wrapper with <code>mlflow.pyfunc.load_model("models:/thresholded_logistic_model/1")</code> - the threshold comes with it, as it should.
 
-   <pre><i><u>You logged the model in Exercise 2 — check in the MLflow UI what version your model has ended up on.</u></i></pre>
+   <pre><i><u>You logged the model in Exercise 2 - check in the MLflow UI what version your model has ended up on.</u></i></pre>
    </details>
 
 2. <details> <summary> Detect data drift</summary>
@@ -32,7 +32,7 @@ We continue with the thresholded classifier from the previous exercises. `resour
    Run it with the data drift dataset. Do you expect to see a difference in the distribution of the X variable? Do you expect the model's error to change?
 
    <details><summary>Expectation</summary>
-   Yes, the distribution of the X variable has changed — that is essentially the definition of data drift, and the KS test should fire. Whether the accuracy changes is less obvious: our simple model might handle the new range of inputs fine. In realistic scenarios the model might not extrapolate properly, so we always need to keep an eye on performance — and on the <i>prediction distribution</i>: with a fixed threshold, a shifted input distribution shifts the share of positive predictions.
+   Yes, the distribution of the X variable has changed - that is essentially the definition of data drift, and the KS test should fire. Whether the accuracy changes is less obvious: our simple model might handle the new range of inputs fine. In realistic scenarios the model might not extrapolate properly, so we always need to keep an eye on performance - and on the <i>prediction distribution</i>: with a fixed threshold, a shifted input distribution shifts the share of positive predictions.
    </details>
    </details>
 
@@ -61,11 +61,9 @@ We continue with the thresholded classifier from the previous exercises. `resour
    </details>
 
 4. <details> <summary> Discuss: monitoring a served model </summary>
-   <pre><i><u>In pairs:
-
-<li>Your service from Exercise 3 logs every request. How would you turn those logs into drift metrics? What would you alert on?</li>
+   <pre><i><u><li>Your service from Exercise 3 logs every request. How would you turn those logs into drift metrics? What would you alert on?</li>
 <li>For the concept drift case, what do you need that a serving service alone cannot provide? (hint: where do the true labels come from?)</li>
-<li>How does the threshold from Exercise 2 interact with drift — can a "fine" model start misbehaving just because the class balance shifts?</li></u></i></pre>
+<li>How does the threshold from Exercise 2 interact with drift - can a "fine" model start misbehaving just because the class balance shifts?</li></u></i></pre>
    </details>
 
 And that is it! You can do a lot more with MLflow and FastAPI, and you might see some more complex commands later in the course, but remember: start simple and then add complexity later.

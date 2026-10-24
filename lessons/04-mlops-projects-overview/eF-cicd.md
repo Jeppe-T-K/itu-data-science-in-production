@@ -4,16 +4,16 @@ title: CI/CD
 
 # Exercise 5: Automate with GitHub Actions (CI/CD)
 
-Right now, your pipeline runs when _you_ remember to run it. In the lecture's maturity levels, that is stage 1 at best. The defining trait of stage 2 is that every change to the code is automatically built, tested, and delivered — continuous integration and continuous delivery.
+Right now, your pipeline runs when _you_ remember to run it. In the lecture's maturity levels, that is stage 1 at best. The defining trait of stage 2 is that every change to the code is automatically built, tested, and delivered - continuous integration and continuous delivery.
 
-GitHub Actions gives you CI/CD for free: a workflow file in your repo describes what to do on every push or pull request, and GitHub runs it on a fresh virtual machine. In this exercise you will add tests to your project and a workflow that runs them — and produces your model artifact automatically.
+GitHub Actions gives you CI/CD for free: a workflow file in your repo describes what to do on every push or pull request, and GitHub runs it on a fresh virtual machine. In this exercise you will add tests to your project and a workflow that runs them - and produces your model artifact automatically.
 
 ### Exercise 5.1: Write tests first
 
 CI is only as good as what it checks, so you need something for it to run. Look in the `tests/` directory of your CCDS scaffold.
 
 1. <details><summary>Add a test for one pipeline step</summary>
-   Write a pytest test for one of your pure functions from Exercise 3 — e.g. the data preparation function. Give it a tiny, fixed input and assert on the output. Run it locally:
+   Write a pytest test for one of your pure functions from Exercise 3 - e.g. the data preparation function. Give it a tiny, fixed input and assert on the output. Run it locally:
 
    <pre><code>pytest tests/</code></pre>
 
@@ -73,7 +73,7 @@ CI is only as good as what it checks, so you need something for it to run. Look 
 Continuous _delivery_ means the pipeline's output is produced automatically, not just its checks.
 
 1. <details><summary>Run the pipeline as a job</summary>
-   Add a job (or extend the existing one) that runs <code>make pipeline</code> after the tests pass. Remember: the runner is a fresh machine — nothing in <code>data/</code> or <code>models/</code> exists until your pipeline creates it. That is the point of Exercise 4's question about fresh clones.
+   Add a job (or extend the existing one) that runs <code>make pipeline</code> after the tests pass. Remember: the runner is a fresh machine - nothing in <code>data/</code> or <code>models/</code> exists until your pipeline creates it. That is the point of Exercise 4's question about fresh clones.
    </details>
 
 2. <details><summary>Publish the artifact</summary>
@@ -100,6 +100,6 @@ Continuous _delivery_ means the pipeline's output is produced automatically, not
 <li>Stage 0 (notebooks, manual): where exactly did you leave that behind?</li>
 <li>Stage 1 (pipeline, re-runnable): which parts of your project give you that today?</li>
 <li>Stage 2 (CI/CD automation): which parts do you have, and which are missing?</li>
-<li>What remains before your model actually <i>serves</i> predictions to someone — and which of the coming lessons covers that?</li></u></i></pre>
+<li>What remains before your model actually <i>serves</i> predictions to someone - and which of the coming lessons covers that?</li></u></i></pre>
 
 [Back to Introduction](exercise-intro)
