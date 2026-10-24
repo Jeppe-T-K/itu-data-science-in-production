@@ -11,7 +11,7 @@ title: Introduction
  * [08:15 – 09:00] – Lecture: MLOps vs DevOps
  * [09:15 – 10:00] – Lecture: MLOps stages
  * [10:15 – 11:00] – Follow-along exercises: Cookiecutter Data Science
- * [11:15 – 12:00] – Follow-along exercises: Pipeline, cloud storage, and CI/CD
+ * [11:15 – 12:00] – Follow-along exercises: Pipeline, CI/CD, and cloud storage
 
 
 ### Preparation

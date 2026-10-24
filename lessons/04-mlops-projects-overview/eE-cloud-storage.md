@@ -2,7 +2,7 @@
 title: Cloud Storage
 ---
 
-# Exercise 4: Data and Models in S3-Compatible Object Storage
+# Exercise 5 (extra): Data and Models in S3-Compatible Object Storage
 
 Your pipeline now runs locally, but everything it produces lives on your laptop. If a teammate (or a CI machine) clones your repo, `data/raw/` and `models/` are empty. Git is for code - data and model artifacts belong somewhere else.
 
@@ -10,7 +10,7 @@ In practice, that "somewhere else" is almost always an object store speaking the
 
 In this exercise you will make your pipeline pull its raw data from and push its model artifact to an S3-compatible bucket, first locally with MinIO, then (optionally) against a real cloud provider.
 
-### Exercise 4.1: A local object store with MinIO
+### Exercise 5.1: A local object store with MinIO
 
 MinIO is an S3-compatible object store you can run locally - perfect for development, and it means you don't need cloud credentials to do this exercise. You already know the tool for the job from the containers lesson:
 
@@ -30,7 +30,7 @@ MinIO is an S3-compatible object store you can run locally - perfect for develop
    <pre><i><u>Given the data stages from the lecture, what "folders" (S3 uses key prefixes, not real folders) would you create inside the bucket?</u></i></pre>
    </details>
 
-### Exercise 4.2: Talk S3 from Python with boto3
+### Exercise 5.2: Talk S3 from Python with boto3
 
 `boto3` is the standard Python client for the S3 API - it works against AWS, Spaces, and MinIO alike, you just point it at a different `endpoint_url`.
 
@@ -66,7 +66,7 @@ MinIO is an S3-compatible object store you can run locally - perfect for develop
    <pre><i><u>What happens if you upload the same key twice? What does that tell you about using the S3 key as your artifact "versioning"?</u></i></pre>
    </details>
 
-### Exercise 4.3: Put the pipeline on storage
+### Exercise 5.3: Put the pipeline on storage
 
 Now make the pipeline actually use the bucket:
 
@@ -84,7 +84,7 @@ Now make the pipeline actually use the bucket:
    <pre><i><u>What still breaks on a fresh clone that didn't break on your machine? (hint: where do the Python dependencies come from?)</u></i></pre>
    </details>
 
-### Exercise 4.4: Discuss
+### Exercise 5.4: Discuss
 
 <pre><i><u><li>Why do you think basically every MLOps platform (including the tools from the data versioning lesson, whose DVC remotes you have already met) speaks S3?</li>
 <li>What are the trade-offs of storing artifacts in a bucket vs. committing them to git vs. attaching them to a CI run?</li>

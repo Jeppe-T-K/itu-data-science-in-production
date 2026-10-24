@@ -2,13 +2,13 @@
 title: CI/CD
 ---
 
-# Exercise 5: Automate with GitHub Actions (CI/CD)
+# Exercise 4: Automate with GitHub Actions (CI/CD)
 
 Right now, your pipeline runs when _you_ remember to run it. In the lecture's maturity levels, that is stage 1 at best. The defining trait of stage 2 is that every change to the code is automatically built, tested, and delivered - continuous integration and continuous delivery.
 
 GitHub Actions gives you CI/CD for free: a workflow file in your repo describes what to do on every push or pull request, and GitHub runs it on a fresh virtual machine. In this exercise you will add tests to your project and a workflow that runs them - and produces your model artifact automatically.
 
-### Exercise 5.1: Write tests first
+### Exercise 4.1: Write tests first
 
 CI is only as good as what it checks, so you need something for it to run. Look in the `tests/` directory of your CCDS scaffold.
 
@@ -26,7 +26,7 @@ CI is only as good as what it checks, so you need something for it to run. Look 
    <pre><i><u>This mirrors the lecture's point that an evaluation "must be better than baseline". How could a test like this stop a broken model from ever reaching production?</u></i></pre>
    </details>
 
-### Exercise 5.2: Your first workflow
+### Exercise 4.2: Your first workflow
 
 1. <details><summary>Create the workflow file</summary>
    Create <code>.github/workflows/ci.yml</code>:
@@ -68,12 +68,12 @@ CI is only as good as what it checks, so you need something for it to run. Look 
    <pre><i><u>Why does installation dominate the runtime? What else could you cache?</u></i></pre>
    </details>
 
-### Exercise 5.3: Produce the model artifact in CI
+### Exercise 4.3: Produce the model artifact in CI
 
 Continuous _delivery_ means the pipeline's output is produced automatically, not just its checks.
 
 1. <details><summary>Run the pipeline as a job</summary>
-   Add a job (or extend the existing one) that runs <code>make pipeline</code> after the tests pass. Remember: the runner is a fresh machine - nothing in <code>data/</code> or <code>models/</code> exists until your pipeline creates it. That is the point of Exercise 4's question about fresh clones.
+   Add a job (or extend the existing one) that runs <code>make pipeline</code> after the tests pass. Remember: the runner is a fresh machine - nothing in <code>data/</code> or <code>models/</code> exists until your pipeline creates it. That is the point of the fresh-machine question - and you will meet it again in the extra Exercise 5, where your artifacts get a home off the machine.
    </details>
 
 2. <details><summary>Publish the artifact</summary>
@@ -88,12 +88,12 @@ Continuous _delivery_ means the pipeline's output is produced automatically, not
    </details>
 
 3. <details><summary>Optional: use your bucket from CI</summary>
-   If you did Exercise 4 with a real cloud provider (or are feeling ambitious): GitHub can hold secrets too. Add your S3 credentials under <b>Settings → Secrets and variables → Actions</b>, map them into the job with <code>env:</code>, and let the CI pipeline upload the model artifact to the bucket instead of the runner.
+   If you do the extra Exercise 5 with a real cloud provider (or are feeling ambitious): GitHub can hold secrets too. Add your S3 credentials under <b>Settings → Secrets and variables → Actions</b>, map them into the job with <code>env:</code>, and let the CI pipeline upload the model artifact to the bucket instead of the runner.
 
    <pre><i><u>Why is it OK for a secret to live in GitHub's secret store, but not in the repository?</u></i></pre>
    </details>
 
-### Exercise 5.4: Reflect
+### Exercise 4.4: Reflect
 
 <pre><i><u>Look back at the whole session, and place your project on Google's MLOps maturity ladder:
 

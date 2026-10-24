@@ -29,14 +29,21 @@ Either way you should recognize the CCDS layout from Exercise 2:
 
 ### Questions
 
-- Can you run each component by itself?
-    - Ideally yes. We aim for modularity, so each step should be possible to run without the other. However, the training step might require that some data has been fetched/processed.
-- How do you handle python packages?
-    - Depending on what you installed:
-        - uv: `uv add ...`
-        - requirements.txt: add e.g. `sklearn==1.3` in file
-        - conda: `conda add` # AI double check this
-        - etc...
+<details><summary>Can you run each component by itself?</summary>
+
+- Ideally yes. We aim for modularity, so each step should be possible to run without the other. However, the training step might require that some data has been fetched/processed.
+
+</details>
+
+<details><summary>How do you handle python packages?</summary>
+
+- Depending on what you installed:
+  - uv: `uv add ...`
+  - requirements.txt: add e.g. `sklearn==1.3` in file
+  - conda: `conda install <package>` (often via `-c conda-forge`)
+  - etc...
+
+</details>
 
 ## Exercise 3.2: Run the pipeline with the Makefile
 
@@ -65,8 +72,18 @@ Run it, then inspect what appeared under `data/` and `models/`. Try running the 
 
 ### Questions
 
-- How does this differ from using Dagger for creating the pipeline
-    - No specification of Docker image
-    - AI suggest 2 other things
-- What is still missing before you would call this MLOps level 1? 
-    - hint: automation and CI
+<details><summary>How does this differ from using Dagger for creating the pipeline?</summary>
+
+- No specification of Docker image
+- No environment isolation: `make` runs commands in your local Python environment, so results depend on what is installed on that machine; Dagger steps run in containers and are reproducible anywhere
+- No caching of intermediate results: the targets are phony, so every step re-runs every time; Dagger caches each step's outputs and only re-runs what changed
+
+</details>
+
+<details><summary>What is still missing before you would call this MLOps level 1?</summary>
+
+- Automation: the pipeline only runs when you type `make pipeline` - a human is the trigger. Level 1 means the pipeline runs itself, e.g. on a schedule or when new data arrives, without anyone remembering to run it.
+- CI: pushing to GitHub triggers nothing. There is no automatic run of the tests, and no way for anyone (including future you) to see that the pipeline still works after a change. That is what you build in Exercise 4.
+- (The same goes for where the artifacts live: everything is still only on your machine - the extra Exercise 5 fixes that.)
+
+</details>
