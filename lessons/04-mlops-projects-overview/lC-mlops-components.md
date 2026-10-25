@@ -17,29 +17,27 @@ Based on https://ml-ops.org/content/mlops-principles
 From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
 
 
-<details><summary style="font-style: italic"> What's going on in each step? </summary>
-
 <details><summary style="font-weight: bold; color: #8a9faf; font-size: 1.5em">Data</summary>
 
-- <details><summary>1. </summary> Extraction </details>
-- <details><summary>2. </summary> Validation </details>
-- <details><summary>3. </summary> Preparation </details>
+1. Extraction
+2. Validation
+3. Preparation
 
 </details>
 
 
 <details><summary style="font-weight: bold; color: #51bdf2; font-size: 1.5em">Model</summary>
 
-- <details><summary>1. </summary> Training </details>
-- <details><summary>2. </summary> Evaluation </details>
-- <details><summary>3. </summary> Validation </details>
+1. Training
+2. Evaluation
+3. Validation
 </details>
 
 <details><summary style="font-weight: bold; color: #25506c; font-size: 1.5em">Code</summary>
 
-- <details><summary>1. </summary> Deployment </details>
-- <details><summary>2. </summary> Serving </details>
-- <details><summary>3. </summary> Monitoring </details>
+1. Deployment
+2. Serving
+3. Monitoring
 </details>
 
 
@@ -49,8 +47,6 @@ From https://ml-architects.ch/blog_posts/mlops_maturity_model.html
 <div style="text-align: center;">
   <img src="/images/mlops-projects-overview/mlops-pipeline.svg" alt="MLOps pipeline" style="width: 80%;" />
 </div>
-
-</details>
 
 </details>
 
