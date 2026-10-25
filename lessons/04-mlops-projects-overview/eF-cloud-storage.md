@@ -79,7 +79,7 @@ Now make the pipeline actually use the bucket:
    </details>
 
 3. <details><summary>Prove it is reproducible</summary>
-   Delete <code>data/</code> and <code>models/</code> locally and re-run <code>make pipeline</code>. Then simulate a fresh teammate: clone your repo into a new directory and run the pipeline there.
+   Delete <code>data/</code> and <code>models/</code> locally and re-run your pipeline (<code>make pipeline</code> or <code>go run pipeline.go</code>). Then simulate a fresh teammate: clone your repo into a new directory and run the pipeline there.
 
    <pre><i><u>What still breaks on a fresh clone that didn't break on your machine? (hint: where do the Python dependencies come from?)</u></i></pre>
    </details>

@@ -23,7 +23,7 @@ For these exercises, we will use a specific template for Data Science, called [C
 > <li>Explain the motivation for the structure of a data science project</li>
 > <li>Map the typical MLOps steps (data, models, code) onto a concrete project structure</li>
 > <li>Run an ML pipeline locally from end to end as a set of composable steps</li>
-> <li>Set up a CI/CD workflow that tests your project and produces artifacts on every change</li>
+> <li>Set up a CI/CD workflow that runs your pipeline and produces the model artifact on every change</li>
 > <li>Use S3-compatible object storage for data and model artifacts, with credentials kept out of version control</li>
 > </ul>
 
@@ -34,7 +34,7 @@ The following exercises take you from an empty directory to a working MLOps proj
 - [Exercise 1: Cookiecutter Setup](cookiecutter-setup) - Scaffold the repo and push it to GitHub
 - [Exercise 2: Project Structure](project-structure) - Map the MLOps steps from the lecture onto the CCDS structure
 - [Exercise 3: Local Pipeline](local-pipeline) - Run the whole ML pipeline locally with a single command
-- [Exercise 4: CI/CD](cicd) - Test the project and produce artifacts automatically with GitHub Actions
+- [Exercise 4: CI/CD](cicd) - Run the pipeline and produce the model artifact automatically with GitHub Actions
 - [Exercise 5 (extra): Cloud Storage](cloud-storage) - Store data and model artifacts in S3-compatible object storage
 
 ---

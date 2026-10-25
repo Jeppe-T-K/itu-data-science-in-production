@@ -33,8 +33,8 @@
         "eB-cookiecutter-setup",
         "eC-project-structure",
         "eD-local-pipeline",
-        "eF-cicd",
-        "eE-cloud-storage"
+        "eE-cicd",
+        "eF-cloud-storage"
       ]
     }
   ]
