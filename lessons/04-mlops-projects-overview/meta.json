@@ -27,6 +27,16 @@
       ]
     },
     {
+      "title": "Interactive Session",
+      "order": [
+        "qA-interaction-success",
+        "qB-interaction-maturity",
+        "qC-interaction-architecture",
+        "qD-interaction-data-model",
+        "qE-interaction-code-deployment"
+      ]
+    },
+    {
       "title": "Exercises", 
       "order": [
         "eA-exercise-intro",

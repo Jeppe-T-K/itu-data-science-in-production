@@ -16,6 +16,7 @@ title: Lecture Intro
     - Data processing
     - Model experimentation
     - Code deployment
+6. Interactive session - open questions, sliders, and quizzes on all of the above
 
 ![Coco looking](/images/mlops-projects-overview/coco-looking.png)
 
