@@ -65,7 +65,7 @@ At Level 2, what do "continuous integration" and "continuous delivery" apply to?
 
 **B.** In Level 2, the pipelines are the artifact under CI/CD: new data or new code automatically triggers building, testing, and deployment of new pipeline versions and models.
 
-A is classic DevOps - it applies at Level 1 at best. C is close, but it misses that the *pipelines* are what gets integrated and delivered. D is wrong - CI/CD for pipelines is exactly what distinguishes Level 2.
+A is classic DevOps for application code; it is not what distinguishes Level 2. C is close, but it misses that the *pipelines* are what gets integrated and delivered. D is wrong - CI/CD for pipelines is exactly what distinguishes Level 2.
 
 </details>
 

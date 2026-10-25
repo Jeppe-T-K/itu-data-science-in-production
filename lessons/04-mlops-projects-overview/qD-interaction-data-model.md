@@ -31,13 +31,13 @@ Recap of the "Data Component" and "Model Component" lectures.
 Of a data scientist's working hours, how much goes to collecting and cleaning data rather than modeling?
 
 - A: Around 5%
-- B: Around 60-80%
+- B: Around 60%
 - C: Practically 100%
 - D: Around 20%
 
 <details><summary>Answer</summary>
 
-**B.** CrowdFlower's survey put ~60% on cleaning plus ~19% on collecting data, and Anaconda's State of Data Science found ~45% on data loading and preparation.
+**B.** CrowdFlower's survey put ~60% on cleaning (plus ~19% on collecting data), and Anaconda's State of Data Science found ~45% on data loading and preparation.
 
 A and D are far too optimistic - the data work dominates. C overstates it: there is still modeling, evaluation, and communication left.
 
@@ -163,7 +163,7 @@ Which statement about ONNX is true?
 
 <details><summary>Answer</summary>
 
-**D.** ONNX is an open format backed by the LF AI SIG, with support across TensorFlow, Core ML, ML.NET, and more.
+**D.** ONNX is an open format backed by the LF AI & Data Foundation, with support across TensorFlow, Core ML, ML.NET, and more.
 
 A is wrong - it was designed precisely to work across frameworks. C describes PMML (XML), not ONNX, which is a compressed binary format. B confuses it with Apple's .mlmodel.
 
