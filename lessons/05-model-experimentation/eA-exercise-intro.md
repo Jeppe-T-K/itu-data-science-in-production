@@ -4,7 +4,7 @@ title: Exercise Intro
 
 # Background
 
-The lecture used the DORA metrics as the red thread for why model experimentation, selection and monitoring matter. Now we make it concrete: you will take a small model through the whole journey - track it, wrap it, serve it, and monitor it.
+The lecture used the DORA metrics as the red thread for why productionising models matters. Now we make it concrete: you will take a small model through the whole journey - track it, wrap it, serve it, and monitor it.
 
 An ML experiment produces more than a model: it produces parameters, metrics, artifacts and (crucially) the *decision* about which configuration was best. Without a tool to record all of that, experiments live in ad-hoc scripts and spreadsheets: results are not comparable, not reproducible, and the model that ends up in production is "the one Jeppe ran last Tuesday". The tool we use for that is [MLflow](https://mlflow.org/), which covers experiment tracking as well as a model registry and model serving; the lecture also mentioned alternatives such as Weights & Biases, Neptune and DVC.
 
@@ -23,7 +23,7 @@ Throughout the course you are building a real project (the [itu-sdse-project](ht
 
 ## Exercises
 
-The following exercises will guide you through model experimentation:
+The following exercises will guide you through productionising a model:
 
 - [Exercise 1: MLflow Catch-Up](mlflow-basics) - Track ML experiments, register models, and select the best run
 - [Exercise 2: A Custom Model Wrapper](custom-models) - Wrap a logistic regression with a classification threshold

@@ -4,7 +4,7 @@ title: Summary
 
 # Summary
 
-We used the **DORA metrics for MLOps** as the red thread for why model experimentation, selection and monitoring matters:
+We used the **DORA metrics for MLOps** as the red thread for why productionising models matters:
 
 <details><summary style="font-size: 1.2em"> Deployment frequency</summary>
 
@@ -38,4 +38,4 @@ Any change carries a risk. Pilot studies, A/B tests and shadow testing let you r
 
 From https://ml-ops.org/content/mlops-principles
 
-Experimentation, selection and monitoring are not separate from the rest of MLOps – they are the practices that keep the four metrics healthy in an ML system.
+Productionising models is not separate from the rest of MLOps – experimentation, selection and monitoring are the practices that keep the four metrics healthy in an ML system.

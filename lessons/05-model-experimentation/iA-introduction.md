@@ -2,13 +2,13 @@
 title: Introduction
 ---
 
-# Model Experimentation, Selection and Monitoring
+# Productionising Models
 
 ## Overview
 
 ### Agenda
 
- * [08:15 – 09:00] – Lecture: DORA metrics and model experimentation, selection and monitoring
+ * [08:15 – 09:00] – Lecture: DORA metrics and productionising models
  * [09:15 – 12:00] – Exercises: MLflow catch-up, custom model wrapper, model serving and monitoring
 
 ### Preparation

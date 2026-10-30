@@ -17,6 +17,6 @@ title: Lecture Intro
 5. Mean time to restore
 6. Change failure rate
 
-<img src="/images/model_experimentation/dora-outline.png" alt="DORA metrics outline" width="100%" />
+<img src="/images/model_experimentation/coco-outline.png" alt="Coco outline" width="100%" />
 
 
