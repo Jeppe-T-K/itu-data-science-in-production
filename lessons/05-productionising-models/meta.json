@@ -1,6 +1,6 @@
 {
-  "title": "Model Experimentation",
-  "shortTitle": "Model Experimentation",
+  "title": "Productionising Models",
+  "shortTitle": "Productionising",
   "description": "ML experiment tracking with MLflow, custom model wrappers, model serving with MLflow and FastAPI, and performance monitoring",
   "sections": [
     {
