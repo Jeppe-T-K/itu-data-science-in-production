@@ -297,8 +297,12 @@ async function generatePDF(browser, html, outputPath) {
   });
   
   // Set HTML content
+  // All assets (images) are inlined as base64 data URLs, so there is no
+  // network activity to wait for. Large sections produce very large HTML
+  // documents, so allow plenty of time for Chrome to parse the content.
   await page.setContent(html, {
-    waitUntil: "networkidle0",
+    waitUntil: "load",
+    timeout: 300000,
   });
   
   // Wait for images to load
