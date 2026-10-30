@@ -87,6 +87,9 @@ export default function LessonSlug({ post }) {
 
 export async function getStaticProps({ params }) {
   const post = await getLesson(params.section, params.slug);
+  if (!post) {
+    return { notFound: true };
+  }
   return {
     props: {
       post,
