@@ -1,27 +1,34 @@
-import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split
 
-from sklearn.linear_model import Lasso
-from sklearn.metrics import mean_squared_error
+# Load a binary classification dataset that ships with scikit-learn
+X, y = load_breast_cancer(return_X_y=True)
 
-from data_util import get_data
-
-# Load data
-X_train, X_test, y_train, y_test = get_data()
+# Split into train (70%), validation (15%) and test (15%) sets, keeping the
+# class balance the same in all three
+X_train, X_rest, y_train, y_rest = train_test_split(
+    X, y, test_size=0.30, random_state=42, stratify=y
+)
+X_val, X_test, y_val, y_test = train_test_split(
+    X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest
+)
 
 # Define the model hyperparameters
 params = {
-    "alpha": 0.5,
-    "max_iter": 1000,
+    "C": 0.5,
+    "max_iter": 5000,
     "random_state": 8,
 }
 
 # Train the model
-lr = Lasso(**params)
+lr = LogisticRegression(**params)
 lr.fit(X_train, y_train)
 
 # Predict on the test set
 y_pred = lr.predict(X_test)
 
 # Calculate metrics
-mse = mean_squared_error(y_test, y_pred)
-print(f"Mean Squared Error: {mse}")
+f1 = f1_score(y_test, y_pred)
+print(f"F1 Score: {f1}")

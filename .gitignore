@@ -32,3 +32,7 @@ yarn-error.log*
 *.csv
 
 .env
+
+# python / mlflow exercise artifacts
+__pycache__/
+mlruns/

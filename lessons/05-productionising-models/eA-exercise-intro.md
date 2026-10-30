@@ -30,12 +30,15 @@ The following exercises will guide you through productionising a model:
 - [Exercise 3: Serving the Model](fastapi-serving) - Serve the registered model directly with MLflow, then wrap it in your own FastAPI app
 - [Exercise 4: Check Performance of Deployed Model](model-monitoring) - Monitor for data and concept drift
 
-There are 5 python files in the [**resources**](https://github.com/Jeppe-T-K/itu-data-science-in-production/tree/main/lessons/05-productionising-models/resources) folder for these exercises:
-* [data_util.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/data_util.py), which you can use for generating the data (imagine it is the output of the data processing pipelines), including classification data with a train/validation/test split and drift variants
-* [example_model.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/example_model.py), which you can use as the basic SKLearn model
-* [basic_mlflow_training.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_mlflow_training.py), which you can use as a guide for wrapping a model with a threshold and setting up MLflow
-* [basic_fastapi_app.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_fastapi_app.py), which you can use as a guide for serving the model with FastAPI
-* [basic_mlflow_evaluation.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_mlflow_evaluation.py), which you can use for evaluating the (created) models using new data and check for drifts.
+There are 6 python files in the [**resources**](https://github.com/Jeppe-T-K/itu-data-science-in-production/tree/main/lessons/05-productionising-models/resources) folder for these exercises:
+* [example_model.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/example_model.py), the basic scikit-learn model the exercises build on: a logistic regression on the breast cancer dataset
+* [data_util.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/data_util.py), which provides the data: the breast cancer train/validation/test split and drift variants of it for Exercise 4 (imagine it is the output of the data processing pipelines)
+* [basic_mlflow_logging.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_mlflow_logging.py), a possible solution for Exercise 1, in case you get stuck
+* [basic_mlflow_training.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_mlflow_training.py), a possible solution for Exercise 2, in case you get stuck
+* [basic_fastapi_app.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_fastapi_app.py), a possible solution for Exercise 3, in case you get stuck
+* [basic_mlflow_evaluation.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/basic_mlflow_evaluation.py), a possible solution for Exercise 4, in case you get stuck
+
+If you get stuck, copy freely from the possible solutions - but as always, try yourself (and the MLflow documentation) first.
 
 As always for the most effective learning, try to use the MLflow documentation and figure out how to solve the exercises yourself first before consulting AI.
 

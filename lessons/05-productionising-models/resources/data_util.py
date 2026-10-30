@@ -1,5 +1,30 @@
 import numpy as np
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
+
+def get_breast_cancer_data():
+    """The breast cancer dataset with the same stratified 70/15/15
+    train/validation/test split as example_model.py."""
+    X, y = load_breast_cancer(return_X_y=True)
+    X_train, X_rest, y_train, y_rest = train_test_split(
+        X, y, test_size=0.30, random_state=42, stratify=y)
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest)
+    return X_train, X_val, X_test, y_train, y_val, y_test
+
+def get_breast_cancer_drift_data():
+    """Data drift: the same patients and outcomes as before, but the
+    measurement device has drifted - every reading comes out 25% higher.
+    The input distributions have changed; the labels have not."""
+    X, y = load_breast_cancer(return_X_y=True)
+    return X * 1.25, y
+
+def get_breast_cancer_concept_data():
+    """Concept drift: the same measurements as before, but the labeling
+    guideline changed and every diagnosis is the opposite of what it was.
+    The input distributions are unchanged; the relationship X -> y flipped."""
+    X, y = load_breast_cancer(return_X_y=True)
+    return X, 1 - y
 
 def get_data(N=100):
     np.random.seed(42)

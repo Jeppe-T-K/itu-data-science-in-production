@@ -1,21 +1,24 @@
-from datetime import datetime, timezone
+"""A possible solution for Exercise 2: sweep classification thresholds on
+the validation split, wrap the model (and its threshold) in a PythonModel,
+log it to MLflow, register it, and load it back to verify."""
 
-import os
+from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
 import mlflow
 
+from sklearn.datasets import load_breast_cancer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.model_selection import train_test_split
 
-from data_util import get_classification_data
 from mlflow.pyfunc import PythonModel
 
 
 class ThresholdedLogisticRegression(PythonModel):
-    """A logistic regression wrapped with a decision threshold, so the
-    threshold is stored (and versioned) together with the model."""
+    """A logistic regression wrapped with a decision threshold, returning
+    the predictions together with a timestamp of the prediction call."""
 
     def __init__(self, model, threshold=0.5):
         self.model = model
@@ -31,46 +34,57 @@ class ThresholdedLogisticRegression(PythonModel):
         }
 
 
-# Load data (stratified train/validation/test split)
-X_train, X_val, X_test, y_train, y_val, y_test = get_classification_data()
+# Load data (stratified 70/15/15 train/validation/test split)
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_rest, y_train, y_rest = train_test_split(
+    X, y, test_size=0.30, random_state=42, stratify=y
+)
+X_val, X_test, y_val, y_test = train_test_split(
+    X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest
+)
 
 # Define the model hyperparameters
-params = {"max_iter": 1000, "random_state": 8}
+params = {"C": 0.5, "max_iter": 5000, "random_state": 8}
 
-# Train the model
-lr = LogisticRegression(**params)
-lr.fit(X_train, y_train)
 
-# Sweep thresholds on the validation split and pick the best one for F1
-proba = lr.predict_proba(X_val)[:, 1]
-sweep = {}
-for threshold in np.arange(0.1, 0.91, 0.05):
-    preds = (proba >= threshold).astype(int)
-    sweep[round(threshold, 2)] = {
-        "f1": f1_score(y_val, preds),
-        "precision": precision_score(y_val, preds, zero_division=0),
-        "recall": recall_score(y_val, preds, zero_division=0),
-    }
-best_threshold = max(sweep, key=lambda t: sweep[t]["f1"])
+# Sweep thresholds on the validation split
+def sweep_thresholds(lr, X_val, y_val):
+    proba = lr.predict_proba(X_val)[:, 1]
+    threshold_sweep = {}
+    for threshold in np.arange(0.1, 0.91, 0.05):
+        preds = (proba >= threshold).astype(int)
+        threshold_sweep[round(threshold, 2)] = {
+            "f1": f1_score(y_val, preds),
+            "precision": precision_score(y_val, preds, zero_division=0),
+            "recall": recall_score(y_val, preds, zero_division=0),
+        }
+    best_threshold = max(threshold_sweep, key=lambda t: threshold_sweep[t]["f1"])
+    return best_threshold, threshold_sweep
+
 
 mlflow.set_experiment("Thresholded Logistic Regression")
 with mlflow.start_run() as run:
-    # Create a Dataset object for later
-    os.makedirs("mlflow_artifacts", exist_ok=True)
-    csv_path = "mlflow_artifacts/X_train.csv"
-    pd.DataFrame(X_train).to_csv(csv_path, index=False)
-    dataset = mlflow.data.from_pandas(pd.DataFrame(X_train), source=csv_path)
-    mlflow.log_input(dataset, context="training")
+    # Train inside the run: the whole experiment belongs to the run
+    lr = LogisticRegression(**params)
+    lr.fit(X_train, y_train)
+
+    # Sweep thresholds and pick the best one
+    best_threshold, threshold_sweep = sweep_thresholds(lr, X_val, y_val)
+
+    # Wrap the model and sanity-check the wrapped predictions
+    model = ThresholdedLogisticRegression(lr, threshold=best_threshold)
+    proba = lr.predict_proba(X_val)[:, 1]
+    expected = (proba >= best_threshold).astype(int).tolist()
+    # Outside MLflow the context is unused, so pass it explicitly
+    assert model.predict(None, pd.DataFrame(X_val))["predictions"] == expected
 
     # Log parameters (including the chosen threshold) and the sweep artifact
     mlflow.log_params(params)
     mlflow.log_param("threshold", best_threshold)
-    mlflow.log_dict(sweep, "threshold_sweep.json")
+    mlflow.log_dict(threshold_sweep, "threshold_sweep.json")
 
-    # Evaluate the wrapped model at the chosen threshold
-    model = ThresholdedLogisticRegression(lr, threshold=best_threshold)
+    # Evaluate at the chosen threshold on the validation and test splits
     for split, X, y in [("validation", X_val, y_val), ("test", X_test, y_test)]:
-        # (context is unused here; MLflow injects one when serving)
         y_pred = model.predict(None, pd.DataFrame(X))["predictions"]
         mlflow.log_metric(f"{split}_accuracy", accuracy_score(y, y_pred))
         mlflow.log_metric(f"{split}_f1_score", f1_score(y, y_pred))
@@ -86,3 +100,8 @@ mlflow.register_model(
     f"runs:/{run.info.run_id}/thresholded_logistic_model",
     name="thresholded_logistic_model",
 )
+
+# Load the model back from the registry and verify it predicts the same
+loaded = mlflow.pyfunc.load_model("models:/thresholded_logistic_model/1")
+loaded_pred = loaded.predict(pd.DataFrame(X_test))["predictions"]
+assert loaded_pred == model.predict(None, pd.DataFrame(X_test))["predictions"]

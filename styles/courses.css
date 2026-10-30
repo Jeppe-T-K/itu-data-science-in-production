@@ -566,8 +566,12 @@ ol.sections-name .lesson-details {
   padding: 0px 5px;
 }
 
-code,
-pre code {
+code {
+  padding: 0.1rem 0.3rem;
+}
+
+pre code,
+pre code.hljs {
   padding: 0.5rem;
 }
 
