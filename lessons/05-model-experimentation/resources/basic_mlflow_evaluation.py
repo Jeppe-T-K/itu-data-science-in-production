@@ -2,6 +2,8 @@ import pandas as pd
 import scipy
 import mlflow
 
+from sklearn.metrics import accuracy_score, f1_score
+
 from data_util import (
     get_classification_data,
     get_classification_drift_data,
@@ -16,8 +18,10 @@ def detect_data_drift(X_old, X_new):
             drifted_features.append(i)
     return drifted_features
 
-# The training data, to compare new data against
-X_train, _, y_train, _ = get_classification_data()
+# The test split from training time is the baseline the new data is
+# compared against (in the course project, the training job stores a
+# baseline statistics artifact for exactly this purpose)
+_, _, X_test, _, _, y_test = get_classification_data()
 
 model_name = "thresholded_logistic_model"
 model_version = 1  # Or higher if you ran it multiple times
@@ -29,21 +33,16 @@ model = mlflow.pyfunc.load_model(
 
 # The new data the model is meeting "in production".
 # Swap between the two to compare data drift vs. concept drift.
-X_new, X_eval, y_new, y_eval = get_classification_drift_data()
-# X_new, X_eval, y_new, y_eval = get_classification_concept_data()
-
-# Create evaluation dataset
-eval_data = pd.DataFrame(X_eval)
-eval_data["target"] = y_eval
+_, X_new, _, y_new = get_classification_drift_data()
+# _, X_new, _, y_new = get_classification_concept_data()
 
 mlflow.set_experiment("Thresholded Logistic Regression")
-with mlflow.start_run():
-    data_drift_columns = detect_data_drift(X_train, X_eval)
+with mlflow.start_run(run_name="drift_evaluation"):
+    data_drift_columns = detect_data_drift(X_test, X_new)
     mlflow.log_metric("data_drifted_features", len(data_drift_columns))
 
-    result = mlflow.evaluate(
-        model,             # Function to evaluate
-        eval_data,         # Evaluation data
-        targets="target",  # Target column
-        model_type="classifier",  # Task type
-    )
+    # The wrapper returns predictions together with a timestamp
+    output = model.predict(pd.DataFrame(X_new))
+    y_pred = output["predictions"]
+    mlflow.log_metric("accuracy", accuracy_score(y_new, y_pred))
+    mlflow.log_metric("f1_score", f1_score(y_new, y_pred))

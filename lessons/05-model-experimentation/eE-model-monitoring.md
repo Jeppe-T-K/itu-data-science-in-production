@@ -8,6 +8,8 @@ Once a model is deployed, you need to monitor its performance. Here we test how 
 
 We continue with the thresholded classifier from the previous exercises. `resources/data_util.py` provides two new datasets for this: `get_classification_drift_data()` and `get_classification_concept_data()`.
 
+In these exercises the test set plays the role of "the data the model was approved on": it is the baseline we compare new data against, and it is where we evaluate performance. The course project does the same thing more seriously: its training notebook stores a set of baseline statistics, and the serving endpoint compares live traffic against that baseline.
+
 ### Exercise 4.1: Evaluate on drifted data
 
 1. <details> <summary> Load your registered model </summary>
@@ -16,8 +18,8 @@ We continue with the thresholded classifier from the previous exercises. `resour
    <pre><i><u>You logged the model in Exercise 2 - check in the MLflow UI what version your model has ended up on.</u></i></pre>
    </details>
 
-2. <details> <summary> Detect data drift</summary>
-   Compare the feature distributions of the training data and the new data with a statistical test, e.g. a Kolmogorov–Smirnov test per feature (see <code>resources/basic_mlflow_evaluation.py</code> for inspiration):
+2. <details> <summary> Detect data drift </summary>
+   Compare the feature distributions of the test set (your baseline) and the new data with a statistical test, e.g. a Kolmogorov–Smirnov test per feature (see <code>resources/basic_mlflow_evaluation.py</code> for inspiration):
 
    ```python
    def detect_data_drift(X_old, X_new):
@@ -37,20 +39,15 @@ We continue with the thresholded classifier from the previous exercises. `resour
    </details>
 
 3. <details> <summary> Evaluate the model on both new datasets </summary>
-   Log the evaluation as an MLflow run, e.g. with <code>mlflow.evaluate</code> (now with <code>model_type="classifier"</code>), and compare the metrics against the training-time run:
+   The new datasets come with labels, so we can measure performance directly. Get predictions from the loaded wrapper and compute the metrics yourself, logging the evaluation as an MLflow run so it can be compared against the training-time run:
 
    ```python
-   eval_data = pd.DataFrame(X_new)
-   eval_data["target"] = y_new
-
-   with mlflow.start_run():
-       mlflow.log_metric("data_drifted_features", len(detect_data_drift(X_train, X_new)))
-       mlflow.evaluate(
-           model,            # the loaded pyfunc wrapper
-           eval_data,        # evaluation data
-           targets="target", # target column
-           model_type="classifier",
-       )
+   with mlflow.start_run(run_name="data_drift"):
+       mlflow.log_metric("data_drifted_features", len(detect_data_drift(X_test, X_new)))
+       output = model.predict(pd.DataFrame(X_new))
+       y_pred = output["predictions"]
+       mlflow.log_metric("accuracy", accuracy_score(y_new, y_pred))
+       mlflow.log_metric("f1_score", f1_score(y_new, y_pred))
    ```
 
    Then repeat with the concept drift dataset: do you expect the model error to change? Do you expect a difference in the distribution of the X variable?
@@ -58,14 +55,16 @@ We continue with the thresholded classifier from the previous exercises. `resour
    <details><summary>Expectation</summary>
    Now we expect the model's error to increase sharply, since the fundamental relationship between X and y has been reversed. The distribution of X is the same as during training, so the KS test does <i>not</i> fire. That is exactly why monitoring inputs alone is not enough: you also need to track outcomes and metrics over time.
    </details>
+
+   <pre><i><u>For a model that returns plain predictions (a standard flavour), <code>mlflow.evaluate</code> can compute and log all of this for you in one call. Why do we extract <code>predictions</code> and compute the metrics ourselves here? (Hint: look at what your wrapper returns.)</u></i></pre>
    </details>
 
 4. <details> <summary> Discuss: monitoring a served model </summary>
-   <pre><i><u><li>Your service from Exercise 3 logs every request. How would you turn those logs into drift metrics? What would you alert on?</li>
+   <pre><i><u><li>Your service from Exercise 3 could log every request. How would you turn those logs into drift metrics? What would you alert on?</li>
 <li>For the concept drift case, what do you need that a serving service alone cannot provide? (hint: where do the true labels come from?)</li>
 <li>How does the threshold from Exercise 2 interact with drift - can a "fine" model start misbehaving just because the class balance shifts?</li></u></i></pre>
    </details>
 
 And that is it! You can do a lot more with MLflow and FastAPI, and you might see some more complex commands later in the course, but remember: start simple and then add complexity later.
 
-[Back to Introduction](introduction)
+[Back to Introduction](exercise-intro)

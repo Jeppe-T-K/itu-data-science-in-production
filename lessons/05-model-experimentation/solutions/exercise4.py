@@ -2,6 +2,8 @@ import pandas as pd
 import scipy
 import mlflow
 
+from sklearn.metrics import accuracy_score, f1_score
+
 from data_util import (
     get_classification_data,
     get_classification_drift_data,
@@ -16,8 +18,8 @@ def detect_data_drift(X_old, X_new):
             drifted_features.append(i)
     return drifted_features
 
-# The training data to compare new data against
-X_train, _, y_train, _ = get_classification_data()
+# The test split from training time is the drift baseline
+_, _, X_test, _, _, y_test = get_classification_data()
 
 # Load the registered wrapper (the threshold is stored with it)
 model = mlflow.pyfunc.load_model("models:/thresholded_logistic_model/1")
@@ -30,23 +32,20 @@ datasets = {
 
 mlflow.set_experiment("Thresholded Logistic Regression")
 for name, loader in datasets.items():
-    _, X_eval, _, y_eval = loader()
-
-    eval_data = pd.DataFrame(X_eval)
-    eval_data["target"] = y_eval
+    _, X_new, _, y_new = loader()
 
     with mlflow.start_run(run_name=name):
-        drifted = detect_data_drift(X_train, X_eval)
+        drifted = detect_data_drift(X_test, X_new)
         mlflow.log_metric("data_drifted_features", len(drifted))
 
-        result = mlflow.evaluate(
-            model,             # the loaded pyfunc wrapper
-            eval_data,         # evaluation data
-            targets="target",  # target column
-            model_type="classifier",
-        )
+        # The wrapper returns predictions together with a timestamp
+        y_pred = model.predict(pd.DataFrame(X_new))["predictions"]
+        accuracy = accuracy_score(y_new, y_pred)
+        f1 = f1_score(y_new, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("f1_score", f1)
 
         print(
             f"{name}: drifted features={drifted}, "
-            f"accuracy={result.metrics.get('accuracy')}"
+            f"accuracy={accuracy:.4f}, f1={f1:.4f}"
         )

@@ -1,7 +1,7 @@
 {
   "title": "Model Experimentation",
   "shortTitle": "Model Experimentation",
-  "description": "ML experiment tracking with MLflow, custom model wrappers, FastAPI serving, and performance monitoring",
+  "description": "ML experiment tracking with MLflow, custom model wrappers, model serving with MLflow and FastAPI, and performance monitoring",
   "sections": [
     {
       "title": "Introduction",
@@ -31,10 +31,11 @@
     {
       "title": "Exercises",
       "order": [
-        "eA-mlflow-basics",
-        "eB-custom-models",
-        "eC-fastapi-serving",
-        "eD-model-monitoring"
+        "eA-exercise-intro",
+        "eB-mlflow-basics",
+        "eC-custom-models",
+        "eD-fastapi-serving",
+        "eE-model-monitoring"
       ]
     }
   ]

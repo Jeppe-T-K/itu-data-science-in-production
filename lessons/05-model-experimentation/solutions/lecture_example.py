@@ -35,7 +35,7 @@ y_pred = lr.predict(params, X_test)
 mse = mean_squared_error(y_test, y_pred)
 
 mlflow.set_experiment("Basic Linear Model")
-with mlflow.start_run():
+with mlflow.start_run() as run:
     # Create a Dataset object for later
     os.makedirs("mlflow_artifacts", exist_ok=True)
     csv_path = "mlflow_artifacts/X_train.csv"
@@ -47,7 +47,12 @@ with mlflow.start_run():
     mlflow.log_params(params)
     mlflow.log_metric("mean_squared_error", mse)
     mlflow.pyfunc.log_model(
-        name="Custom Linear Model", 
+        name="Custom Linear Model",
         python_model=lr,
-        registered_model_name="custom_linear_model"
     )
+
+# Register the logged model in the model registry (after the run)
+mlflow.register_model(
+    f"runs:/{run.info.run_id}/Custom Linear Model",
+    name="custom_linear_model",
+)
