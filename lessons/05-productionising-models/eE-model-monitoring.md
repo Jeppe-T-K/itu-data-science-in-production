@@ -36,7 +36,7 @@ In these exercises the test set (from <code>get_breast_cancer_data()</code>) pla
            mlflow.log_metric("f1_score", f1_score(y_new, y_pred))
    ```
 
-   <i><u>For a model that returns plain predictions (a standard flavour), <code>mlflow.evaluate</code> can compute and log all of this for you in one call. Why do we extract <code>predictions</code> and compute the metrics ourselves here? (Hint: look at what your wrapper returns.). Why is this useful to wrap this in MLflow?</u></i>
+   <i><u>For a model that returns plain predictions (a standard flavour), <code>mlflow.evaluate</code> can compute and log all of this for you in one call. Why do we extract <code>predictions</code> and compute the metrics ourselves here? (Hint: look at what your wrapper returns.) Why is this useful to wrap this in MLflow?</u></i>
    </details>
 
 3. <details> <summary> Which test detects which drift? </summary>
