@@ -1,7 +1,7 @@
 """A possible solution for Exercise 3: serve the registered thresholded
 classifier behind your own FastAPI app - model loaded once at startup, a
-health endpoint that reports readiness, a validated invocations endpoint,
-and tests for both. Run with `uvicorn basic_fastapi_app:app --reload`."""
+health endpoint that reports readiness, and a validated invocations
+endpoint. Run with `uvicorn basic_fastapi_app:app --reload`."""
 
 import os
 from contextlib import asynccontextmanager
@@ -50,42 +50,5 @@ def health():
 def invocations(payload: Invocation) -> Prediction:
     # The threshold is inside the loaded model, not in this file
     df = pd.DataFrame(payload.features)
-    return Prediction(**app.state.model.predict(df))
-
-
-# --- Tests (run with pytest) ---
-
-from fastapi.testclient import TestClient
-
-
-def sample_features():
-    # Two real rows from the breast cancer dataset: the dataset is ordered
-    # with the malignant samples first, so row 0 is malignant and row 500
-    # is benign
-    from sklearn.datasets import load_breast_cancer
-
-    X, _ = load_breast_cancer(return_X_y=True)
-    return X[[0, 500]].tolist()
-
-
-def test_health_loading():
-    # Without entering the lifespan the model is not loaded yet
-    response = TestClient(app).get("/health")
-    assert response.status_code == 503
-    assert response.json() == {"status": "loading"}
-
-
-def test_health_ok():
-    with TestClient(app) as client:  # enters the lifespan, loads the model
-        response = client.get("/health")
-        assert response.status_code == 200
-        assert response.json() == {"status": "ok"}
-
-
-def test_invocations():
-    with TestClient(app) as client:
-        response = client.post("/invocations", json={"features": sample_features()})
-        assert response.status_code == 200
-        assert set(response.json()) == {"predictions", "threshold"}
-        # Known input -> expected class: malignant -> 0, benign -> 1
-        assert response.json()["predictions"] == [0, 1]
+    predictions = app.state.model.predict(df)
+    return Prediction(**predictions)

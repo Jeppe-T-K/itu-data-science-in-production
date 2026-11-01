@@ -36,3 +36,4 @@ yarn-error.log*
 # python / mlflow exercise artifacts
 __pycache__/
 mlruns/
+!lessons/05-productionising-models/resources/payload.csv

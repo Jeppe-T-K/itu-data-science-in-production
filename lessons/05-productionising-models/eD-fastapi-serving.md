@@ -9,40 +9,49 @@ Your model now sits in the MLflow registry, threshold and all - but it isn't ser
 There are two ways to do that, and you will try both:
 
 1. **Serve the model directly with MLflow.** `mlflow models serve` starts a scoring server for any logged model, `/invocations` endpoint included. This is exactly how the course project serves its vial-classification model.
-2. **Define the API yourself with FastAPI.** When you need control over the contract - validation, documentation, response bodies - you write the service yourself. The go-to Python framework for that is [FastAPI](https://fastapi.tiangolo.com/): it validates requests with [pydantic](https://docs.pydantic.dev/), generates interactive documentation automatically, and is easy to test. The course project uses both together: a thin FastAPI app in front of the MLflow scoring server.
+2. **Define the API yourself with FastAPI.** When you need control over the contract - validation, documentation, response bodies - you can write the service yourself. A simple Python framework for that is [FastAPI](https://fastapi.tiangolo.com/): it validates requests with [pydantic](https://docs.pydantic.dev/), generates interactive documentation automatically, and is easy to test. The course project uses both together: a thin FastAPI app in front of the MLflow scoring server.
 
 ### Exercise 3.1: Serve the model directly with MLflow
 
 1. <details><summary>Start the scoring server</summary>
 
-   <pre><code>mlflow models serve -m models:/thresholded_logistic_model/1 -p 5001 --no-conda</code></pre>
+   ```bash
+   mlflow models serve -m models:/thresholded_logistic_model/1 -p 5001 --env-manager local
+   ```
 
-   Under the hood this launches a FastAPI application run by uvicorn - the same stack you will use yourself in a moment. The <code>-m</code> flag accepts any model URI: a registry version like here, or a <code>runs:/...</code> URI.
+   Under the hood this launches a FastAPI application run by uvicorn. You specify which model to serve with the <code>-m</code> flag, which accepts any model URI: a registry version like here, or a <code>runs:/...</code> URI. 
+
+   The <code>--env-manager local</code> flag tells MLflow to serve the model in your current Python environment. Without it, MLflow first builds a fresh virtual environment from the model's logged requirements - safer, but slow, and often the first thing that breaks on a laptop.
    </details>
 
 2. <details><summary>Call the invocations endpoint</summary>
+   Your model expects rows of 30 features - real measurements of cell nuclei, not numbers you would want to type by hand. Two example rows (a malignant sample and a benign one) are ready in <a href="https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/payload.json">resources/payload.json</a>, and <a href="https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/payload.csv">resources/payload.csv</a> shows the same two rows with their column names. Download the JSON and call the endpoint with it:
 
-   <pre><code>curl -X POST http://localhost:5001/invocations \
+   ```bash
+   curl -X POST http://localhost:5001/invocations \
      -H "Content-Type: application/json" \
-     -d '{"instances": [[12.0, 34.0], [95.0, 60.0]]}'</code></pre>
+     -d @payload.json
+   ```
 
    The scoring server converts the JSON into a DataFrame and passes it to your wrapper's <code>predict</code>. The response is your wrapper's output, wrapped by the scoring server in a <code>predictions</code> key:
 
-   <pre><code>{"predictions": {"predictions": [0, 1], "timestamp": "2026-10-30T09:41:12.842017+00:00"}}</code></pre>
+   ```json
+   {"predictions": {"predictions": [0, 1], "threshold": 0.25}}
+   ```
 
-   The course project calls the same endpoint the same way - only with base64-encoded images in <code>instances</code> instead of feature rows - and lives with the same wrapping rather than writing its own scoring server.
-
-   <pre><i><u>Where did the threshold come from in these predictions? What happens if you send the wrong field name, or a string instead of a number?</u></i></pre>
+   <i><u>Where did the threshold in the response come from? What happens if you send the wrong field name, or a string instead of a number?</u></i>
    </details>
 
 3. <details><summary>Check the health endpoint</summary>
 
-   <pre><code>curl -i http://localhost:5001/health</code></pre>
+   ```bash
+   curl -i http://localhost:5001/health
+   ```
 
-   <pre><i><u>Is the response valid JSON? This bare-newline answer is exactly why the course project puts its own FastAPI app in front of the scoring server: to control what the endpoints actually respond. Keep that motivation in mind for the next part.</u></i></pre>
+   <i><u>Is the response valid JSON? This bare-newline answer is exactly why the course project puts its own FastAPI app in front of the scoring server: to control what the endpoints actually respond. Keep that motivation in mind for the next part.</u></i>
    </details>
 
-### Exercise 3.2 (advanced): Define your own API with FastAPI
+### Exercise 3.2: Define your own API with FastAPI
 
 1. <details><summary>Install and run a hello-world app</summary>
    <code>pip install fastapi uvicorn</code>
@@ -61,90 +70,90 @@ There are two ways to do that, and you will try both:
 
    Run it with <code>uvicorn app:app --reload</code> and open http://localhost:8000/health - then http://localhost:8000/docs.
 
-   <pre><i><u>What is the /docs page? (hint: OpenAPI). Why does every serious service have a health endpoint - remember the logging/monitoring part of the lecture?</u></i></pre>
+   <i><u>What is the /docs page? (hint: OpenAPI). Why does a health endpoint make sense to have? Think back on the logging/monitoring part of the lecture</u></i>
    </details>
 
-2. <details><summary>Load the model once at startup</summary>
-   Use a lifespan handler to load your registered wrapper once when the app starts:
+2. <details><summary>The skeleton of the model service</summary>
+   It's not a learning objective to set up a fully functioning API service. However, we want to give enough context for what it takes to serve a model via an API. Here is therefore a skeleton of the full service. Replace your <code>app.py</code> with it and read through: it loads your registered model when the app starts, defines the request and response contract with pydantic, and answers health checks. The <code>invocations</code> endpoint is yours to finish in the next step.
 
    ```python
+   import os
    from contextlib import asynccontextmanager
+
+   import mlflow
+   import pandas as pd
+   from fastapi import FastAPI
+   from fastapi.responses import JSONResponse
+   from pydantic import BaseModel
+
+   MODEL_URI = os.environ.get("MODEL_URI", "models:/thresholded_logistic_model/1")
+
 
    @asynccontextmanager
    async def lifespan(app: FastAPI):
-       app.state.model = mlflow.pyfunc.load_model(
-           os.environ.get("MODEL_URI", "models:/thresholded_logistic_model/1")
-       )
+       # Load the model once at startup, not per request
+       app.state.model = mlflow.pyfunc.load_model(MODEL_URI)
        yield
 
-   app = FastAPI(lifespan=lifespan)
-   ```
 
-   <pre><i><u>Why load at startup instead of inside the endpoint? What would that do to latency? And why read the model URI from an environment variable?</u></i></pre>
-   </details>
+   app = FastAPI(title="Thresholded classifier service", lifespan=lifespan)
 
-3. <details><summary>Add the invocations endpoint</summary>
-   Define pydantic models for the request and response, so FastAPI both validates and documents the contract. The response mirrors the wrapper's output: predictions plus a timestamp.
-
-   ```python
-   from pydantic import BaseModel
 
    class Invocation(BaseModel):
+       # One or more rows of features (30 features per row for this model)
        features: list[list[float]]
 
+
    class Prediction(BaseModel):
+       # The wrapper's output: predictions plus the threshold that produced them
        predictions: list[int]
-       timestamp: str
+       threshold: float
+
+
+   @app.get("/health")
+   def health():
+       # "ok" only once the model is actually loaded and ready to serve
+       if getattr(app.state, "model", None) is None:
+           return JSONResponse(status_code=503, content={"status": "loading"})
+       return {"status": "ok"}
+
 
    @app.post("/invocations")
    def invocations(payload: Invocation) -> Prediction:
-       df = pd.DataFrame(payload.features)
-       return Prediction(**app.state.model.predict(df))
+       ...  # your job in the next step
    ```
 
-   Start the service and try it:
-
-   <pre><code>curl -X POST http://localhost:8000/invocations \
-     -H "Content-Type: application/json" \
-     -d '{"features": [[12.0, 34.0], [95.0, 60.0]]}'</code></pre>
-
-   <pre><i><u>Compare the response to the one from the scoring server in 3.1: here it is not double-wrapped - defining the API yourself means controlling the contract. What happens if you send a string instead of a number? Or the wrong field name? Watch what FastAPI does for you - and discuss why "sanity check input/output" from the lecture matters.</u></i></pre>
    </details>
 
-4. <details><summary>Make the health check complete</summary>
-   A health endpoint that just returns <code>{"status": "ok"}</code> only tells you the process is alive - not that it can actually serve. Make it report on the model as well: return <code>503</code> with a <code>"loading"</code> status until the model is loaded, and only then <code>200</code> with <code>"ok"</code>.
-
-   The course project takes this further: its health check distinguishes <code>ok</code> / <code>loading</code> / <code>error</code>, because the model there runs in a separate process that can die independently of the API.
-
-   <pre><i><u>Why does a load balancer (or an orchestrator like Docker/Kubernetes) care about the difference between "process alive" and "model ready"?</u></i></pre>
-   </details>
-
-### Exercise 3.3: Test the service
-
-1. <details><summary>Write an API test</summary>
-   FastAPI ships with a test client, so you can test the service without running a server:
+3. <details><summary>Make the invocations endpoint work</summary>
+   The endpoint body is only two lines: create a DataFrame from the request features, and feed it to the loaded model for the response.
 
    ```python
-   from fastapi.testclient import TestClient
-
-   def test_health():
-       response = TestClient(app).get("/health")
-       assert response.status_code == 200
-       assert response.json() == {"status": "ok"}
+   @app.post("/invocations")
+   def invocations(payload: Invocation) -> Prediction:
+       df = pd.DataFrame(<payload operation>)
+       predictions = <app.state.model prediction operations>
+       return Prediction(<predictions output format>)
    ```
 
-   Add tests for <code>/invocations</code> too (e.g. known input &rarr; expected class).
+   `payload` is an `Invocation` item, so you need to get the `features` values out somehow.
+
+   Start the service with <code>uvicorn app:app --reload</code> and try it - reuse the payload from 3.1, only with the other field name (FastAPI expects <code>features</code> where the scoring server expected <code>instances</code>):
+
+   ```bash
+   python -c "import json; d=json.load(open('payload.json')); json.dump({'features': d['instances']}, open('payload_fastapi.json','w'))"
+
+   curl -X POST http://localhost:8000/invocations \
+     -H "Content-Type: application/json" \
+     -d @payload_fastapi.json
+   ```
+
+   <i><u>Compare the response to the one from the scoring server in 3.1: here it is not double-wrapped - defining the API yourself means controlling the contract. What happens if you send a string instead of a number? Or the wrong field name? Watch what FastAPI does for you - and discuss why "sanity check input/output" from the lecture matters.</u></i>
+
+   <details><summary>Solution hints</summary>
+
+   - For `<payload operation>`: the request rows are in <code>payload.features</code> - pydantic has already parsed and validated the JSON for you.
+   - For `<app.state.model prediction operations>`: <code>app.state.model.predict(df)</code> returns a dict with <code>predictions</code> and <code>threshold</code>.
+   - For `<predictions output format>`: unpack that dict into the response model with <code>**</code>, so <code>Prediction(**predictions)</code>.
    </details>
-
-2. <details><summary>Discuss: wire it into CI</summary>
-   <pre><i><u>You set up GitHub Actions in the previous lesson. What would a workflow step that runs these tests give you that the unit tests of the model alone do not?</u></i></pre>
    </details>
-
-### Exercise 3.4: Reflect
-
-<pre><i><u>Discuss:
-
-<li>The scoring server from 3.1 needed no code from you. When is that enough, and when do you need the FastAPI app from 3.2? What does the course project's combination of the two give it?</li>
-<li>This is "on demand" serving. When would batch serving (like the one from the MLOps projects lesson) be better?</li>
-<li>Who should be able to call your service? What is missing before you would call this production-ready? (hint: authentication, monitoring, containerization...)</li>
-<li>The lecture said "recent != better" when promoting models. How does the MODEL_URI environment variable let you choose what gets served - and roll back?</li></u></i></pre>
