@@ -15,13 +15,13 @@ Make sure MLflow and friends are installed (see Exercise 0 on the [exercise intr
 
 ### Exercise 1.1: Run an ML experiment
 
-The <code>resources/example_model.py</code> script trains a <code>LogisticRegression</code> on the breast cancer dataset that ships with scikit-learn (<code>load_breast_cancer</code>) - a real binary classification task, and the same model you will keep building on in the following exercises. The script splits the data into a stratified 70/15/15 train/validation/test split - the same proportions the course project's training notebook uses. The three sets have distinct roles, and you will rely on the separation in the next exercises:
+The [resources/example_model.py](https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/example_model.py) script trains a <code>LogisticRegression</code> on the breast cancer dataset that ships with scikit-learn (<code>load_breast_cancer</code>) - a real binary classification task, and the same model you will keep building on in the following exercises. The script splits the data into a stratified 70/15/15 train/validation/test split - the same proportions the course project's training notebook uses. The three sets have distinct roles, and you will rely on the separation in the next exercises:
 
 - <b>train</b>: fit the model
 - <b>validation</b>: make decisions during experimentation (like picking a classification threshold)
 - <b>test</b>: a final, untouched evaluation
 
-1. <details> <summary> Edit the <code>resources/example_model.py</code> script to log the model run with MLflow</summary>
+1. <details> <summary> Edit the <a href="https://github.com/Jeppe-T-K/itu-data-science-in-production/blob/main/lessons/05-productionising-models/resources/example_model.py">resources/example_model.py</a> script to log the model run with MLflow</summary>
    First <code>import mlflow</code>
 
    Then set the MLflow experiment via <code>mlflow.set_experiment("My experiment name")</code>

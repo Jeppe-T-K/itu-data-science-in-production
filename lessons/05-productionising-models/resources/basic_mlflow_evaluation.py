@@ -48,7 +48,8 @@ for name, loader in datasets.items():
         drifted = detect_data_drift(X_test, X_new)
         mlflow.log_metric("data_drifted_features", len(drifted))
 
-        # The wrapper returns predictions together with a timestamp
+        # The wrapper returns predictions together with the threshold that
+        # produced them
         y_pred = model.predict(pd.DataFrame(X_new))["predictions"]
         accuracy = accuracy_score(y_new, y_pred)
         f1 = f1_score(y_new, y_pred)

@@ -7,12 +7,13 @@ from sklearn.model_selection import train_test_split
 X, y = load_breast_cancer(return_X_y=True)
 
 # Split into train (70%), validation (15%) and test (15%) sets, keeping the
-# class balance the same in all three
-X_train, X_rest, y_train, y_rest = train_test_split(
-    X, y, test_size=0.30, random_state=42, stratify=y
+# class balance the same in all three: first hold out the test set, then
+# carve the validation set out of the remaining training data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.15, random_state=42, stratify=y
 )
-X_val, X_test, y_val, y_test = train_test_split(
-    X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest
+X_train, X_val, y_train, y_val = train_test_split(
+    X_train, y_train, test_size=15 / 85, random_state=42, stratify=y_train
 )
 
 # Define the model hyperparameters

@@ -33,9 +33,9 @@ class Invocation(BaseModel):
 
 
 class Prediction(BaseModel):
-    # The wrapper's output: predictions plus a timestamp of the call
+    # The wrapper's output: predictions plus the threshold that produced them
     predictions: list[int]
-    timestamp: str
+    threshold: float
 
 
 @app.get("/health")
@@ -86,6 +86,6 @@ def test_invocations():
     with TestClient(app) as client:
         response = client.post("/invocations", json={"features": sample_features()})
         assert response.status_code == 200
-        assert set(response.json()) == {"predictions", "timestamp"}
+        assert set(response.json()) == {"predictions", "threshold"}
         # Known input -> expected class: malignant -> 0, benign -> 1
         assert response.json()["predictions"] == [0, 1]

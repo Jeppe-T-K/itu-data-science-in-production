@@ -2,8 +2,6 @@
 the validation split, wrap the model (and its threshold) in a PythonModel,
 log it to MLflow, register it, and load it back to verify."""
 
-from datetime import datetime, timezone
-
 import numpy as np
 import pandas as pd
 import mlflow
@@ -18,29 +16,42 @@ from mlflow.pyfunc import PythonModel
 
 class ThresholdedLogisticRegression(PythonModel):
     """A logistic regression wrapped with a decision threshold, returning
-    the predictions together with a timestamp of the prediction call."""
+    the predictions together with the threshold that produced them."""
 
     def __init__(self, model, threshold=0.5):
         self.model = model
         self.threshold = threshold
 
     def predict(self, context, model_input) -> dict:
+        # MLflow injects `context` into every predict call of a pyfunc
+        # model: read-only metadata about where and how the model is being
+        # invoked, with the fields
+        #   request_id           - ID of this inference request (e.g. when
+        #                         called through the scoring server)
+        #   is_evaluate          - True when the call comes from mlflow.evaluate
+        #   dependencies_schemas - schemas of the model's dependencies
+        #   model_id             - ID of the logged model being served
+        #   endpoint_name        - name of the serving endpoint, when the
+        #                         model is served behind one
+        # We need none of it here - the threshold travels on the model
+        # object - but the signature has to accept it.
         if isinstance(model_input, pd.DataFrame):
             model_input = model_input.values
         proba = self.model.predict_proba(model_input)[:, 1]
         return {
             "predictions": (proba >= self.threshold).astype(int).tolist(),
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "threshold": self.threshold,
         }
 
 
-# Load data (stratified 70/15/15 train/validation/test split)
+# Load data (stratified 70/15/15 train/validation/test split: the test set
+# is held out first, then the validation set is carved out of the rest)
 X, y = load_breast_cancer(return_X_y=True)
-X_train, X_rest, y_train, y_rest = train_test_split(
-    X, y, test_size=0.30, random_state=42, stratify=y
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.15, random_state=42, stratify=y
 )
-X_val, X_test, y_val, y_test = train_test_split(
-    X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest
+X_train, X_val, y_train, y_val = train_test_split(
+    X_train, y_train, test_size=15 / 85, random_state=42, stratify=y_train
 )
 
 # Define the model hyperparameters

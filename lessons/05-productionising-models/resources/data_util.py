@@ -4,12 +4,13 @@ from sklearn.model_selection import train_test_split
 
 def get_breast_cancer_data():
     """The breast cancer dataset with the same stratified 70/15/15
-    train/validation/test split as example_model.py."""
+    train/validation/test split as example_model.py: the test set is
+    held out first, then the validation set is carved out of the rest."""
     X, y = load_breast_cancer(return_X_y=True)
-    X_train, X_rest, y_train, y_rest = train_test_split(
-        X, y, test_size=0.30, random_state=42, stratify=y)
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_rest, y_rest, test_size=0.50, random_state=42, stratify=y_rest)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.15, random_state=42, stratify=y)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_train, y_train, test_size=15 / 85, random_state=42, stratify=y_train)
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 def get_breast_cancer_drift_data():
