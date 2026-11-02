@@ -11,7 +11,7 @@ title: DORA Metrics
 
 ![DevOps infinity loop](/images/model_experimentation/dynatrace-devops.png)
 
-<i><u>Do you have any ideas for what they could be?</u></i>
+<i><u>Do you have any ideas what they could be?</u></i>
 
 ---
 
