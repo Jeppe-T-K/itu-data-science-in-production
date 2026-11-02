@@ -45,9 +45,3 @@ Experiment tracking is not unique to MLflow – DVC has its own experiment manag
 ![DVC experiments in VSCode](/images/model_experimentation/dvc-experiments-vscode.png)
 
 From https://dvc.org/doc/user-guide/experiment-management/comparing-experiments?tab=VSCode-Extension
-
----
-
-## MLflow? Demo time
-
-We saw the basics of MLflow in the exercises this morning. In the lecture we do a quick demo of comparing experiments and models – and you will get to try it yourself in [the exercises](mlflow-basics).

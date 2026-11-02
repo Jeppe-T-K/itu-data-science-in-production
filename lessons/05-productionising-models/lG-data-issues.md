@@ -22,7 +22,7 @@ From https://www.evidentlyai.com/ml-in-production/data-drift
 
 ---
 
-<details><summary style="font-size: 1.5em"> Data quality</summary>
+## Data quality
 
 The list of possible data quality issues is long… for example:
 
@@ -36,13 +36,9 @@ Common checks to catch them:
 - Schema comparison
 - NaNs, min/max, etc.
 
-![Data quality](/images/model_experimentation/data-quality.png)
-
-</details>
-
 ---
 
-<details><summary style="font-size: 1.5em"> Data/feature drift</summary>
+## Data/feature drift
 
 The distribution of your data changes over time.
 
@@ -53,7 +49,7 @@ Statistical tests to detect it:
 - **Kolmogorov-Smirnov test** – i.e., the max distance between the cumulative distributions
 - **Chi-squared** for categorical features
 
-![Data drift distributions](/images/model_experimentation/datajello-data-drift.png)
+<img src="/images/model_experimentation/datajello-data-drift.svg" alt="Data drift distributions" style="width: 90%">
 
 From https://datajello.com/production-ml-data-drift-and-concept-drift/
 
@@ -61,11 +57,9 @@ From https://datajello.com/production-ml-data-drift-and-concept-drift/
 
 From https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test#/media/File:KS_Example.png
 
-</details>
-
 ---
 
-<details><summary style="font-size: 1.5em"> Outliers</summary>
+## Outliers
 
 Where do outliers come from?
 
@@ -76,5 +70,3 @@ Where do outliers come from?
 → The real question: **when and how to react?**
 
 ![Faulty sensor data leading to outliers](/images/model_experimentation/outlier-sensor-data.png)
-
-</details>

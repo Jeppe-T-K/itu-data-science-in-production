@@ -17,7 +17,7 @@ For regular software, restoring means deploying a fix for a bug. For ML systems,
 - Bad or missing data reaching the model
 - A serving issue
 
-![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end.png)
+![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end-mttr.png)
 
 From https://ml-ops.org/content/end-to-end-ml-workflow
 

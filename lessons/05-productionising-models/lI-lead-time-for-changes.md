@@ -16,7 +16,7 @@ Just like with deployment frequency, "a change" in an ML system can be several t
 - Changes to the model
 - Changes to the code
 
-![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end.png)
+![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end-ltfc.png)
 
 From https://ml-ops.org/content/end-to-end-ml-workflow
 

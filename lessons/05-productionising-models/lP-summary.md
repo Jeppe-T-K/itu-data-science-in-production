@@ -34,7 +34,7 @@ Any change carries a risk. Pilot studies, A/B tests and shadow testing let you r
 
 ## MLOps?
 
-![MLOps principles](/images/model_experimentation/ml-ops-org-circles.png)
+![DevOps vs MLOps DORA metrics](/images/model_experimentation/devops-vs-mlops-dora-metrics.png)
 
 From https://ml-ops.org/content/mlops-principles
 

@@ -16,7 +16,7 @@ For a regular software project, a deployment ships code. But in an ML system, "a
 - Model changes (new parameters, new architecture)
 - Code changes (feature engineering, serving logic)
 
-![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end.png)
+![End-to-end ML workflow](/images/model_experimentation/ml-ops-org-end-to-end-deploymentfreq.png)
 
 From https://ml-ops.org/content/end-to-end-ml-workflow
 

@@ -10,14 +10,9 @@ title: DORA for MLOps
 
 The four DORA metrics were made for DevOps – software delivery in general. But we are running **machine learning** systems, which have more moving parts than a regular software project.
 
-![MLOps principles](/images/model_experimentation/ml-ops-org-circles.png)
+![DevOps vs MLOps DORA metrics](/images/model_experimentation/devops-vs-mlops-dora-metrics.png)
 
 From https://ml-ops.org/content/mlops-principles
-
-Discuss the four metrics:
-
-- How would you measure this?
-- What affects this for ML?
 
 ---
 

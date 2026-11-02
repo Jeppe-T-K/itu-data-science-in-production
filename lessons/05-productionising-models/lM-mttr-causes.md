@@ -18,9 +18,8 @@ Why does that happen?
 
 So: **retrain, rectify, or rollback?**
 
-![Loss down, KPI down](/images/model_experimentation/new-model-release-kpi.png)
+![Loss down, KPI down](/images/model_experimentation/rollback-chatgpt.png)
 
-> "This churn model always overestimates the chance of freight forwarders stopping to be our customers"
 
 ---
 
@@ -33,8 +32,6 @@ When something is off in production, where do you look?
 - Serving latency?
 
 → **Domain knowledge + logging** are what let you find the cause. Without good logging there is nothing to troubleshoot from, and without domain knowledge you don't know where to look.
-
-![Troubleshooting](/images/model_experimentation/troubleshooting.png)
 
 ---
 

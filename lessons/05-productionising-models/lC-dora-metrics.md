@@ -11,20 +11,25 @@ title: DORA Metrics
 
 ![DevOps infinity loop](/images/model_experimentation/dynatrace-devops.png)
 
+<i><u>Do you have any ideas for what they could be?</u></i>
+
 ---
 
-## Overview
+<details><summary style="font-size: 1.5em"> Overview</summary>
 
 Four metrics for measuring success/performance of software delivery:
 
 - 2 "dev" metrics
 - 2 "ops" metrics
 
-Do you have any ideas for what they could be?
 
-![MLOps principles](/images/model_experimentation/ml-ops-org-circles.png)
+<div style="width: 100%; overflow: hidden">
+<img src="/images/model_experimentation/devops-vs-mlops-dora-metrics.png" alt="DevOps DORA metrics" style="width: 200%; max-width: 200%; margin: 5px 0; display: block">
+</div>
 
 From https://ml-ops.org/content/mlops-principles
+
+</details>
 
 ---
 

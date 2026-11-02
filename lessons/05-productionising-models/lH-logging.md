@@ -22,9 +22,13 @@ Things worth logging, monitoring and setting up alerts for:
 
 ![Logging, monitoring and alerts](/images/model_experimentation/monitoring-alerts.gif)
 
+<details><summary style="font-style: italic;">Within reason, anyway.</summary>
+
 ![Within reason, anyway](/images/model_experimentation/within-reason-anyway.png)
 
-*Within reason, anyway.*
+This was my inbox 2 years ago. Now I don't even know how many Github notifications I have.
+
+</details>
 
 ---
 
