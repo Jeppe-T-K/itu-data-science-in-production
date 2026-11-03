@@ -55,3 +55,9 @@ Try running it with:
 `mlflow --version`
 
 Does this command run and show a version number of 2.18 or newer? Great! (FastAPI and uvicorn arrive with Exercise 3, so don't worry about them yet.)
+
+In case you want run the MLflow for the project, you might have success with running a command like this:
+```mlflow server \
+  --backend-store-uri sqlite:////Users/jeppekristensen/mlflow/mlflow.db \
+  --default-artifact-root /Users/jeppekristensen/mlflow/artifacts \
+  --host 127.0.0.1 --port 5000```
